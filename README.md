@@ -1,13 +1,13 @@
-# Telerehabilitation App
+# 🚀 Telerehabilitation App
  
 Telemedicine is a way to access healthcare appointments with healthcare providers on the internet using your phone or computer. These appointments are usually video calls with online chat messaging through an app or platform. It is not meant to replace clinic visits with a doctor but instead should complement regular healthcare. The objective of this project is to use telemedicine patients to access physical therapy services.
  
-## System Admin
+## 👤 System Admin
 - [ ] Can approve/deny requests for creation of physical therapist account
 - [ ] Can approve/deny requests for creation of patient account
 - [ ] Can enable/disable physical therapist or patient account
 
-## Physical Therapist
+## 👤 Physical Therapist
 - [ ] Request for creation of physical therapist account
 - [ ] Login
 - [ ] Forgot password
@@ -54,7 +54,7 @@ Telemedicine is a way to access healthcare appointments with healthcare provider
 		- [ ] YouTube link of exercise videos (unlisted)
  
  
-## Patient
+## 👤 Patient
 - [ ] Request for patient account
 - [ ] Login
 - [ ] Forgot Password
