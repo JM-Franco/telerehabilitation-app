@@ -1,0 +1,35 @@
+{% extends 'webapp/base.html' %}
+
+{% block content %}
+<div class="dashboard-grid-container">
+	<div class="dashboard-nav-sidebar">
+		<div class="profile-nav-item">
+			<div class="profile-picture">
+			</div>		
+			<div class="profile-label">
+				<a href="{% url 'webapp:profile_page' %}">
+					<p>Profile Name</p>
+				</a>
+				<p class="caption-text">
+					Caption
+				</p>
+			</div>
+			<div class=logout-icon>
+				<a href="{% url 'webapp:login' %}">
+					🚀		
+				</a>
+				
+			</div>
+		</div>
+	</div>
+	<div class="dashboard-main-content">
+		<h1>Dashboard</h1>
+		<p>
+			Sample Content
+		</p>
+	</div>
+
+	{% include 'webapp/footer.html' %}
+</div>
+
+{% endblock content %}

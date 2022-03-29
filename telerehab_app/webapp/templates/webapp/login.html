@@ -1,0 +1,35 @@
+{% extends 'webapp/base.html' %}
+{% block title %}Login Page{% endblock title %}
+{% block content %}
+<div class="login-grid-container">
+    <div class="login-hero">
+        <div class="login-hero-content">
+            <h1>Logo Here</h1>
+            <p>Text and Background Picture</p>
+        </div>
+    </div>
+    <div class="login-form">
+        <div class="login-form-card">
+            <h3>Login</h3>
+            <h6>Username</h6>
+            <input id="login-username" type="text">
+            <h6>Password</h6>
+            <input id="login-password" type="password">
+            <a href="#">
+                <a href="{% url 'webapp:reset_password' %}">
+					<p id="reset-password" style="text-align: center">
+						Forgot Password?
+					</p>
+				</a>
+            </a>
+            <div style="display: flex; justify-content: center">
+				<a class="button-primary button-text" href="{% url 'webapp:dashboard' %}">
+                    Login
+                </a>
+            </div>
+            <p>Don't have an account yet? <a href="{% url 'webapp:request_account' %}" style="display: inline;">Request for an account"</a></p>
+        </div>
+    </div>
+	{% include 'webapp/footer.html' %}
+</div>
+{% endblock content %}

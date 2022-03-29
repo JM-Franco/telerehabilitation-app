@@ -1,0 +1,19 @@
+{% extends 'webapp/base.html' %}
+
+{% block content %}
+
+<h1>Profile Page </h1>
+
+<p>{{user.first_name}} {{user.last_name}}</p>
+<p class="caption-text">{{user.role}}</p>
+
+<div style="display:flex; flex-direction:column;">
+	<p>{{user.email}}</p>
+	<p>{{user.birthdate}}</p>
+	<p>{{user.age}}</p>
+	<p>{{user.sex}}</p>
+	<p>{{user.contact_number}}</p>
+	<p>{{user.date_joined}}</p>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,24 @@
+{% extends 'webapp/base.html' %}
+
+{% block content %}
+<div class="request-account-grid-container">
+	<div class="request-account-form">
+		<div class="request-account-form-title">
+			<h1>Join us!</h1>
+			<p>Please supply the required information</p>
+		</div>
+		<div class="request-account-form-container">
+			<div class="request-account-form-card">
+				<h6>Email Address</h6>
+				<input type="Email">
+				<div style="display: flex; justify-content: center;">
+					<a class="button-primary button-text" href="#">
+						Submit
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% include 'webapp/footer.html' %}
+</div>
+{% endblock content %}
