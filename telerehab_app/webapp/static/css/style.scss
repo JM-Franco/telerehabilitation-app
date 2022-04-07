@@ -72,6 +72,7 @@ html {
 
 body {
     background-color: #dee2e6;
+	margin: 0;
 }
 
 h1 {
@@ -150,6 +151,11 @@ input {
     width: 100%;
 }
 
+ion-icon {
+    font-size: 24px;
+    text-decoration: none;
+    color: white;
+}
 
 
 // Classes
@@ -170,18 +176,64 @@ input {
     }
 }
 
+
 .footer {
     grid-area: footer;
     background-color: $primary-color;
     color: $monochrome-1;
     padding: $spacing-40 $spacing-80;
     height: 208px;
-    & p:nth-child(1) {
+    p:nth-child(1) {
         margin-bottom: $spacing-40;
     }
 }
 
 
+.nav-sidebar {
+    grid-area: nav-sidebar;	
+    display: flex;
+    flex-direction: column;
+    background-color: $primary-color;
+    color: white;
+    margin: 0rem 0rem 0rem (-$spacing-32);
+    height: 100%;
+    .nav-item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        position: relative;
+        margin: 0 $baseline-spacing $spacing-16;
+        padding: $baseline-spacing $spacing-16;
+        &:first-child {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: $spacing-16 $spacing-16 0rem;
+            margin-bottom: $spacing-40;
+            .profile-picture {
+                box-sizing: border-box; 
+                height: $spacing-48;
+                width: $spacing-48;
+                background-color: $monochrome-3;
+                border-radius: 10px;
+            }
+            .profile-label {
+                margin-left: $baseline-spacing;
+            }
+            .logout-icon {
+                margin-left: auto;
+            }
+        }
+        &.active {
+            background-color: $secondary-color;
+            border-radius: 10px; 
+            @extend .nav-item;
+        }
+        .nav-icon {
+            margin-right: $spacing-16;
+        }
+    }
+}	
 
 /* ========== Component Styles ========== */
 
@@ -197,32 +249,30 @@ input {
     left: 0;
     /*   grid-template: 1fr / repeat(12, 1fr); */
     column-gap: $spacing-16;
-    & .login-hero {
+    .login-hero {
         grid-area: login-hero;
         height: 100vh;
         display: flex;
         flex-direction: row;
         margin-left: $spacing-32;
-        & .login-hero-content {
+        .login-hero-content {
             margin: auto 116px;
-            & h1 {
+            h1 {
 				margin-bottom: $spacing-16;
             //     color: $primary-color;
-            }
-            & p {
             }
         }
     }
 
-    & .login-form {
+    .login-form {
         grid-area: login-form;
         display: grid;
         margin-right: $spacing-32;
-        & .login-form-card {
+        .login-form-card {
             @include card($spacing-64);
             margin: auto 0px;
 
-            & h3,
+            h3,
             button,
             a,
             #login-username,
@@ -230,12 +280,12 @@ input {
                 margin-bottom: $spacing-40;
             }
 
-            & h6,
+            h6,
             #login-password {
                 margin-bottom: $spacing-16;
             }
 
-            & p {
+            p {
                 @include remove-Y-margins(true, true);
             }
         }
@@ -253,7 +303,7 @@ input {
     top: 0;
     left: 0;
 
-    & .request-account-form {
+    .request-account-form {
         grid-area: request-account-hero;
 		display: grid;
 		grid-template-columns: 3.5fr 5fr 3.5fr;
@@ -263,17 +313,17 @@ input {
 		margin: 0 $spacing-32;
         padding: $spacing-80 0;
 		gap: $spacing-16;
-		& .request-account-form-title {
+		.request-account-form-title {
 			grid-column: 2 / 4;
-			& h1 {
+			h1 {
 				margin-bottom: $spacing-16;
 			}
 
-			& p {
+			p {
 				margin-bottom: $spacing-40;
 			}	
 		}
-        & .request-account-form-container {
+        .request-account-form-container {
 			grid-column: 2 / span 1;	
 
 			// If headings are inside the container
@@ -286,13 +336,13 @@ input {
 			// 	margin-bottom: $spacing-40;
 			// }	
 
-            & .request-account-form-card {
+            .request-account-form-card {
                 @include card();
-                & h6 {
+                h6 {
                    margin-bottom: $spacing-16; 
                 }
 
-                & input {
+                input {
                     margin-bottom: $spacing-40;
                 }
             }
@@ -312,7 +362,7 @@ input {
     top: 0;
     left: 0;
 
-    & .reset-password-form {
+    .reset-password-form {
         grid-area: request-account-form;
 		display: grid;
 		grid-template-columns: 3.5fr 5fr 3.5fr;
@@ -322,25 +372,25 @@ input {
 		margin: 0 $spacing-32;
         padding: $spacing-80 0;
 		column-gap: $spacing-16;
-		& .reset-password-form-title {
+		.reset-password-form-title {
 			grid-column: 2 / 4;
-			& h1 {
+			h1 {
 				margin-bottom: $spacing-16;
 			}
 
-			& p {
+			p {
 				margin-bottom: $spacing-40;
 			}	
 		}
-        & .reset-password-form-card-grid-container {
+        .reset-password-form-card-grid-container {
 			grid-column: 2 / span 1;	
-            & .reset-password-form-card {
+            .reset-password-form-card {
                 @include card();
-                & h6 {
+                h6 {
                    margin-bottom: $spacing-16; 
                 }
 
-                & input {
+                input {
                     margin-bottom: $spacing-40;
                 }
             }
@@ -354,8 +404,8 @@ input {
     grid-template-columns: repeat(12, 1fr);
     grid-auto-rows: auto;
 	grid-template-areas:
-		'dashboard-nav-sidebar dashboard-nav-sidebar . dashboard-main-content dashboard-main-content dashboard-main-content dashboard-main-content dashboard-main-content dashboard-main-content dashboard-main-content dashboard-main-content .' 
-		'dashboard-nav-sidebar dashboard-nav-sidebar footer footer footer footer footer footer footer footer footer footer'; 
+		'nav-sidebar nav-sidebar . dashboard-main-content dashboard-main-content dashboard-main-content dashboard-main-content dashboard-main-content dashboard-main-content dashboard-main-content dashboard-main-content .' 
+		'nav-sidebar nav-sidebar footer footer footer footer footer footer footer footer footer footer'; 
 	position: absolute;
 	height: 100%;
 	top: 0;
@@ -363,46 +413,105 @@ input {
 	column-gap: $spacing-16;
     margin: 0 $spacing-32;
 
-	& .dashboard-nav-sidebar {
-		grid-area: dashboard-nav-sidebar;	
-        display: flex;
-        flex-direction: column;
-		background-color: $primary-color;
-		color: white;
-        margin: 0rem 0rem 0rem (-$spacing-32);
-		height: 100%;
-
-        & .profile-nav-item {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            padding: $spacing-16 $spacing-16 0rem;
-            & .profile-picture {
-                box-sizing: border-box; 
-                height: $spacing-48;
-                width: $spacing-48;
-                background-color: $monochrome-3;
-                border-radius: 10px;
-            }
-
-            & .profile-label {
-                margin-left: $baseline-spacing;
-            }
-
-            & .logout-icon {
-                margin-left: auto;
-            }
-        }
-	}	
-
-	& .dashboard-main-content {
+	.dashboard-main-content {
 		grid-area: dashboard-main-content;
 		height: 100vh;
 	}
 
-    & .footer {
+    .footer {
         margin: 0rem (-$spacing-32) 0rem (-$spacing-16);
         box-shadow: inset 10px 0px 5px rgb(0, 0, 0, 25%);
     }
 
+}
+
+.profile-page-grid-container {
+	display: grid;
+	grid-template: 1fr / repeat(12, 1fr);
+	height: 100%;
+	top: 0;
+	left: 0;
+	column-gap: $spacing-16;
+    margin: 0 $spacing-32;
+	.profile-page-card-grid-container {
+		grid-column: 4 / span 6; 
+		.profile-page-card {
+			@include card($spacing-64);
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			margin: ($spacing-80 + 6.563rem) 0 $spacing-80 0;
+			padding-top: (6.563rem + $spacing-16);
+
+            svg {
+                z-index: -1;
+                position: absolute;
+                border-radius: 25px;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+
+                defs mask#circle{
+                    rect {
+                        fill: white;
+                        width: 100%;
+                        height: 100%;
+                    }
+                    
+                    circle {
+                        fill: black;
+                    }
+                }
+
+                rect {
+                    fill: $primary-color;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+			.profile-picture {
+				box-sizing: border-box;
+				position: absolute;
+				background-color: $monochrome-3;
+				// border: 10px solid $monochrome-2;
+				border-radius: 50%;
+				height: 12.5rem;
+				width: 12.5rem;
+				/*
+				height: 13.125rem;
+				width: 13.125rem;
+				*/
+				left: 0;
+				right: 0;
+				top: -6.563rem;
+				margin: 0 auto;
+			}
+			
+			.name {
+				margin-bottom: $spacing-16;
+				text-align: center;
+			}
+
+            .account-type {
+                margin-bottom: $spacing-40;
+                text-align: center;
+                color: $secondary-color;	
+            }
+
+            .profile-page-card-body {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                .info-group {
+                    .label {
+                        margin-bottom: $spacing-16;
+                    }
+                    .info {
+                        margin-bottom: $spacing-40;
+                    }
+                }
+            }
+		}
+	}
 }
