@@ -147,8 +147,17 @@ input {
     box-sizing: border-box;
     border: 15px solid white;
     border-radius: 25px;
+	padding: 0 $baseline-spacing;
     height: 48px;
     width: 100%;
+	&:focus {
+		// outline: none;
+		outline-width: 3px;
+		outline-color: $secondary-color;
+		outline-style: solid;
+		// border: 1px solid $secondary-color;
+		// box-shadow: 0 0 20px $secondary-color;
+	}
 }
 
 ion-icon {
@@ -161,6 +170,7 @@ ion-icon {
 // Classes
 
 .button-primary {
+	@extend .button-text;
     display: inline-block;
     background-color: $secondary-color;
     padding: $spacing-16 $spacing-56;
@@ -176,11 +186,11 @@ ion-icon {
     }
 }
 
-
 .footer {
     grid-area: footer;
     background-color: $primary-color;
     color: $monochrome-1;
+	margin: $spacing-80 0 0;
     padding: $spacing-40 $spacing-80;
     height: 208px;
     p:nth-child(1) {
@@ -384,6 +394,7 @@ ion-icon {
 		}
         .reset-password-form-card-grid-container {
 			grid-column: 2 / span 1;	
+			margin-bottom: $spacing-80;
             .reset-password-form-card {
                 @include card();
                 h6 {
@@ -399,12 +410,12 @@ ion-icon {
 }
 
 
-.dashboard-grid-container {
+.main-grid-container {
 	display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-auto-rows: auto;
 	grid-template-areas:
-		'nav-sidebar nav-sidebar . dashboard-main-content dashboard-main-content dashboard-main-content dashboard-main-content dashboard-main-content dashboard-main-content dashboard-main-content dashboard-main-content .' 
+		'nav-sidebar nav-sidebar . main-content main-content main-content main-content main-content main-content main-content main-content .' 
 		'nav-sidebar nav-sidebar footer footer footer footer footer footer footer footer footer footer'; 
 	position: absolute;
 	height: 100%;
@@ -413,13 +424,14 @@ ion-icon {
 	column-gap: $spacing-16;
     margin: 0 $spacing-32;
 
-	.dashboard-main-content {
-		grid-area: dashboard-main-content;
+	.main-content {
+		grid-area: main-content;
 		height: 100vh;
+		padding-top: $spacing-64; // footer has margin-top: $spacing-80
 	}
 
     .footer {
-        margin: 0rem (-$spacing-32) 0rem (-$spacing-16);
+        margin: $spacing-80 (-$spacing-32) 0rem (-$spacing-16);
         box-shadow: inset 10px 0px 5px rgb(0, 0, 0, 25%);
     }
 
@@ -455,8 +467,8 @@ ion-icon {
                 defs mask#circle{
                     rect {
                         fill: white;
-                        width: 100%;
-                        height: 100%;
+                        width: 100vw;
+                        height: 100vh;
                     }
                     
                     circle {
@@ -466,8 +478,8 @@ ion-icon {
 
                 rect {
                     fill: $primary-color;
-                    width: 100%;
-                    height: 100%;
+                    width: 100vw;
+                    height: 100vh;
                 }
             }
 

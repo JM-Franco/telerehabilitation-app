@@ -17,17 +17,13 @@
                 <input id="login-username" type="text" name="email">
                 <h6>Password</h6>
                 <input id="login-password" type="password" name="password">
-                <a href="#">
-                    <a href="{% url 'webapp:reset_password' %}">
-                                    <p id="reset-password" style="text-align: center">
-                                        Forgot Password?
-                                    </p>
-                                </a>
-                </a>
+				<a href="{% url 'webapp:reset_password' %}">
+					<p id="reset-password" style="text-align: center">
+						Forgot Password?
+					</p>
+				</a>
                 <div style="display: flex; justify-content: center">
-                                <button type="submit" class="button-primary button-text" href="{% url 'webapp:dashboard' %}">
-                        Login
-                    </button>
+					<button type="submit" class="button-primary button-text" href="{% url 'webapp:dashboard' %}"> Login </button>
                 </div>
                 <p>Don't have an account yet? <a href="{% url 'webapp:request_account' %}" style="display: inline;">Request for an account"</a></p>
             </form>
