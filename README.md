@@ -10,10 +10,10 @@ Telemedicine is a way to access healthcare appointments with healthcare provider
 ## 👤 Physical Therapist
 - [ ] Request for creation of physical therapist account
 - [ ] Login
-- [ ] Forgot password
+- [/] Forgot password
 - [ ] View dashboard
-	- [ ] Profile Tab
-		- [ ] View profile
+	- [/] Profile Tab
+		- [/] View profile
 		- [ ] Update profile
 		- [ ] Create clinic hours (input time, day Ex. MWF 9am-12noon; 1pm-4pm
 		- [ ] Update clinic hours
@@ -57,7 +57,7 @@ Telemedicine is a way to access healthcare appointments with healthcare provider
 ## 👤 Patient
 - [ ] Request for patient account
 - [ ] Login
-- [ ] Forgot Password
+- [/] Forgot Password
 - [ ] Search Tab
 	- [ ] View list of physical therapists
 	- [ ] View profile of a specific physical therapist

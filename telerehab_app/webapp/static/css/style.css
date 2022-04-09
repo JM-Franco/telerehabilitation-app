@@ -215,7 +215,8 @@ ion-icon {
   top: 0;
   left: 0;
   /*   grid-template: 1fr / repeat(12, 1fr); */
-  column-gap: 1rem;
+  -moz-column-gap: 1rem;
+       column-gap: 1rem;
 }
 .login-grid-container .login-hero {
   grid-area: login-hero;
@@ -272,6 +273,7 @@ ion-icon {
   grid-area: request-account-hero;
   display: grid;
   grid-template-columns: 3.5fr 5fr 3.5fr;
+  grid-template-rows: -webkit-min-content auto;
   grid-template-rows: min-content auto;
   box-sizing: border-box;
   height: 100vh;
@@ -318,12 +320,14 @@ ion-icon {
   grid-area: request-account-form;
   display: grid;
   grid-template-columns: 3.5fr 5fr 3.5fr;
+  grid-template-rows: -webkit-min-content auto;
   grid-template-rows: min-content auto;
   box-sizing: border-box;
   height: 100vh;
   margin: 0 2rem;
   padding: 5rem 0;
-  column-gap: 1rem;
+  -moz-column-gap: 1rem;
+       column-gap: 1rem;
 }
 .reset-password-grid-container .reset-password-form .reset-password-form-title {
   grid-column: 2/4;
@@ -361,7 +365,8 @@ ion-icon {
   height: 100%;
   top: 0;
   left: 0;
-  column-gap: 1rem;
+  -moz-column-gap: 1rem;
+       column-gap: 1rem;
   margin: 0 2rem;
 }
 .main-grid-container .main-content {
@@ -380,7 +385,8 @@ ion-icon {
   height: 100%;
   top: 0;
   left: 0;
-  column-gap: 1rem;
+  -moz-column-gap: 1rem;
+       column-gap: 1rem;
   margin: 0 2rem;
 }
 .profile-page-grid-container .profile-page-card-grid-container {
@@ -454,6 +460,4 @@ ion-icon {
 }
 .profile-page-grid-container .profile-page-card-grid-container .profile-page-card .profile-page-card-body .info-group .info {
   margin-bottom: 2.5rem;
-}
-
-/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=style.css.map */
