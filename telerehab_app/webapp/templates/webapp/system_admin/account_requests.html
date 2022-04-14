@@ -1,0 +1,105 @@
+{% extends 'webapp/base.html' %}
+
+{% block title %}Account Requests{% endblock title %}
+
+{% block content %}
+<div class="main-grid-container">
+    {% include 'webapp/nav_sidebar.html' %}
+	<div class="main-content-area">
+		<h1 class="main-content-title">Account Requests</h1>
+		<form class="search" x-data="{ open: false }" hx-get="{% url 'webapp:account_requests_search' %}" hx-target="#account_requests">
+			<div class="dropdown">
+				<button class="dropdown-button" type="button" @click="open = !open">
+					<ion-icon name="filter-outline"></ion-icon>
+					<p>Filters</p>
+				</button>
+			</div>
+			<div class="filter-menu" style="grid-template-columns: repeat(2, 1fr);" x-show="open" @click.outside="open = false"  x-transition>
+				<div class="filter-menu-section">
+					<p class="filter-menu-section-title">Roles</p>
+					<div class="filter-menu-item">
+						<p>Physical Therapist</p>
+						<div class="toggle-active">
+							<label class="switch">
+								<input value="PT" name="filter" type="checkbox" checked>
+								<span class="slider"></span>
+							</label>	
+						</div>
+					</div>
+					<div class="filter-menu-item">
+						<p>Patient</p>
+						<div class="toggle-active">
+							<label class="switch">
+								<input value="P" name="filter" type="checkbox" checked>
+								<span class="slider"></span>
+							</label>	
+						</div>
+					</div>
+				</div>
+				<div class="filter-menu-section">
+					<p class="filter-menu-section-title">Status</p>
+					<div class="filter-menu-item">
+						<p>Pending</p>
+						<div class="toggle-active">
+							<label class="switch">
+								<input value="pending" name="filter" type="checkbox" checked>
+								<span class="slider"></span>
+							</label>
+						</div>
+					</div>
+					<div class="filter-menu-item">
+						<p>Approved</p>
+						<div class="toggle-active">
+							<label class="switch">
+								<input value="approved" name="filter" type="checkbox">
+								<span class="slider"></span>
+							</label>
+						</div>
+					</div>
+					<div class="filter-menu-item">
+						<p>Denied</p>
+						<div class="toggle-active">
+							<label class="switch">
+								<input value="denied" name="filter" type="checkbox">
+								<span class="slider"></span>
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<input name="textfilter" class="search-bar" type="text" placeholder="Search...">
+			<input type="submit" hidden />
+		</form>
+
+		<!-- Display Requests -->
+		<div id="account_requests">
+			{% for account_request in account_requests %}
+				<div x-data="{ open: true }" x-show="open" x-transition.duration.500ms class="account-requests-item" id="whaddup2">
+					<h6>{{account_request.email}}</h6>
+					<h6 style="margin-left:16px;">{{account_request.get_role_display}}</h6>
+					<p style="margin-left: 16px">{{account_request.get_status_display}}</p>
+					 {% if account_request.status == 'approved' %}
+						<div @click="open = false" hx-trigger="click" hx-post="{% url 'webapp:account_request_action' action='approve' pk=account_request.pk  %}" style="pointer-events: none">
+							 <ion-icon class="accept" name="checkmark-outline"></ion-icon>
+						</div>
+					 {% elif account_request.status == 'denied' %}
+						<div @click="open = false" hx-trigger="click" hx-post="{% url 'webapp:account_request_action' action='deny' pk=account_request.pk  %}" style="pointer-events: none">
+							<ion-icon class="deny" name="close-outline"></ion-icon>
+						</div>
+					 {% else %}
+						<div @click="open = false" hx-trigger="click" hx-post="{% url 'webapp:account_request_action' action='approve' pk=account_request.pk  %}">
+							 <ion-icon class="accept" name="checkmark-outline"></ion-icon>
+						</div>
+						<div @click="open = false" hx-trigger="click" hx-post="{% url 'webapp:account_request_action' action='deny' pk=account_request.pk  %}">
+							<ion-icon class="deny" name="close-outline"></ion-icon>
+						</div>
+					{% endif %}
+				</div>
+			{% empty %}
+				<p>Nada</p>
+			{% endfor %}
+		</div>
+	</div>
+    {% include 'webapp/footer.html' %}
+</div>
+{% endblock content %}

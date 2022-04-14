@@ -1,0 +1,24 @@
+{% for account in accounts %}
+    <div class="accounts-item">
+        <div class="name">
+            <h6>Name</h6>
+            <p>{{account.first_name}} {{account.last_name}}</p>
+        </div>
+        <div class="role">
+            <h6>Role</h6>
+            <p>{{account.get_role_display}}</p>
+        </div>
+        <div class="email">
+            <h6>Email</h6>
+            <p>{{account.email}}</p>
+        </div>
+        <div class="toggle-active">
+            <label class="switch">
+                <input hx-post="{% url 'webapp:toggle_is_active' account.pk %}" hx-target="this" type="checkbox" {% if account.is_active %}checked{% endif %}>
+                <span class="slider"></span>
+            </label>	
+        </div>
+    </div>
+{% empty %}
+    Nada
+{% endfor %}

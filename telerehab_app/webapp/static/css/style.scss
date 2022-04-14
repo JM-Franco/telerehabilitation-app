@@ -1,4 +1,4 @@
-@use "sass:math" as math;
+@use "sass:math"as math;
 
 
 /* ========== Mixins and Functions ==========  */
@@ -13,12 +13,69 @@
     padding: $padding;
 }
 
+@mixin switch {
+	display: flex;
+	align-items: end;
+	justify-content: center;
+	.switch {
+		position: relative;
+		display: inline-block;
+		width: $spacing-64;
+		height: $spacing-40;
+		input {
+			opacity: 0;
+			width: 0;
+			height: 0;
+			&:checked {
+				+ .slider {
+					background-color: $secondary-color;
+					&:before {
+						-webkit-transform: translateX($spacing-24);
+						-ms-transform: translateX($spacing-24);
+						transform: translateX($spacing-24);
+					}
+				}
+			}
+			&:focus{
+				+ .slider {
+					box-shadow: 0 0 4px $secondary-color;
+				}
+			}
+		}
+		.slider {
+			position: absolute;
+			cursor: pointer;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: $monochrome-3;
+			-webkit-transition: .4s;
+			transition: .4s;
+			border-radius: 25px;
+			&:before {
+				position: absolute;
+				content: "";
+				height: $spacing-24;
+				width: $spacing-24;
+				left: $baseline-spacing;
+				bottom: $baseline-spacing;
+				background-color: white;
+				-webkit-transition: .4s;
+				transition: .4s;
+				border-radius: 25px;
+			}
+		}
+	}
+}
+
 @mixin remove-Y-margins($top: true, $bottom: true) {
     @if $top {
         margin-top: 0px;
     }
+
     @if $bottom {
-        margin-bottom: 0px; 
+        margin-bottom: 0px;
     }
 }
 
@@ -52,14 +109,18 @@ $text-scale-ratio: 1.333;
 
 @mixin text-size($header: true, $number) {
     $font-size: $text-base-size;
+
     @if $header {
         $font-size: $font-size * math.pow($text-scale-ratio, 7-$number);
         font-family: "Fredoka", sans-serif;
         font-weight: normal;
-    } @else {
+    }
+
+    @else {
         $font-size: $font-size - $number;
         font-family: "ABeeZee", sans-serif;
     }
+
     font-size: $font-size;
     line-height: $font-size * 1.5;
     @include remove-Y-margins(true, true);
@@ -72,7 +133,7 @@ html {
 
 body {
     background-color: #dee2e6;
-	margin: 0;
+    margin: 0;
 }
 
 h1 {
@@ -125,7 +186,7 @@ p {
 
 $baseline-spacing: 8px;
 $spacing-16: 1rem;
-$spacing-24: 1.5;
+$spacing-24: 1.5rem;
 $spacing-32: 2rem;
 $spacing-40: 2.5rem;
 $spacing-48: 3rem;
@@ -143,20 +204,22 @@ a {
 }
 
 input {
-    @include text-size(false, 0);
-    box-sizing: border-box;
-    border: 15px solid white;
-    border-radius: 25px;
-	padding: 0 $baseline-spacing;
-    height: 48px;
-    width: 100%;
-	&:focus {
-		// outline: none;
-		outline-width: 3px;
-		outline-color: $secondary-color;
-		outline-style: solid;
-		// border: 1px solid $secondary-color;
-		// box-shadow: 0 0 20px $secondary-color;
+	&:not([type="checkbox"]) {
+		@include text-size(false, 0);
+		box-sizing: border-box;
+		border: 15px solid white;
+		border-radius: 25px;
+		padding: 0 $baseline-spacing;
+		height: $spacing-48;
+		width: 100%;
+		&:focus {
+			// outline: none;
+			outline-width: 3px;
+			outline-color: $secondary-color;
+			outline-style: solid;
+			// border: 1px solid $secondary-color;
+			// box-shadow: 0 0 20px $secondary-color;
+		}
 	}
 }
 
@@ -170,7 +233,7 @@ ion-icon {
 // Classes
 
 .button-primary {
-	@extend .button-text;
+    @extend .button-text;
     display: inline-block;
     background-color: $secondary-color;
     padding: $spacing-16 $spacing-56;
@@ -180,6 +243,7 @@ ion-icon {
     color: white;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+
     &:hover {
         filter: brightness(85%);
         // box-shadow: inset 0px 0px 10px 2px rgb(0, 0, 0, 5);
@@ -190,9 +254,10 @@ ion-icon {
     grid-area: footer;
     background-color: $primary-color;
     color: $monochrome-1;
-	margin: $spacing-80 0 0;
+    margin: $spacing-80 0 0;
     padding: $spacing-40 $spacing-80;
     height: 208px;
+
     p:nth-child(1) {
         margin-bottom: $spacing-40;
     }
@@ -200,7 +265,7 @@ ion-icon {
 
 
 .nav-sidebar {
-    grid-area: nav-sidebar;	
+    grid-area: nav-sidebar;
     display: flex;
     flex-direction: column;
     background-color: $primary-color;
@@ -221,7 +286,7 @@ ion-icon {
             padding: $spacing-16 $spacing-16 0rem;
             margin-bottom: $spacing-40;
             .profile-picture {
-                box-sizing: border-box; 
+                box-sizing: border-box;
                 height: $spacing-48;
                 width: $spacing-48;
                 background-color: $monochrome-3;
@@ -236,14 +301,107 @@ ion-icon {
         }
         &.active {
             background-color: $secondary-color;
-            border-radius: 10px; 
+            border-radius: 10px;
             @extend .nav-item;
         }
         .nav-icon {
             margin-right: $spacing-16;
         }
     }
-}	
+}
+
+
+.dropdown {
+	.dropdown-button {
+		@extend .button-primary;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		font-size: 24px;
+		padding-top: $baseline-spacing;
+		padding-bottom: $baseline-spacing;
+		height: 100%;
+		ion-icon {
+			margin-right: $spacing-16;
+		}
+	}
+	.dropdown-menu {
+		z-index: 1;
+		box-sizing: border-box;
+		position: absolute;
+		top: $spacing-56;
+		left: 0;
+		background-color: $monochrome-1;
+		color: black;
+		padding: $baseline-spacing $spacing-16;
+		border-radius: 25px;
+		width: 100%;
+		.dropdown-menu-section {
+			@extend .overline-text;
+			text-transform: uppercase;
+			color: $monochrome-5;
+			&:not(:first-child) {
+				margin-top: $spacing-16;
+			}
+		}
+		.dropdown-menu-item {
+			display: flex;
+			flex-direction: row;
+			input {
+				margin-right: $spacing-16;
+			}
+		}
+	}
+}
+
+.search {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: $spacing-16;
+	position: relative;
+	.filter-menu {
+		z-index: 1;
+		display: grid;
+		column-gap: $spacing-16;
+		box-sizing: border-box;
+		position: absolute;
+		top: $spacing-56;
+		left: 0;
+		background-color: $monochrome-1;
+		color: black;
+		padding: $baseline-spacing $spacing-16;
+		border-radius: 25px;
+		.filter-menu-section {
+			.filter-menu-section-title {
+				@extend .overline-text;
+				text-transform: uppercase;
+				color: $monochrome-5;
+				&:not(:first-child) {
+					margin-top: $spacing-16;
+				}
+			}
+			.filter-menu-item {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				.toggle-active {
+					@include switch;
+					margin-left: auto;
+					transform: scale(50%); 
+					--moz-transform: scale(50%);
+					--webkit-transform: scale(50%);
+					
+				}
+			}
+		}
+	}
+	.search-bar {
+		margin-left: $spacing-16;
+	}
+}
+
+
+
 
 /* ========== Component Styles ========== */
 
@@ -259,17 +417,20 @@ ion-icon {
     left: 0;
     /*   grid-template: 1fr / repeat(12, 1fr); */
     column-gap: $spacing-16;
+
     .login-hero {
         grid-area: login-hero;
         height: 100vh;
         display: flex;
         flex-direction: row;
         margin-left: $spacing-32;
+
         .login-hero-content {
             margin: auto 116px;
+
             h1 {
-				margin-bottom: $spacing-16;
-            //     color: $primary-color;
+                margin-bottom: $spacing-16;
+                //     color: $primary-color;
             }
         }
     }
@@ -278,6 +439,7 @@ ion-icon {
         grid-area: login-form;
         display: grid;
         margin-right: $spacing-32;
+
         .login-form-card {
             @include card($spacing-64);
             margin: auto 0px;
@@ -315,41 +477,45 @@ ion-icon {
 
     .request-account-form {
         grid-area: request-account-hero;
-		display: grid;
-		grid-template-columns: 3.5fr 5fr 3.5fr;
-		grid-template-rows: min-content auto;
+        display: grid;
+        grid-template-columns: 3.5fr 5fr 3.5fr;
+        grid-template-rows: min-content auto;
         box-sizing: border-box;
         height: 100vh;
-		margin: 0 $spacing-32;
+        margin: 0 $spacing-32;
         padding: $spacing-80 0;
-		gap: $spacing-16;
-		.request-account-form-title {
-			grid-column: 2 / 4;
-			h1 {
-				margin-bottom: $spacing-16;
-			}
+        gap: $spacing-16;
 
-			p {
-				margin-bottom: $spacing-40;
-			}	
-		}
+        .request-account-form-title {
+            grid-column: 2 / 4;
+
+            h1 {
+                margin-bottom: $spacing-16;
+            }
+
+            p {
+                margin-bottom: $spacing-40;
+            }
+        }
+
         .request-account-form-container {
-			grid-column: 2 / span 1;	
+            grid-column: 2 / span 1;
 
-			// If headings are inside the container
-			//
-			// & h1 {
-			// 	margin-bottom: $spacing-16;
-			// }
+            // If headings are inside the container
+            //
+            // & h1 {
+            // 	margin-bottom: $spacing-16;
+            // }
 
-			// & p {
-			// 	margin-bottom: $spacing-40;
-			// }	
+            // & p {
+            // 	margin-bottom: $spacing-40;
+            // }	
 
             .request-account-form-card {
                 @include card();
+
                 h6 {
-                   margin-bottom: $spacing-16; 
+                    margin-bottom: $spacing-16;
                 }
 
                 input {
@@ -374,31 +540,36 @@ ion-icon {
 
     .reset-password-form {
         grid-area: request-account-form;
-		display: grid;
-		grid-template-columns: 3.5fr 5fr 3.5fr;
-		grid-template-rows: min-content auto;
+        display: grid;
+        grid-template-columns: 3.5fr 5fr 3.5fr;
+        grid-template-rows: min-content auto;
         box-sizing: border-box;
         height: 100vh;
-		margin: 0 $spacing-32;
+        margin: 0 $spacing-32;
         padding: $spacing-80 0;
-		column-gap: $spacing-16;
-		.reset-password-form-title {
-			grid-column: 2 / 4;
-			h1 {
-				margin-bottom: $spacing-16;
-			}
+        column-gap: $spacing-16;
 
-			p {
-				margin-bottom: $spacing-40;
-			}	
-		}
+        .reset-password-form-title {
+            grid-column: 2 / 4;
+
+            h1 {
+                margin-bottom: $spacing-16;
+            }
+
+            p {
+                margin-bottom: $spacing-40;
+            }
+        }
+
         .reset-password-form-card-grid-container {
-			grid-column: 2 / span 1;	
-			margin-bottom: $spacing-80;
+            grid-column: 2 / span 1;
+            margin-bottom: $spacing-80;
+
             .reset-password-form-card {
                 @include card();
+
                 h6 {
-                   margin-bottom: $spacing-16; 
+                    margin-bottom: $spacing-16;
                 }
 
                 input {
@@ -411,24 +582,98 @@ ion-icon {
 
 
 .main-grid-container {
-	display: grid;
+    display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-auto-rows: auto;
-	grid-template-areas:
-		'nav-sidebar nav-sidebar . main-content main-content main-content main-content main-content main-content main-content main-content .' 
-		'nav-sidebar nav-sidebar footer footer footer footer footer footer footer footer footer footer'; 
-	position: absolute;
-	height: 100%;
-	top: 0;
-	left: 0;
-	column-gap: $spacing-16;
+    grid-template-areas:
+        'nav-sidebar nav-sidebar . main-content main-content main-content main-content main-content main-content main-content main-content .'
+        'nav-sidebar nav-sidebar footer footer footer footer footer footer footer footer footer footer';
+    position: absolute;
+    min-height: 100%;
+    top: 0;
+    left: 0;
+    column-gap: $spacing-16;
     margin: 0 $spacing-32;
 
-	.main-content {
-		grid-area: main-content;
-		height: 100vh;
-		padding-top: $spacing-64; // footer has margin-top: $spacing-80
-	}
+    .main-content-area {
+        grid-area: main-content;
+        min-height: 100vh;
+        padding-top: $spacing-64; // footer has margin-top: $spacing-80
+
+        .main-content-title {
+            margin-bottom: $spacing-40;
+        }
+
+        .account-requests-item {
+            @include card();
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            div {
+                display: flex;
+                align-items: center;
+				cursor: pointer;
+				border-radius: 25px;
+				transition: all 0.5s ease-in-out;
+				padding: $baseline-spacing;
+
+				&:hover {
+					background-color: $secondary-color;
+				}
+
+                &:first-of-type {
+                    margin-left: auto;
+                }
+
+                &:not(:last-child) {
+                    margin-right: $spacing-16;
+                }
+
+                ion-icon {
+                    font-size: $spacing-32;
+
+                    &.accept {
+                        color: $success;
+                    }
+
+                    &.deny {
+                        color: $danger;
+                    }
+                }
+            }
+
+            &:not(:last-child) {
+                margin-bottom: $spacing-16;
+            }
+        }
+
+        .accounts-item {
+            @include card();
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            column-gap: $spacing-16;
+
+            &:not(:last-child) {
+                margin-bottom: $spacing-16
+            }
+
+            div {
+                display: flex;
+                flex-direction: column;
+
+                &.name {}
+
+                &.role {}
+
+                &.email {}
+
+                &.toggle-active {
+					@include switch; 
+				}
+            }
+        }
+    }
 
     .footer {
         margin: $spacing-80 (-$spacing-32) 0rem (-$spacing-16);
@@ -438,22 +683,24 @@ ion-icon {
 }
 
 .profile-page-grid-container {
-	display: grid;
-	grid-template: 1fr / repeat(12, 1fr);
-	height: 100%;
-	top: 0;
-	left: 0;
-	column-gap: $spacing-16;
+    display: grid;
+    grid-template: 1fr / repeat(12, 1fr);
+    height: 100%;
+    top: 0;
+    left: 0;
+    column-gap: $spacing-16;
     margin: 0 $spacing-32;
-	.profile-page-card-grid-container {
-		grid-column: 4 / span 6; 
-		.profile-page-card {
-			@include card($spacing-64);
-			position: relative;
-			display: flex;
-			flex-direction: column;
-			margin: ($spacing-80 + 6.563rem) 0 $spacing-80 0;
-			padding-top: (6.563rem + $spacing-16);
+
+    .profile-page-card-grid-container {
+        grid-column: 4 / span 6;
+
+        .profile-page-card {
+            @include card($spacing-64);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            margin: ($spacing-80 + 6.563rem) 0 $spacing-80 0;
+            padding-top: (6.563rem + $spacing-16);
 
             svg {
                 z-index: -1;
@@ -464,13 +711,13 @@ ion-icon {
                 top: 0;
                 left: 0;
 
-                defs mask#circle{
+                defs mask#circle {
                     rect {
                         fill: white;
                         width: 100vw;
                         height: 100vh;
                     }
-                    
+
                     circle {
                         fill: black;
                     }
@@ -483,47 +730,49 @@ ion-icon {
                 }
             }
 
-			.profile-picture {
-				box-sizing: border-box;
-				position: absolute;
-				background-color: $monochrome-3;
-				// border: 10px solid $monochrome-2;
-				border-radius: 50%;
-				height: 12.5rem;
-				width: 12.5rem;
-				/*
+            .profile-picture {
+                box-sizing: border-box;
+                position: absolute;
+                background-color: $monochrome-3;
+                // border: 10px solid $monochrome-2;
+                border-radius: 50%;
+                height: 12.5rem;
+                width: 12.5rem;
+                /*
 				height: 13.125rem;
 				width: 13.125rem;
 				*/
-				left: 0;
-				right: 0;
-				top: -6.563rem;
-				margin: 0 auto;
-			}
-			
-			.name {
-				margin-bottom: $spacing-16;
-				text-align: center;
-			}
+                left: 0;
+                right: 0;
+                top: -6.563rem;
+                margin: 0 auto;
+            }
+
+            .name {
+                margin-bottom: $spacing-16;
+                text-align: center;
+            }
 
             .account-type {
                 margin-bottom: $spacing-40;
                 text-align: center;
-                color: $secondary-color;	
+                color: $secondary-color;
             }
 
             .profile-page-card-body {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
+
                 .info-group {
                     .label {
                         margin-bottom: $spacing-16;
                     }
+
                     .info {
                         margin-bottom: $spacing-40;
                     }
                 }
             }
-		}
-	}
+        }
+    }
 }

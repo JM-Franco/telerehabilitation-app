@@ -6,6 +6,9 @@
         <div class="login-hero-content">
             <h1>Logo Here</h1>
             <p>Text and Background Picture</p>
+            {% for message in messages %}
+                {{message}}
+            {% endfor %}
         </div>
     </div>
     <div class="login-form">
