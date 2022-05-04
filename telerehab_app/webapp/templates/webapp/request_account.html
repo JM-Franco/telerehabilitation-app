@@ -9,11 +9,18 @@
 		</div>
 		<div class="request-account-form-container">
 			<div class="request-account-form-card">
-				<form action="#" method="post">
-					<h6>Email Address</h6>
-					<input type="Email">
-					<div style="display: flex; justify-content: center;">
-						<button type="submit" class="button-primary button-text"> Submit </button>
+				<form method='post' action="{% url 'webapp:request_account' %}">
+					{% csrf_token %}
+					<h6>Email</h6>
+					<input type="text" name="email">
+					<select name="role" id="lang">
+						<option value="P">Patient</option>
+						<option value="SA">System Admin</option>
+						<option value="PT">Physical Therapist</option>
+					  </select>
+
+					<div style="display: flex; justify-content: center">
+						<button type="submit" class="button-primary button-text" href="{% url 'webapp:login' %}"> Submit </button>
 					</div>
 				</form>
 			</div>
@@ -21,4 +28,6 @@
 	</div>
 	{% include 'webapp/footer.html' %}
 </div>
+
+
 {% endblock content %}

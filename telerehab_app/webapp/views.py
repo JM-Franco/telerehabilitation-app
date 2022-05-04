@@ -33,6 +33,12 @@ def logout_user(request):
 
 
 def request_account(request):
+    if request.method == 'POST':
+        acc_data = Account_Request()
+        acc_data.email = request.POST.get('email')
+        acc_data.role = request.POST.get('role')
+        acc_data.save()
+        return redirect('/')
     return render(request, 'webapp/request_account.html')
 
 def reset_password(request):
