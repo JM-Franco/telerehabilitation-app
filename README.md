@@ -8,7 +8,7 @@ Telemedicine is a way to access healthcare appointments with healthcare provider
 - [x] Can enable/disable physical therapist or patient account
 
 ## 👤 Physical Therapist
-- [ ] Request for creation of physical therapist account
+- [x] Request for creation of physical therapist account
 - [x] Login
 - [x] Forgot password
 - [ ] View dashboard
@@ -55,7 +55,7 @@ Telemedicine is a way to access healthcare appointments with healthcare provider
  
  
 ## 👤 Patient
-- [ ] Request for patient account
+- [x] Request for patient account
 - [x] Login
 - [x] Forgot Password
 - [ ] Search Tab
@@ -80,3 +80,25 @@ Telemedicine is a way to access healthcare appointments with healthcare provider
 	- [ ] View reminders of clinical/teleconsultation appointments
 	- [ ] Messages to/from physical therapist (ex. YouTube links to exercise videos)
  
+
+## Heroku Postgres Database Credentials
+- Host
+	ec2-52-73-155-171.compute-1.amazonaws.com
+- Database
+    d6hlvm3t5csmko
+- User
+    inbsnfpxmpenfc
+- Port
+    5432
+- Password
+    bb68d64d00fc0ad543a07a3e104808094a9e681150d93a1b349bb575ae5063d0
+- URI
+    postgres://inbsnfpxmpenfc:bb68d64d00fc0ad543a07a3e104808094a9e681150d93a1b349bb575ae5063d0@ec2-52-73-155-171.compute-1.amazonaws.com:5432/d6hlvm3t5csmko
+- Heroku CLI
+    heroku pg:psql postgresql-fluffy-69157 --app kmontrainingpy
+
+## Django Admin Superuser account
+- Email
+	bermylle@gmail.com
+- Password
+	pjpszsvpuqalcfse
