@@ -1,4 +1,4 @@
-@use "sass:math" as math;
+@use "sass:math"as math;
 
 
 /* ========== Mixins and Functions ==========  */
@@ -13,12 +13,69 @@
     padding: $padding;
 }
 
+@mixin switch {
+	display: flex;
+	align-items: end;
+	justify-content: center;
+	.switch {
+		position: relative;
+		display: inline-block;
+		width: $spacing-64;
+		height: $spacing-40;
+		input {
+			opacity: 0;
+			width: 0;
+			height: 0;
+			&:checked {
+				+ .slider {
+					background-color: $secondary-color;
+					&:before {
+						-webkit-transform: translateX($spacing-24);
+						-ms-transform: translateX($spacing-24);
+						transform: translateX($spacing-24);
+					}
+				}
+			}
+			&:focus{
+				+ .slider {
+					box-shadow: 0 0 4px $secondary-color;
+				}
+			}
+		}
+		.slider {
+			position: absolute;
+			cursor: pointer;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: $monochrome-3;
+			-webkit-transition: .4s;
+			transition: .4s;
+			border-radius: 25px;
+			&:before {
+				position: absolute;
+				content: "";
+				height: $spacing-24;
+				width: $spacing-24;
+				left: $baseline-spacing;
+				bottom: $baseline-spacing;
+				background-color: white;
+				-webkit-transition: .4s;
+				transition: .4s;
+				border-radius: 25px;
+			}
+		}
+	}
+}
+
 @mixin remove-Y-margins($top: true, $bottom: true) {
     @if $top {
         margin-top: 0px;
     }
+
     @if $bottom {
-        margin-bottom: 0px; 
+        margin-bottom: 0px;
     }
 }
 
@@ -52,14 +109,18 @@ $text-scale-ratio: 1.333;
 
 @mixin text-size($header: true, $number) {
     $font-size: $text-base-size;
+
     @if $header {
         $font-size: $font-size * math.pow($text-scale-ratio, 7-$number);
         font-family: "Fredoka", sans-serif;
         font-weight: normal;
-    } @else {
+    }
+
+    @else {
         $font-size: $font-size - $number;
         font-family: "ABeeZee", sans-serif;
     }
+
     font-size: $font-size;
     line-height: $font-size * 1.5;
     @include remove-Y-margins(true, true);
@@ -72,6 +133,7 @@ html {
 
 body {
     background-color: #dee2e6;
+    margin: 0;
 }
 
 h1 {
@@ -124,7 +186,7 @@ p {
 
 $baseline-spacing: 8px;
 $spacing-16: 1rem;
-$spacing-24: 1.5;
+$spacing-24: 1.5rem;
 $spacing-32: 2rem;
 $spacing-40: 2.5rem;
 $spacing-48: 3rem;
@@ -142,19 +204,36 @@ a {
 }
 
 input {
-    @include text-size(false, 0);
-    box-sizing: border-box;
-    border: 15px solid white;
-    border-radius: 25px;
-    height: 48px;
-    width: 100%;
+	&:not([type="checkbox"]) {
+		@include text-size(false, 0);
+		box-sizing: border-box;
+		border: 15px solid white;
+		border-radius: 25px;
+		padding: 0 $baseline-spacing;
+		height: $spacing-48;
+		width: 100%;
+		&:focus {
+			// outline: none;
+			outline-width: 3px;
+			outline-color: $secondary-color;
+			outline-style: solid;
+			// border: 1px solid $secondary-color;
+			// box-shadow: 0 0 20px $secondary-color;
+		}
+	}
 }
 
+ion-icon {
+    font-size: 24px;
+    text-decoration: none;
+    color: white;
+}
 
 
 // Classes
 
 .button-primary {
+    @extend .button-text;
     display: inline-block;
     background-color: $secondary-color;
     padding: $spacing-16 $spacing-56;
@@ -164,6 +243,7 @@ input {
     color: white;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+
     &:hover {
         filter: brightness(85%);
         // box-shadow: inset 0px 0px 10px 2px rgb(0, 0, 0, 5);
@@ -174,12 +254,152 @@ input {
     grid-area: footer;
     background-color: $primary-color;
     color: $monochrome-1;
+    margin: $spacing-80 0 0;
     padding: $spacing-40 $spacing-80;
     height: 208px;
-    & p:nth-child(1) {
+
+    p:nth-child(1) {
         margin-bottom: $spacing-40;
     }
 }
+
+
+.nav-sidebar {
+    grid-area: nav-sidebar;
+    display: flex;
+    flex-direction: column;
+    background-color: $primary-color;
+    color: white;
+    margin: 0rem 0rem 0rem (-$spacing-32);
+    height: 100%;
+    .nav-item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        position: relative;
+        margin: 0 $baseline-spacing $spacing-16;
+        padding: $baseline-spacing $spacing-16;
+        &:first-child {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: $spacing-16 $spacing-16 0rem;
+            margin-bottom: $spacing-40;
+            .profile-picture {
+                box-sizing: border-box;
+                height: $spacing-48;
+                width: $spacing-48;
+                background-color: $monochrome-3;
+                border-radius: 10px;
+            }
+            .profile-label {
+                margin-left: $baseline-spacing;
+            }
+            .logout-icon {
+                margin-left: auto;
+            }
+        }
+        &.active {
+            background-color: $secondary-color;
+            border-radius: 10px;
+            @extend .nav-item;
+        }
+        .nav-icon {
+            margin-right: $spacing-16;
+        }
+    }
+}
+
+
+.dropdown {
+	.dropdown-button {
+		@extend .button-primary;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		font-size: 24px;
+		padding-top: $baseline-spacing;
+		padding-bottom: $baseline-spacing;
+		height: 100%;
+		ion-icon {
+			margin-right: $spacing-16;
+		}
+	}
+	.dropdown-menu {
+		z-index: 1;
+		box-sizing: border-box;
+		position: absolute;
+		top: $spacing-56;
+		left: 0;
+		background-color: $monochrome-1;
+		color: black;
+		padding: $baseline-spacing $spacing-16;
+		border-radius: 25px;
+		width: 100%;
+		.dropdown-menu-section {
+			@extend .overline-text;
+			text-transform: uppercase;
+			color: $monochrome-5;
+			&:not(:first-child) {
+				margin-top: $spacing-16;
+			}
+		}
+		.dropdown-menu-item {
+			display: flex;
+			flex-direction: row;
+			input {
+				margin-right: $spacing-16;
+			}
+		}
+	}
+}
+
+.search {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: $spacing-16;
+	position: relative;
+	.filter-menu {
+		z-index: 1;
+		display: grid;
+		column-gap: $spacing-16;
+		box-sizing: border-box;
+		position: absolute;
+		top: $spacing-56;
+		left: 0;
+		background-color: $monochrome-1;
+		color: black;
+		padding: $baseline-spacing $spacing-16;
+		border-radius: 25px;
+		.filter-menu-section {
+			.filter-menu-section-title {
+				@extend .overline-text;
+				text-transform: uppercase;
+				color: $monochrome-5;
+				&:not(:first-child) {
+					margin-top: $spacing-16;
+				}
+			}
+			.filter-menu-item {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				.toggle-active {
+					@include switch;
+					margin-left: auto;
+					transform: scale(50%); 
+					--moz-transform: scale(50%);
+					--webkit-transform: scale(50%);
+					
+				}
+			}
+		}
+	}
+	.search-bar {
+		margin-left: $spacing-16;
+	}
+}
+
 
 
 
@@ -197,32 +417,34 @@ input {
     left: 0;
     /*   grid-template: 1fr / repeat(12, 1fr); */
     column-gap: $spacing-16;
-    & .login-hero {
+
+    .login-hero {
         grid-area: login-hero;
         height: 100vh;
         display: flex;
         flex-direction: row;
         margin-left: $spacing-32;
-        & .login-hero-content {
+
+        .login-hero-content {
             margin: auto 116px;
-            & h1 {
-				margin-bottom: $spacing-16;
-            //     color: $primary-color;
-            }
-            & p {
+
+            h1 {
+                margin-bottom: $spacing-16;
+                //     color: $primary-color;
             }
         }
     }
 
-    & .login-form {
+    .login-form {
         grid-area: login-form;
         display: grid;
         margin-right: $spacing-32;
-        & .login-form-card {
+
+        .login-form-card {
             @include card($spacing-64);
             margin: auto 0px;
 
-            & h3,
+            h3,
             button,
             a,
             #login-username,
@@ -230,12 +452,12 @@ input {
                 margin-bottom: $spacing-40;
             }
 
-            & h6,
+            h6,
             #login-password {
                 margin-bottom: $spacing-16;
             }
 
-            & p {
+            p {
                 @include remove-Y-margins(true, true);
             }
         }
@@ -253,46 +475,50 @@ input {
     top: 0;
     left: 0;
 
-    & .request-account-form {
+    .request-account-form {
         grid-area: request-account-hero;
-		display: grid;
-		grid-template-columns: 3.5fr 5fr 3.5fr;
-		grid-template-rows: min-content auto;
+        display: grid;
+        grid-template-columns: 3.5fr 5fr 3.5fr;
+        grid-template-rows: min-content auto;
         box-sizing: border-box;
         height: 100vh;
-		margin: 0 $spacing-32;
+        margin: 0 $spacing-32;
         padding: $spacing-80 0;
-		gap: $spacing-16;
-		& .request-account-form-title {
-			grid-column: 2 / 4;
-			& h1 {
-				margin-bottom: $spacing-16;
-			}
+        gap: $spacing-16;
 
-			& p {
-				margin-bottom: $spacing-40;
-			}	
-		}
-        & .request-account-form-container {
-			grid-column: 2 / span 1;	
+        .request-account-form-title {
+            grid-column: 2 / 4;
 
-			// If headings are inside the container
-			//
-			// & h1 {
-			// 	margin-bottom: $spacing-16;
-			// }
+            h1 {
+                margin-bottom: $spacing-16;
+            }
 
-			// & p {
-			// 	margin-bottom: $spacing-40;
-			// }	
+            p {
+                margin-bottom: $spacing-40;
+            }
+        }
 
-            & .request-account-form-card {
+        .request-account-form-container {
+            grid-column: 2 / span 1;
+
+            // If headings are inside the container
+            //
+            // & h1 {
+            // 	margin-bottom: $spacing-16;
+            // }
+
+            // & p {
+            // 	margin-bottom: $spacing-40;
+            // }	
+
+            .request-account-form-card {
                 @include card();
-                & h6 {
-                   margin-bottom: $spacing-16; 
+
+                h6 {
+                    margin-bottom: $spacing-16;
                 }
 
-                & input {
+                input {
                     margin-bottom: $spacing-40;
                 }
             }
@@ -312,35 +538,41 @@ input {
     top: 0;
     left: 0;
 
-    & .reset-password-form {
+    .reset-password-form {
         grid-area: request-account-form;
-		display: grid;
-		grid-template-columns: 3.5fr 5fr 3.5fr;
-		grid-template-rows: min-content auto;
+        display: grid;
+        grid-template-columns: 3.5fr 5fr 3.5fr;
+        grid-template-rows: min-content auto;
         box-sizing: border-box;
         height: 100vh;
-		margin: 0 $spacing-32;
+        margin: 0 $spacing-32;
         padding: $spacing-80 0;
-		column-gap: $spacing-16;
-		& .reset-password-form-title {
-			grid-column: 2 / 4;
-			& h1 {
-				margin-bottom: $spacing-16;
-			}
+        column-gap: $spacing-16;
 
-			& p {
-				margin-bottom: $spacing-40;
-			}	
-		}
-        & .reset-password-form-card-grid-container {
-			grid-column: 2 / span 1;	
-            & .reset-password-form-card {
+        .reset-password-form-title {
+            grid-column: 2 / 4;
+
+            h1 {
+                margin-bottom: $spacing-16;
+            }
+
+            p {
+                margin-bottom: $spacing-40;
+            }
+        }
+
+        .reset-password-form-card-grid-container {
+            grid-column: 2 / span 1;
+            margin-bottom: $spacing-80;
+
+            .reset-password-form-card {
                 @include card();
-                & h6 {
-                   margin-bottom: $spacing-16; 
+
+                h6 {
+                    margin-bottom: $spacing-16;
                 }
 
-                & input {
+                input {
                     margin-bottom: $spacing-40;
                 }
             }
@@ -349,60 +581,198 @@ input {
 }
 
 
-.dashboard-grid-container {
-	display: grid;
+.main-grid-container {
+    display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-auto-rows: auto;
-	grid-template-areas:
-		'dashboard-nav-sidebar dashboard-nav-sidebar . dashboard-main-content dashboard-main-content dashboard-main-content dashboard-main-content dashboard-main-content dashboard-main-content dashboard-main-content dashboard-main-content .' 
-		'dashboard-nav-sidebar dashboard-nav-sidebar footer footer footer footer footer footer footer footer footer footer'; 
-	position: absolute;
-	height: 100%;
-	top: 0;
-	left: 0;
-	column-gap: $spacing-16;
+    grid-template-areas:
+        'nav-sidebar nav-sidebar . main-content main-content main-content main-content main-content main-content main-content main-content .'
+        'nav-sidebar nav-sidebar footer footer footer footer footer footer footer footer footer footer';
+    position: absolute;
+    min-height: 100%;
+    top: 0;
+    left: 0;
+    column-gap: $spacing-16;
     margin: 0 $spacing-32;
 
-	& .dashboard-nav-sidebar {
-		grid-area: dashboard-nav-sidebar;	
-        display: flex;
-        flex-direction: column;
-		background-color: $primary-color;
-		color: white;
-        margin: 0rem 0rem 0rem (-$spacing-32);
-		height: 100%;
+    .main-content-area {
+        grid-area: main-content;
+        min-height: 100vh;
+        padding-top: $spacing-64; // footer has margin-top: $spacing-80
 
-        & .profile-nav-item {
+        .main-content-title {
+            margin-bottom: $spacing-40;
+        }
+
+        .account-requests-item {
+            @include card();
             display: flex;
             flex-direction: row;
             align-items: center;
-            padding: $spacing-16 $spacing-16 0rem;
-            & .profile-picture {
-                box-sizing: border-box; 
-                height: $spacing-48;
-                width: $spacing-48;
-                background-color: $monochrome-3;
-                border-radius: 10px;
+
+            div {
+                display: flex;
+                align-items: center;
+				cursor: pointer;
+				border-radius: 25px;
+				transition: all 0.5s ease-in-out;
+				padding: $baseline-spacing;
+
+				&:hover {
+					background-color: $secondary-color;
+				}
+
+                &:first-of-type {
+                    margin-left: auto;
+                }
+
+                &:not(:last-child) {
+                    margin-right: $spacing-16;
+                }
+
+                ion-icon {
+                    font-size: $spacing-32;
+
+                    &.accept {
+                        color: $success;
+                    }
+
+                    &.deny {
+                        color: $danger;
+                    }
+                }
             }
 
-            & .profile-label {
-                margin-left: $baseline-spacing;
-            }
-
-            & .logout-icon {
-                margin-left: auto;
+            &:not(:last-child) {
+                margin-bottom: $spacing-16;
             }
         }
-	}	
 
-	& .dashboard-main-content {
-		grid-area: dashboard-main-content;
-		height: 100vh;
-	}
+        .accounts-item {
+            @include card();
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            column-gap: $spacing-16;
 
-    & .footer {
-        margin: 0rem (-$spacing-32) 0rem (-$spacing-16);
+            &:not(:last-child) {
+                margin-bottom: $spacing-16
+            }
+
+            div {
+                display: flex;
+                flex-direction: column;
+
+                &.name {}
+
+                &.role {}
+
+                &.email {}
+
+                &.toggle-active {
+					@include switch; 
+				}
+            }
+        }
+    }
+
+    .footer {
+        margin: $spacing-80 (-$spacing-32) 0rem (-$spacing-16);
         box-shadow: inset 10px 0px 5px rgb(0, 0, 0, 25%);
     }
 
+}
+
+.profile-page-grid-container {
+    display: grid;
+    grid-template: 1fr / repeat(12, 1fr);
+    height: 100%;
+    top: 0;
+    left: 0;
+    column-gap: $spacing-16;
+    margin: 0 $spacing-32;
+
+    .profile-page-card-grid-container {
+        grid-column: 4 / span 6;
+
+        .profile-page-card {
+            @include card($spacing-64);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            margin: ($spacing-80 + 6.563rem) 0 $spacing-80 0;
+            padding-top: (6.563rem + $spacing-16);
+
+            svg {
+                z-index: -1;
+                position: absolute;
+                border-radius: 25px;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+
+                defs mask#circle {
+                    rect {
+                        fill: white;
+                        width: 100vw;
+                        height: 100vh;
+                    }
+
+                    circle {
+                        fill: black;
+                    }
+                }
+
+                rect {
+                    fill: $primary-color;
+                    width: 100vw;
+                    height: 100vh;
+                }
+            }
+
+            .profile-picture {
+                box-sizing: border-box;
+                position: absolute;
+                background-color: $monochrome-3;
+                // border: 10px solid $monochrome-2;
+                border-radius: 50%;
+                height: 12.5rem;
+                width: 12.5rem;
+                /*
+				height: 13.125rem;
+				width: 13.125rem;
+				*/
+                left: 0;
+                right: 0;
+                top: -6.563rem;
+                margin: 0 auto;
+            }
+
+            .name {
+                margin-bottom: $spacing-16;
+                text-align: center;
+            }
+
+            .account-type {
+                margin-bottom: $spacing-40;
+                text-align: center;
+                color: $secondary-color;
+            }
+
+            .profile-page-card-body {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+
+                .info-group {
+                    .label {
+                        margin-bottom: $spacing-16;
+                    }
+
+                    .info {
+                        margin-bottom: $spacing-40;
+                    }
+                }
+            }
+        }
+    }
 }

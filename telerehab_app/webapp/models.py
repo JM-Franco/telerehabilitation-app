@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.utils.translation import gettext_lazy as _
 
@@ -24,7 +24,7 @@ class AccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-class Account(AbstractBaseUser):
+class Account(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name='email', max_length = 225, unique=True)
     first_name = models.CharField(verbose_name='first name', max_length=225, null=True, blank=True)
     last_name = models.CharField(verbose_name='last name', max_length=225, null=True, blank=True)
@@ -62,3 +62,8 @@ class PhysicalTherapist(Account):
 
 class Patient(Account):
     address = models.CharField(max_length=30, null=True, blank=True)
+
+class Account_Request(models.Model):
+    email = models.EmailField(max_length=225)
+    role = models.CharField(verbose_name='role', max_length=2, choices=[('SA', 'System Admin'), ('PT', 'Physical Therapist'), ('P', 'Patient')])
+    status = models.CharField(max_length=8, choices=[('pending', 'Pending'), ('approved', 'Approved'), ('denied', 'Denied')], default='pending')

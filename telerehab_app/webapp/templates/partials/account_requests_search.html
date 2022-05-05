@@ -1,0 +1,23 @@
+{% for account_request in account_requests %}
+	<div x-data="{ open: true }" x-show="open" x-transition.duration.500ms class="account-requests-item" id="whaddup2">
+		<h6>{{account_request.email}}</h6>
+		<h6 style="margin-left:16px;">{{account_request.get_role_display}}</h6>
+		<p style="margin-left: 16px">{{account_request.get_status_display}}</p>
+		 {% if account_request.status == 'approved' %}
+			<div @click="open = false" hx-trigger="click" hx-post="{% url 'webapp:account_request_action' action='approve' pk=account_request.pk  %}" style="pointer-events: none">
+				 <ion-icon class="accept" name="checkmark-outline"></ion-icon>
+			</div>
+		 {% elif account_request.status == 'denied' %}
+			<div @click="open = false" hx-trigger="click" hx-post="{% url 'webapp:account_request_action' action='deny' pk=account_request.pk  %}" style="pointer-events: none">
+				<ion-icon class="deny" name="close-outline"></ion-icon>
+			</div>
+		 {% else %}
+			<div @click="open = false" hx-trigger="click" hx-post="{% url 'webapp:account_request_action' action='approve' pk=account_request.pk  %}">
+				 <ion-icon class="accept" name="checkmark-outline"></ion-icon>
+			</div>
+			<div @click="open = false" hx-trigger="click" hx-post="{% url 'webapp:account_request_action' action='deny' pk=account_request.pk  %}">
+				<ion-icon class="deny" name="close-outline"></ion-icon>
+			</div>
+		{% endif %}
+	</div>
+{% endfor %}

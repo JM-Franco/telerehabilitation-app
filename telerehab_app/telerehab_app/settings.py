@@ -31,8 +31,8 @@ ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'webapp.Account'
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.AllowAllUsersModelBackend',
-    'webapp.backends.CaseInsensitiveModelBackend'
+    # 'django.contrib.auth.backends.ModelBackend',
+    'webapp.backends.CaseInsensitiveModelBackend',
 )
 
 
@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'webapp.apps.WebappConfig',
-
 ]
 
 MIDDLEWARE = [
@@ -86,11 +85,11 @@ WSGI_APPLICATION = 'telerehab_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'telerehab_app',
+        'NAME': 'd6hlvm3t5csmko',
         # 'NAME': 'e_chart_test' <-- for testing purposes
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
+        'USER': 'inbsnfpxmpenfc',
+        'PASSWORD': 'bb68d64d00fc0ad543a07a3e104808094a9e681150d93a1b349bb575ae5063d0',
+        'HOST': 'ec2-52-73-155-171.compute-1.amazonaws.com',
         'PORT': '5432' 
     }
 
@@ -142,7 +141,7 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,  'static')
+    os.path.join(BASE_DIR, 'static')
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')

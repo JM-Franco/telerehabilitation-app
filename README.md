@@ -3,17 +3,17 @@
 Telemedicine is a way to access healthcare appointments with healthcare providers on the internet using your phone or computer. These appointments are usually video calls with online chat messaging through an app or platform. It is not meant to replace clinic visits with a doctor but instead should complement regular healthcare. The objective of this project is to use telemedicine patients to access physical therapy services.
  
 ## 👤 System Admin
-- [ ] Can approve/deny requests for creation of physical therapist account
-- [ ] Can approve/deny requests for creation of patient account
-- [ ] Can enable/disable physical therapist or patient account
+- [x] Can approve/deny requests for creation of physical therapist account
+- [x] Can approve/deny requests for creation of patient account
+- [x] Can enable/disable physical therapist or patient account
 
 ## 👤 Physical Therapist
-- [ ] Request for creation of physical therapist account
-- [ ] Login
-- [ ] Forgot password
+- [x] Request for creation of physical therapist account
+- [x] Login
+- [x] Forgot password
 - [ ] View dashboard
-	- [ ] Profile Tab
-		- [ ] View profile
+	- [x] Profile Tab
+		- [x] View profile
 		- [ ] Update profile
 		- [ ] Create clinic hours (input time, day Ex. MWF 9am-12noon; 1pm-4pm
 		- [ ] Update clinic hours
@@ -55,9 +55,9 @@ Telemedicine is a way to access healthcare appointments with healthcare provider
  
  
 ## 👤 Patient
-- [ ] Request for patient account
-- [ ] Login
-- [ ] Forgot Password
+- [x] Request for patient account
+- [x] Login
+- [x] Forgot Password
 - [ ] Search Tab
 	- [ ] View list of physical therapists
 	- [ ] View profile of a specific physical therapist
@@ -80,3 +80,25 @@ Telemedicine is a way to access healthcare appointments with healthcare provider
 	- [ ] View reminders of clinical/teleconsultation appointments
 	- [ ] Messages to/from physical therapist (ex. YouTube links to exercise videos)
  
+
+## Heroku Postgres Database Credentials
+- Host
+	ec2-52-73-155-171.compute-1.amazonaws.com
+- Database
+    d6hlvm3t5csmko
+- User
+    inbsnfpxmpenfc
+- Port
+    5432
+- Password
+    bb68d64d00fc0ad543a07a3e104808094a9e681150d93a1b349bb575ae5063d0
+- URI
+    postgres://inbsnfpxmpenfc:bb68d64d00fc0ad543a07a3e104808094a9e681150d93a1b349bb575ae5063d0@ec2-52-73-155-171.compute-1.amazonaws.com:5432/d6hlvm3t5csmko
+- Heroku CLI
+    heroku pg:psql postgresql-fluffy-69157 --app kmontrainingpy
+
+## Django Admin Superuser account
+- Email
+	bermylle@gmail.com
+- Password
+	pjpszsvpuqalcfse
