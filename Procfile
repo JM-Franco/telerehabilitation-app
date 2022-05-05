@@ -1,1 +1,1 @@
-web: python manage.py runserver
+web: gunicorn telerehab_app/telerehab_app.wsgi
