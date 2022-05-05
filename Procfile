@@ -1,0 +1,1 @@
+web: gunicorn telerehab_app.wsgi
