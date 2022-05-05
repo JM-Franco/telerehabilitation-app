@@ -1,1 +1,1 @@
-web: gunicorn telerehab_app.telerehab_app.wsgi
+web: gunicorn telerehab_app.wsgi
