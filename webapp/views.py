@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from .models import *
-
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_GET
 from .decorators import *
@@ -107,9 +107,10 @@ def toggle_is_active(request, pk):
 @allowed_users(allowed_roles=['SA'])
 def account_request_action(request, action, pk):
     account_request = Account_Request.objects.get(pk=pk)
-    temp_pass = re.search(r'\w+(?=@)', account_request.email).group()
+    #temp_pass = re.search(r'\w+(?=@)', account_request.email).group()
+    temp_pass = "123456"
     if action == 'approve':
-        Account.objects.create(email=account_request.email, role=account_request.role, password=temp_pass)
+        Account.objects.create(email=account_request.email, role=account_request.role, password=make_password(temp_pass))
         account_request.status = 'approved'
         account_request.save(update_fields=['status'])
     elif action == 'deny':
