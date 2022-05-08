@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'webapp.Account'
 
 AUTHENTICATION_BACKENDS = (
-    # 'django.contrib.auth.backends.ModelBackend',
+    'django.contrib.auth.backends.ModelBackend',
     'webapp.backends.CaseInsensitiveModelBackend',
 )
 
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
     'webapp.apps.WebappConfig',
 ]
 

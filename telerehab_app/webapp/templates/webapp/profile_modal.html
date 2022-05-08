@@ -1,0 +1,94 @@
+<!-- User Profile Modal -->
+<div class="modal" x-show="profilemodal" x-cloak>
+	<div class="modal-bg-profile" x-show="profilemodal" x-transition.opacity.duration.300ms>
+		<div class="profile-page-grid-container">
+			<div class="profile-page-card-grid-container">
+				<div @click.away="profilemodal = false; $dispatch('body-scroll', {});" x-show="profilemodal" x-transition.scale.duration.300ms>
+					<div class="profile-page-card" style="z-index: 0">
+						<!--
+						Used to create a notch where the profile picture goes
+					
+						<svg>
+							<defs>
+								<mask id="circle">
+									<rect x="0" y="0" />
+									<circle cx="50%" cy="-2" r="6.5625rem" />
+								</mask>
+							</defs>
+							<rect x="0" y="0" mask="url(#circle)" />
+						</svg> -->
+						<div class="profile-picture"></div>
+						<h3 class="name">{{user.first_name}} {{user.last_name}}</h3>
+						<div class="account-type"><h6>{{user.get_role_display}}</h6></div>
+					
+						<div class="profile-page-card-body">
+							<div class="info-group">
+								<h6 class="label">Birthdate</h6>
+								<p class="info">{{user.birthdate}}</p>
+							</div>
+							<div class="info-group">
+								<h6 class="label">Age</h6>
+								<p class="info">{{user.age}}</p>
+							</div>
+							<div class="info-group">
+								<h6 class="label">Sex</h6>
+								<p class="info">{{user.get_sex_display}}</p>
+							</div>
+							<div class="info-group">
+								<h6 class="label">Email</h6>
+								<p class="info">{{user.email}}</p>
+							</div>
+							<div class="info-group">
+								<h6 class="label">Phone Number</h6>
+								<p class="info">{{user.contact_number}}</p>
+							</div>
+						</div>
+					</div>
+					<div class="profile-button-group">
+						<div class="profile-button-section">
+							<a class="button-primary" href="{% url 'webapp:edit_profile' request.user.pk %}?prevpath={{ request.path|urlencode }}">Edit Profile</a>
+						</div>
+						<div class="profile-button-section"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Previous Attempts -->
+<!-- <div x-data="{ open: false }" x-init="() => { setTimeout(() => { open = true }, 3000); }"> -->
+<!--<div x-data="{ open: false }">-->
+<!--	<div class="modal" x-show="open" x-transition.opacity.duration.500ms>-->
+<!--		<div class="modal-card" @click.away="open = false" x-show="open" x-transition.scale.duration.500ms>-->
+<!--			<div class="modal-card-header">-->
+<!--				<h3>Lorem Ipsum</h3>-->
+<!--				<button class="button-primary" @click="open = false">-->
+<!--					<ion-icon name="close-outline"></ion-icon>-->
+<!--				</button>-->
+<!--			</div>-->
+<!--			<div class="modal-card-body">-->
+<!--				<p>Consectetur voluptatibus harum magnam animi a repellat debitis! Nam unde culpa vel veniam deserunt. Unde commodi neque eum harum autem.</p>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--</div>-->
+
+
+<!--<div class="modal" x-data="{ open: false }" x-show="open" @body-scroll="document.body.style.overflowY = open ? 'hidden' : ''" x-init="() => { setTimeout(() => { open = true; $dispatch('body-scroll', {}) }, 500); };">-->
+<!--&lt;!&ndash; <div x-data="{ open: false }"> &ndash;&gt;-->
+<!--	<div class="modal-bg" x-show="open" x-cloak="" x-transition.opacity.duration.300ms>-->
+<!--		<div class="modal-card" @click.away="open = false; setTimeout(() => { $dispatch('body-scroll', {}); }, 310)" x-show="open" x-transition.scale.duration.300ms>-->
+<!--			<div class="modal-card-header">-->
+<!--				<h3>Lorem Ipsum</h3>-->
+<!--				<button class="button-primary" @click="open = false; setTimeout(() => { $dispatch('body-scroll', {}); }, 310)">-->
+<!--					<ion-icon name="close-outline"></ion-icon>-->
+<!--				</button>-->
+<!--			</div>-->
+<!--			<div class="modal-card-body">-->
+<!--				<p>Amet nulla ad obcaecati quaerat maxime deleniti iusto Rem a atque voluptate tempora sequi Autem eveniet doloremque numquam temporibus atque Dolore maxime ratione autem sapiente pariatur Ducimus cupiditate non eos excepturi rerum libero quos sit distinctio? Quos aliquam vitae dolores sint quas a Eveniet numquam modi esse dolores maxime. Labore quis modi consequatur facilis eos? Vel explicabo molestiae commodi aspernatur obcaecati quod esse. Quisquam nesciunt modi ullam saepe ad Impedit vitae sed perferendis perferendis illum corrupti. Quas modi totam natus saepe explicabo? Porro similique tenetur aperiam eos quaerat maiores Earum autem autem eaque dignissimos rerum Reiciendis quis quia saepe eveniet nihil Cupiditate fugit expedita omnis debitis ipsum! Dolorem fugiat vitae laudantium earum necessitatibus porro? Ducimus sequi sunt in nam dignissimos qui Sapiente reprehenderit reiciendis nihil aperiam nulla nesciunt! Eveniet recusandae quos hic excepturi exercitationem? Atque pariatur nulla atque asperiores quis. Porro maiores adipisci eligendi magnam sed Commodi odit sed quaerat iusto porro! Praesentium fugit aspernatur odio fugiat sint doloremque sint, velit fugiat. Pariatur unde cum deserunt ex dolorum Hic illo officiis minima minima qui, at. Iste soluta reiciendis voluptatem sunt maiores. Numquam omnis quas veritatis cupiditate culpa, doloremque? Non dolorum qui sapiente velit doloribus molestias? Harum rerum quasi saepe fugit hic soluta? Laudantium temporibus ratione tenetur veniam soluta. Fuga unde eveniet vitae eius ipsam, ducimus Rerum tempore veritatis debitis atque alias, velit laudantium Aliquid aperiam nobis nostrum doloribus odit Quis aspernatur natus quisquam ea voluptates? Doloremque facere est assumenda atque mollitia. Officiis fuga architecto amet sapiente dolor Adipisci quaerat sint alias harum nihil Consequatur natus a rerum voluptas aliquid? Quo maiores assumenda nemo blanditiis quae! Nam itaque officiis optio maiores aut. Hic quo accusantium voluptatum libero quod. Reprehenderit velit iure consequuntur nobis minima. Animi fugit quam at aut saepe. Iusto deserunt expedita incidunt nisi pariatur nihil, asperiores, in, dolores doloremque sapiente distinctio rerum! Nisi quam voluptas voluptatem vero atque, saepe ullam iusto Eaque labore provident reiciendis id temporibus facere nemo? Praesentium hic expedita laboriosam provident aperiam. Blanditiis nam est reprehenderit fugiat provident Modi aperiam dolor nisi voluptate quidem. Suscipit eveniet eum modi enim in optio numquam unde Hic libero quis quaerat expedita iste? Suscipit exercitationem nisi obcaecati cum eligendi. Nostrum magni error est aliquid aliquam. Nobis iste totam quae reprehenderit reprehenderit Corporis soluta asperiores molestias provident officia. Tempore doloribus porro reprehenderit impedit tenetur Sit commodi commodi rerum natus reprehenderit. Labore placeat molestiae deleniti maiores minus Impedit sunt corrupti quis reprehenderit ex quia Maxime voluptas quisquam nisi omnis obcaecati. Amet quam odio quidem obcaecati voluptatem Eum impedit tempore odio reprehenderit facere? At et ad alias omnis eaque. Ratione officiis possimus velit beatae suscipit? Maiores eveniet eius sapiente voluptates officiis? Placeat odit facere est velit vel tempora Reprehenderit ab magnam nisi pariatur voluptates aperiam, provident. Atque eum soluta iste suscipit fugiat! Aliquid accusantium aperiam vel culpa hic? Distinctio veniam esse qui totam adipisci Facilis iure magnam est debitis quod? Voluptates aliquam accusantium qui ad voluptatem Error recusandae optio deleniti corrupti unde Ipsum eaque eligendi quo dicta temporibus Praesentium nemo cumque accusantium quasi.</p>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--</div>-->
+

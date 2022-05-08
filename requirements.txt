@@ -2,9 +2,14 @@ asgiref==3.5.0
 astroid==2.11.2
 dill==0.3.4
 Django==4.0.3
+django-htmx==1.9.0
+django-widget-tweaks==1.4.12
 isort==5.10.1
+jedi==0.18.1
 lazy-object-proxy==1.7.1
 mccabe==0.7.0
+parso==0.8.3
+Pillow==9.1.0
 platformdirs==2.5.1
 psycopg2==2.9.3
 pylint==2.13.5

@@ -8,13 +8,13 @@ Telemedicine is a way to access healthcare appointments with healthcare provider
 - [x] Can enable/disable physical therapist or patient account
 
 ## 👤 Physical Therapist
-- [ ] Request for creation of physical therapist account
+- [x] Request for creation of physical therapist account
 - [x] Login
 - [x] Forgot password
 - [ ] View dashboard
 	- [x] Profile Tab
 		- [x] View profile
-		- [ ] Update profile
+		- [x] Update profile
 		- [ ] Create clinic hours (input time, day Ex. MWF 9am-12noon; 1pm-4pm
 		- [ ] Update clinic hours
 		- [ ] Create teleconsultation hours
@@ -55,13 +55,13 @@ Telemedicine is a way to access healthcare appointments with healthcare provider
  
  
 ## 👤 Patient
-- [ ] Request for patient account
+- [x] Request for patient account
 - [x] Login
 - [x] Forgot Password
-- [ ] Search Tab
-	- [ ] View list of physical therapists
+- [x] Search Tab
+	- [x] View list of physical therapists
 	- [ ] View profile of a specific physical therapist
-		i. View clinic and teleconsultation hours tab of a specific physical therapist
+	- [ ] View clinic and teleconsultation hours tab of a specific physical therapist
 - [ ] Appointments Tab
 	- [ ] Request for clinical (physical) appointment
 	- [ ] Request for teleconsultation appointment
@@ -69,7 +69,7 @@ Telemedicine is a way to access healthcare appointments with healthcare provider
 	- [ ] View status of requested teleconsultation appointment
 
 - [ ] Patient's Record Tab
-	- [ ] View personal info
+	- [x] View personal info
 	- [ ] Update personal info
 	- [ ] Upload doctor's orders
 	- [ ] Upload laboratory results (pdf)

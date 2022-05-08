@@ -1,0 +1,55 @@
+{% extends 'webapp/base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Edit Profile - {{user.first_name}} {{user.last_name}}{% endblock title %}
+
+{% block content %}
+
+<div class="profile-page-grid-container">
+	<div class="profile-page-card-grid-container">
+		<form method="post" action="">
+			{% csrf_token %}
+			<div class="profile-page-card">
+				<div class="profile-picture"></div>
+				<h3 class="name-input-group">
+					{% render_field edit_profile_form.first_name class="name-input" placeholder='First Name' %}
+					{% render_field edit_profile_form.last_name class="name-input" placeholder="Last Name" %}
+				</h3>
+				<div class="account-type"><h6>{{user.get_role_display}}</h6></div>
+			
+				<div class="profile-page-card-body">
+					<div class="info-group">
+						<h6 class="label">Birthdate</h6>
+						<p class="info">{% render_field edit_profile_form.birthdate type="date" %}</p>
+					</div>
+					<div class="info-group">
+						<h6 class="label">Age</h6>
+						<p class="info">{% render_field edit_profile_form.age placeholder="Age" maxlength="3" %}</p>
+					</div>
+					<div class="info-group">
+						<h6 class="label">Sex</h6>
+						<p class="info">{% render_field edit_profile_form.sex placeholder="Sex" %}</p>
+					</div>
+					<div class="info-group">
+						<h6 class="label">Email</h6>
+						<p class="info">{{user.email}}</p>
+					</div>
+					<div class="info-group">
+						<h6 class="label">Phone Number</h6>
+						<p class="info">{% render_field edit_profile_form.contact_number placeholder="e.g. 0912345689 or +639123456789" %}</p>
+					</div>
+				</div>
+			</div>
+			<div class="profile-button-group">
+				<div class="profile-button-section">
+					<button type="submit" class="button-primary">Save Changes</button>
+				</div>
+				<div class="profile-button-section"></div>
+			</div>
+			<input type="hidden" name="prevpath" value="{{ request.GET.prevpath }}"/>
+			<input type="submit" hidden />
+		</form>
+	</div>
+</div>
+
+{% endblock content %}

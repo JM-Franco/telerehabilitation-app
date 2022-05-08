@@ -1,4 +1,7 @@
 {% extends 'webapp/base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Request Account{% endblock title %}
 
 {% block content %}
 <div class="request-account-grid-container">
@@ -10,8 +13,11 @@
 		<div class="request-account-form-container">
 			<div class="request-account-form-card">
 				<form action="#" method="post">
+					{% csrf_token %}
 					<h6>Email Address</h6>
-					<input type="Email">
+					{{request_form.email}}
+					 <h6>Role</h6>
+					{{request_form.role}}
 					<div style="display: flex; justify-content: center;">
 						<button type="submit" class="button-primary button-text"> Submit </button>
 					</div>
