@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-%2t+pkye=p$lm#mu2enm$oxzqff6c!iiyu(3cf)^p-k4fuh%7=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["telerehab-app.herokuapp.com"]
+ALLOWED_HOSTS = ["telerehab-app.herokuapp.com", "127.0.0.1"]
 
 AUTH_USER_MODEL = 'webapp.Account'
 
