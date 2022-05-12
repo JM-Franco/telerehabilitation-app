@@ -78,7 +78,7 @@ def accounts(request):
 def patients(request):
     return render(request, 'webapp/physical_therapist/patients.html')
 
-@login_required(login_url='/')
+@login_required(login_url='/') 
 def appointments(request):
     return render(request, 'webapp/physical_therapist/appointments.html')
 
@@ -89,6 +89,24 @@ def teleconferencing(request):
 @login_required(login_url='/')
 def resources(request):
     return render(request, 'webapp/physical_therapist/resources.html')
+
+# P-related views
+
+@login_required(login_url='/')
+def physical_therapists(request):
+    pt_accounts = Account.objects.filter(role="PT")
+    data = {'pt_accounts':pt_accounts}
+    print(data)
+    
+    return render(request, 'webapp/patient/pt_accounts.html', data)
+
+@login_required(login_url='/')
+def view_profile_pt(request, user_id):
+    pt_account = Account.objects.filter(id=user_id)
+    data = {'pt_account':pt_account}
+    print(data)
+    
+    return render(request, 'webapp/patient/pt_profile_page.html', data)
 
 # HTMX
 
