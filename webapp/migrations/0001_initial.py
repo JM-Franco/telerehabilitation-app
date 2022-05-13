@@ -37,37 +37,4 @@ class Migration(migrations.Migration):
                 'abstract': False,
             },
         ),
-        migrations.CreateModel(
-            name='Patient',
-            fields=[
-                ('account_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='webapp.account')),
-                ('address', models.CharField(blank=True, max_length=30, null=True)),
-            ],
-            options={
-                'abstract': False,
-            },
-            bases=('webapp.account',),
-        ),
-        migrations.CreateModel(
-            name='PhysicalTherapist',
-            fields=[
-                ('account_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='webapp.account')),
-                ('address', models.CharField(blank=True, max_length=30, null=True)),
-            ],
-            options={
-                'abstract': False,
-            },
-            bases=('webapp.account',),
-        ),
-        migrations.CreateModel(
-            name='SystemAdmin',
-            fields=[
-                ('account_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='webapp.account')),
-                ('address', models.CharField(blank=True, max_length=30, null=True)),
-            ],
-            options={
-                'abstract': False,
-            },
-            bases=('webapp.account',),
-        ),
     ]

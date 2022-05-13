@@ -180,7 +180,24 @@
       ></span>
     </a>
   </div>
-
+  <div
+    class="nav-item {% if request.resolver_match.view_name == 'webapp:appointments' %}active{% endif %}"
+  >
+    <ion-icon class="nav-icon" name="book-outline"></ion-icon>
+    <p>Appointments</p>
+    <a href="{% url 'webapp:appointments' %}">
+      <span
+        style="
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          z-index: 1;
+        "
+      ></span>
+    </a>
+  </div>
   <div
     class="nav-item {% if request.resolver_match.view_name == '' %}active{% endif %}"
   >

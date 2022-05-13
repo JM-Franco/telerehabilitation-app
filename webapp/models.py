@@ -54,14 +54,29 @@ class Account(AbstractBaseUser, PermissionsMixin):
     def has_module_perms(self, app_label):
         return True
 
-class SystemAdmin(Account):
-    address = models.CharField(max_length=30, null=True, blank=True)
+class SystemAdmin(models.Model):
+    account_ptr = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True, null=True)
+    
+class PhysicalTherapist(models.Model):
+    account_ptr = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True, null=True)
+    
+class Patient(models.Model):
+    account_ptr = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True, null=True)
+  
+class Clinic_Hours(models.Model):
+    fk = models.ForeignKey(PhysicalTherapist, default=None, on_delete=models.CASCADE)
+    start_clinic_time = models.DateTimeField(verbose_name='start clinic hours', auto_now_add=False)
+    end_clinic_time = models.DateTimeField(verbose_name='end clinic hours', auto_now_add=False)
 
-class PhysicalTherapist(Account):
-    address = models.CharField(max_length=30, null=True, blank=True)
+class Teleconsultation_Hours(models.Model):
+    fk = models.ForeignKey(PhysicalTherapist, default=None, on_delete=models.CASCADE)
+    start_tc_time = models.DateTimeField(verbose_name='start teleconsultation hours', auto_now_add=False)
+    end_tc_time = models.DateTimeField(verbose_name='end teleconsultation hours', auto_now_add=False)
 
-class Patient(Account):
-    address = models.CharField(max_length=30, null=True, blank=True)
+class Appointment(models.Model):
+    patient_fk = models.ForeignKey(Patient, default=None, on_delete=models.CASCADE)
+    type = models.CharField(max_length=16, choices=[('teleconsultation', 'teleconsultation'), ('clinical', 'Clinical')], default='teleconsultation')
+    status = models.CharField(max_length=9, choices=[('pending', 'Pending'), ('finished', 'Finished'), ('cancelled', 'Cancelled')], default='pending')
 
 class Account_Request(models.Model):
     email = models.EmailField(max_length=225)

@@ -84,16 +84,24 @@ WSGI_APPLICATION = 'telerehab_app.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'd6hlvm3t5csmko',
+    #     # 'NAME': 'e_chart_test' <-- for testing purposes
+    #     'USER': 'inbsnfpxmpenfc',
+    #     'PASSWORD': 'bb68d64d00fc0ad543a07a3e104808094a9e681150d93a1b349bb575ae5063d0',
+    #     'HOST': 'ec2-52-73-155-171.compute-1.amazonaws.com',
+    #     'PORT': '5432' 
+    # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd6hlvm3t5csmko',
+        'NAME': 'telerehab_app',
         # 'NAME': 'e_chart_test' <-- for testing purposes
-        'USER': 'inbsnfpxmpenfc',
-        'PASSWORD': 'bb68d64d00fc0ad543a07a3e104808094a9e681150d93a1b349bb575ae5063d0',
-        'HOST': 'ec2-52-73-155-171.compute-1.amazonaws.com',
+        'USER': 'postgres',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
         'PORT': '5432' 
     }
-
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',

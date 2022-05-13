@@ -48,12 +48,14 @@ def reset_password(request):
 def profile_page(request):
     user = request.user
     data = {'user':user}
+    print(data)
     return render(request, 'webapp/profile_page.html', data)
 
 @login_required(login_url='/')
 def dashboard(request):
     user = request.user
     data = {'user':user}
+    print(data)
     return render(request, 'webapp/dashboard.html', data)
 
 # SA-related views
@@ -93,10 +95,14 @@ def resources(request):
 # P-related views
 
 @login_required(login_url='/')
+def appointments(request):
+    return render(request, 'webapp/patient/appointments.html')
+
+@login_required(login_url='/')
 def physical_therapists(request):
     pt_accounts = Account.objects.filter(role="PT")
     data = {'pt_accounts':pt_accounts}
-    print(data)
+    #print(data)
     
     return render(request, 'webapp/patient/pt_accounts.html', data)
 
@@ -104,9 +110,19 @@ def physical_therapists(request):
 def view_profile_pt(request, user_id):
     pt_account = Account.objects.filter(id=user_id)
     data = {'pt_account':pt_account}
-    print(data)
-    
+    #print(data)
     return render(request, 'webapp/patient/pt_profile_page.html', data)
+
+@login_required(login_url='/')
+def view_pt_appointment_hours(request, user_id):
+    pt_account = Account.objects.filter(id=user_id).get()
+    pt_fk = PhysicalTherapist.objects.filter(account_ptr_id=user_id).get()
+    pt_clinical_hours_data = Clinic_Hours.objects.filter(fk_id=pt_fk.id).get()
+    pt_teleconsultation_hours_data = Teleconsultation_Hours.objects.filter(fk_id=pt_fk.id).get()
+
+    data = {'pt_account':pt_account, 'pt_clinical_hours_data':pt_clinical_hours_data, 'pt_teleconsultation_hours_data': pt_teleconsultation_hours_data}
+    print(pt_teleconsultation_hours_data.start_tc_time)
+    return render(request, 'webapp/patient/pt_appointment_page.html', data)
 
 # HTMX
 
@@ -128,9 +144,20 @@ def account_request_action(request, action, pk):
     #temp_pass = re.search(r'\w+(?=@)', account_request.email).group()
     temp_pass = "123456"
     if action == 'approve':
-        Account.objects.create(email=account_request.email, role=account_request.role, password=make_password(temp_pass))
+        account = Account(email=account_request.email, role=account_request.role, password=make_password(temp_pass))
         account_request.status = 'approved'
         account_request.save(update_fields=['status'])
+        account.save()
+        if account_request.role == 'P':
+            account_fk = Patient.objects.create(account_ptr_id=account.id)
+            account_fk.save()
+        elif account_request.role == 'PT':
+            account_fk = PhysicalTherapist.objects.create(account_ptr_id=account.id)
+            account_fk.save()
+        elif account_request.role == 'SA':
+            account_fk = SystemAdmin.objects.create(account_ptr_id=account.id)
+            account_fk.save()
+
     elif action == 'deny':
         account_request.status = 'denied'
         account_request.save(update_fields=['status'])

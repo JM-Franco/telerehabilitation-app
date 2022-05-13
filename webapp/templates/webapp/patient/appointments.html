@@ -1,0 +1,28 @@
+{% extends 'webapp/base.html' %}
+
+{% block title %}Appointments{% endblock title %}
+
+{% block content %}
+<div class="main-grid-container">
+	{% include 'webapp/nav_sidebar.html' %}
+	<div class="main-content-area">
+		<h1>Appointments</h1>
+		<p>
+      <a
+      class="button-primary button-text"
+      href="/physical_therapists/{{ account.id }}"
+    >
+      Request for Appointment
+    </a>
+    <a
+    class="button-primary button-text"
+    href="/physical_therapists/{{ account.id }}"
+  >
+    View Appointment Status
+  </a>
+		</p>
+	</div>
+	{% include 'webapp/footer.html' %}
+</div>
+
+{% endblock content %}
