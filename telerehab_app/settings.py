@@ -84,6 +84,7 @@ WSGI_APPLICATION = 'telerehab_app.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
+    # Default db for everyone to use
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'd6hlvm3t5csmko',
@@ -93,7 +94,16 @@ DATABASES = {
         'HOST': 'ec2-52-73-155-171.compute-1.amazonaws.com',
         'PORT': '5432' 
     }
-
+    #  db to use if mabagal yung mga requests
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'telerehab_app',
+    #     # 'NAME': 'e_chart_test' <-- for testing purposes
+    #     'USER': 'postgres',
+    #     'PASSWORD': '1234',
+    #     'HOST': 'localhost',
+    #     'PORT': '5432' 
+    # }
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',

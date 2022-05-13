@@ -22,8 +22,11 @@ urlpatterns = [
         path('resources', views.resources, name='resources'),
 
         # P-related
+        path('physical_therapists/appointments/', views.appointments_page, name='appointments'),
+        path('physical_therapists/request_appointment/', views.request_appointment, name='request appointment'),
         path('physical_therapists/', views.physical_therapists, name='physical_therapists'),
-        path('physical_therapists/<int:user_id>', views.view_profile_pt, name='view_profile_pt'),
+        path('physical_therapists/<int:user_id>/', views.view_profile_pt, name='view_profile_pt'),
+        path('physical_therapists/appointment_hours/<int:user_id>/', views.view_pt_appointment_hours, name='view_pt_appointment_hours'),
         # Reset Password
         path('reset_password/', auth_views.PasswordResetView.as_view(template_name='webapp/password_reset/reset_password.html', success_url=reverse_lazy('webapp:password_reset_done'), email_template_name='webapp/password_reset/password_reset_email.html'), name='reset_password'),
         path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name='webapp/password_reset/reset_password_sent.html'), name='password_reset_done'),
