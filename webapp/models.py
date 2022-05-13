@@ -75,6 +75,7 @@ class Teleconsultation_Hours(models.Model):
 
 class Appointment(models.Model):
     patient_fk = models.ForeignKey(Patient, default=None, on_delete=models.CASCADE)
+    pt_fk = models.ForeignKey(PhysicalTherapist, default=None, on_delete=models.CASCADE)
     type = models.CharField(max_length=16, choices=[('teleconsultation', 'teleconsultation'), ('clinical', 'Clinical')], default='teleconsultation')
     status = models.CharField(max_length=9, choices=[('pending', 'Pending'), ('finished', 'Finished'), ('cancelled', 'Cancelled')], default='pending')
 

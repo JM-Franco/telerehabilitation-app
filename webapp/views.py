@@ -95,8 +95,26 @@ def resources(request):
 # P-related views
 
 @login_required(login_url='/')
-def appointments(request):
+def appointments_page(request):
     return render(request, 'webapp/patient/appointments.html')
+
+@login_required(login_url='/')
+@allowed_users(allowed_roles=['P'])
+def request_appointment(request):
+    user = request.user
+    pt_accounts = Account.objects.filter(role="PT")
+    data = {'pt_accounts':pt_accounts}
+
+    if request.method == 'POST':
+        data = Appointment()
+        data.type = request.POST.get('appointment_type')
+        pt_chosen = Account.objects.filter(id=request.POST.get('pt_chosen')).get() 
+        data.patient_fk_id = Patient.objects.filter(account_ptr_id=user.id).get().id 
+        data.pt_fk_id = PhysicalTherapist.objects.filter(account_ptr_id=pt_chosen.id).get().id 
+        data.save()
+        return redirect('/')
+
+    return render(request, 'webapp/patient/request_appointment_page.html', data)
 
 @login_required(login_url='/')
 def physical_therapists(request):
