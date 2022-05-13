@@ -59,12 +59,12 @@ Telemedicine is a way to access healthcare appointments with healthcare provider
 - [x] Login
 - [x] Forgot Password
 - [ ] Search Tab
-	- [ ] View list of physical therapists
-	- [ ] View profile of a specific physical therapist
+	- [x] View list of physical therapists
+	- [x] View profile of a specific physical therapist
 		i. View clinic and teleconsultation hours tab of a specific physical therapist
 - [ ] Appointments Tab
-	- [ ] Request for clinical (physical) appointment
-	- [ ] Request for teleconsultation appointment
+	- [x] Request for clinical (physical) appointment
+	- [x] Request for teleconsultation appointment
 	- [ ] View status of requested clinical (physical) appointment
 	- [ ] View status of requested teleconsultation appointment
 
