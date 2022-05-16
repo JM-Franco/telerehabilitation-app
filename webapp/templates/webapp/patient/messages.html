@@ -1,0 +1,50 @@
+{% extends 'webapp/base.html' %}
+
+{% block title %}Appointments{% endblock title %}
+
+{% block content %}
+<div class="main-grid-container">
+	{% include 'webapp/nav_sidebar.html' %}
+
+
+	<div class="main-content-area">
+		<h1>Inbox</h1>
+        <div id="accounts">
+            {% for msg in messages %}
+            <div class="accounts-item">
+                <div class="name">
+                    <h6>From</h6>
+                    <p>Dr. {{msg.sender.first_name}} {{msg.sender.last_name}}</p>
+                  </div>
+              <div class="name">
+                <h6>Time</h6>
+                <p>{{msg.date_sent}}</p>
+              </div>
+
+              <!-- <div class="role">
+                <h6>Body</h6>
+                <p>{{msg.text}}</p>
+              </div> -->
+              <a
+                class="button-primary button-text"
+                href="/messages/view_messages/{{msg.sender.id}}/"
+              >
+                View
+              </a>
+            </div>
+            {% empty %} Nada {% endfor %}
+          </div>
+      <a
+      class="button-primary button-text"
+      href="/send_message"
+    >
+      Write a message
+    </a>
+
+
+		</p>
+	</div>
+	{% include 'webapp/footer.html' %}
+</div>
+
+{% endblock content %}

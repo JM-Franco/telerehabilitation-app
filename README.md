@@ -14,7 +14,7 @@ Telemedicine is a way to access healthcare appointments with healthcare provider
 - [ ] View dashboard
 	- [x] Profile Tab
 		- [x] View profile
-		- [ ] Update profile
+		- [x] Update profile
 		- [ ] Create clinic hours (input time, day Ex. MWF 9am-12noon; 1pm-4pm
 		- [ ] Update clinic hours
 		- [ ] Create teleconsultation hours
@@ -65,8 +65,8 @@ Telemedicine is a way to access healthcare appointments with healthcare provider
 - [ ] Appointments Tab
 	- [x] Request for clinical (physical) appointment
 	- [x] Request for teleconsultation appointment
-	- [ ] View status of requested clinical (physical) appointment
-	- [ ] View status of requested teleconsultation appointment
+	- [x] View status of requested clinical (physical) appointment
+	- [x] View status of requested teleconsultation appointment
 
 - [ ] Patient's Record Tab
 	- [ ] View personal info
@@ -77,8 +77,8 @@ Telemedicine is a way to access healthcare appointments with healthcare provider
 	- [ ] Upload video (mp4)
 
 - [ ] Messages Tab
-	- [ ] View reminders of clinical/teleconsultation appointments
-	- [ ] Messages to/from physical therapist (ex. YouTube links to exercise videos)
+	- [x] View reminders of clinical/teleconsultation appointments
+	- [x] Messages to/from physical therapist (ex. YouTube links to exercise videos)
  
 
 ## Heroku Postgres Database Credentials
@@ -98,7 +98,4 @@ Telemedicine is a way to access healthcare appointments with healthcare provider
     heroku pg:psql postgresql-fluffy-69157 --app kmontrainingpy
 
 ## Django Admin Superuser account
-- Email
-	bermylle@gmail.com
-- Password
-	pjpszsvpuqalcfse
+create own. use local db. 

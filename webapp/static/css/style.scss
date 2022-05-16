@@ -195,15 +195,39 @@ $spacing-64: 4rem;
 $spacing-80: 5rem;
 
 
+/* ========== Breakpoints ========== */
+
+$media_queries: (
+    'mobile': unquote("only screen and (max-width: 480px)"),
+	'desktop': unquote("only screen and (min-width: 481px) and (max-width: 1024px)"),
+	'landscape': unquote("screen and (orientation: landscape)"),
+	'portrait': unquote("screen and (orientation: portrait)")
+);
+
+@mixin breakpoint($breakpoints) {
+	$conditions: ();
+	@each $breakpoint in $breakpoints {
+		$conditions: append($conditions, #{inspect(map-get($media_queries, $breakpoint))}, comma);
+	}
+
+	@media #{$conditions} {
+		@content;
+	}
+}
+
 /* ========== Fixed Styles ========== */
 
 // Elements
 
 a {
     color: $info;
+	
+	@include breakpoint(desktop) {
+		color: blue;
+	}
 }
 
-input {
+input, select {
 	&:not([type="checkbox"]) {
 		@include text-size(false, 0);
 		box-sizing: border-box;
@@ -229,6 +253,9 @@ ion-icon {
     color: white;
 }
 
+[x-cloak] {
+	display: none !important;
+}
 
 // Classes
 
@@ -285,15 +312,21 @@ ion-icon {
             align-items: center;
             padding: $spacing-16 $spacing-16 0rem;
             margin-bottom: $spacing-40;
-            .profile-picture {
-                box-sizing: border-box;
-                height: $spacing-48;
-                width: $spacing-48;
-                background-color: $monochrome-3;
-                border-radius: 10px;
-            }
-            .profile-label {
-                margin-left: $baseline-spacing;
+            .profile-nav-item {
+                cursor: pointer;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                .profile-picture {
+                    box-sizing: border-box;
+                    height: $spacing-48;
+                    width: $spacing-48;
+                    background-color: $monochrome-3;
+                    border-radius: 10px;
+                }
+                .profile-label {
+                    margin-left: $baseline-spacing;
+                }
             }
             .logout-icon {
                 margin-left: auto;
@@ -310,20 +343,80 @@ ion-icon {
     }
 }
 
+.modal {
+	position: fixed;
+	z-index: 3;
+	inset: 0;
+	overflow-y: auto;
+
+	// Nasty way of doing this because it won't work unless
+	.modal-bg-profile {
+		background-color: rgb(255,255,255,0.75);
+		height: 100%;
+		overflow-y: auto;
+		.modal-card {
+			@include card();	
+			display: flex;
+			flex-direction: column;
+			margin: $spacing-40;
+			.modal-card-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-start;
+				margin-bottom: $spacing-40;
+				button {
+					display: flex;
+					align-items: center;
+					padding: $spacing-16;
+					border-radius: 100%;
+				}
+			}
+			.modal-card-body {
+				text-align: center;
+			}
+		}
+	}
+	.modal-bg {
+		background-color: rgb(255,255,255,0.75);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+		overflow-y: auto;
+		.modal-card {
+			@include card();	
+			display: flex;
+			flex-direction: column;
+			margin: $spacing-40;
+			.modal-card-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-start;
+				margin-bottom: $spacing-40;
+				button {
+					display: flex;
+					align-items: center;
+					padding: $spacing-16;
+					border-radius: 100%;
+				}
+			}
+			.modal-card-body {
+				text-align: center;
+			}
+		}
+	}
+}
+
 
 .dropdown {
 	.dropdown-button {
 		@extend .button-primary;
-		display: flex;
-		flex-direction: row;
+		display: inline-flex;
 		align-items: center;
 		font-size: 24px;
-		padding-top: $baseline-spacing;
-		padding-bottom: $baseline-spacing;
+		padding: $baseline-spacing $spacing-16;
 		height: 100%;
-		ion-icon {
-			margin-right: $spacing-16;
-		}
+		gap: $spacing-16;
 	}
 	.dropdown-menu {
 		z-index: 1;
@@ -518,7 +611,7 @@ ion-icon {
                     margin-bottom: $spacing-16;
                 }
 
-                input {
+                input, select {
                     margin-bottom: $spacing-40;
                 }
             }
@@ -653,25 +746,22 @@ ion-icon {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             column-gap: $spacing-16;
+			cursor: pointer;
 
             &:not(:last-child) {
                 margin-bottom: $spacing-16
             }
 
-            div {
-                display: flex;
-                flex-direction: column;
+			.name, .role, .email {
+				display: flex;
+				flex-direction: column
+			}
 
-                &.name {}
-
-                &.role {}
-
-                &.email {}
-
-                &.toggle-active {
-					@include switch; 
-				}
-            }
+			.toggle-active {
+				@include switch;
+				display: flex;
+				flex-direction: column;
+			}
         }
     }
 
@@ -699,7 +789,7 @@ ion-icon {
             position: relative;
             display: flex;
             flex-direction: column;
-            margin: ($spacing-80 + 6.563rem) 0 $spacing-80 0;
+            margin: ($spacing-80 + 6.563rem) 0 $spacing-40 0;
             padding-top: (6.563rem + $spacing-16);
 
             svg {
@@ -753,15 +843,35 @@ ion-icon {
                 text-align: center;
             }
 
+			.name-input-group {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				column-gap: $spacing-16;
+				margin-bottom: $spacing-16;
+				.name-input {
+					grid-column: span 1;
+				}
+			}
+
             .account-type {
+				display: flex;
+				justify-content: center;
                 margin-bottom: $spacing-40;
-                text-align: center;
-                color: $secondary-color;
+				:first-child {
+					@extend .button-text;
+					display: inline-block;
+					border-radius: 25px;
+					background-color: $secondary-color;
+					padding: $spacing-16 $spacing-56;
+					text-align: center;
+					color: $monochrome-1;
+				}
             }
 
             .profile-page-card-body {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
+				column-gap: $spacing-16;
 
                 .info-group {
                     .label {
@@ -774,5 +884,19 @@ ion-icon {
                 }
             }
         }
+		.profile-button-group {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			column-gap: $spacing-16;
+			margin-bottom: $spacing-80;	
+			.profile-button-section {
+				grid-row: span 1;
+				display: flex;
+				justify-content: center;
+				.button-primary {
+					width: 100%;
+				}
+			}
+		}
     }
 }

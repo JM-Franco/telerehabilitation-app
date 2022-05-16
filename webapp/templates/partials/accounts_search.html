@@ -1,5 +1,5 @@
 {% for account in accounts %}
-    <div class="accounts-item">
+    <div class="accounts-item" @click="accountmodal = true; $dispatch('body-scroll', {});" hx-get="{% url 'webapp:get_account_detail_view' account.pk %}"  hx-target="#accountdetail" >
         <div class="name">
             <h6>Name</h6>
             <p>{{account.first_name}} {{account.last_name}}</p>
@@ -20,5 +20,7 @@
         </div>
     </div>
 {% empty %}
-    Nada
+	<div style="display: flex; justify-content: center">
+		<h3>No results found</h3>
+	</div>
 {% endfor %}

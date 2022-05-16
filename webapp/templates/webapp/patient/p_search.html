@@ -1,0 +1,122 @@
+{% extends 'webapp/base.html' %}
+
+{% block title %}Search{% endblock title %}
+
+{% block content %}
+<div class="main-grid-container">
+	{% include 'webapp/nav_sidebar.html' %}
+	<div class="main-content-area">
+		<h1>Search</h1>
+		<form class="search" hx-get="{% url 'webapp:p_search_results' %}" hx-target="#search-results">
+			<!-- <div class="dropdown"> -->
+			<!-- 	<button class="dropdown-button" type="button" @click="open = !open"> -->
+			<!-- 		<ion-icon name="filter-outline"></ion-icon> -->
+			<!-- 		<p>Filters</p> -->
+			<!-- 	</button> -->
+			<!-- </div> -->
+			<!-- <div class="filter-menu" style="grid-template-columns: repeat(2, 1fr);" x-show="open" @click.outside="open = false"  x-transition> -->
+			<!-- 	<div class="filter-menu-section"> -->
+			<!-- 		<p class="filter-menu-section-title">Roles</p> -->
+			<!-- 		<div class="filter-menu-item"> -->
+			<!-- 			<p>System Admin</p> -->
+			<!-- 			<div class="toggle-active"> -->
+			<!-- 				<label class="switch"> -->
+			<!-- 					<input value="SA" name="filter" type="checkbox" checked> -->
+			<!-- 					<span class="slider"></span> -->
+			<!-- 				</label> -->	
+			<!-- 			</div> -->
+			<!-- 		</div> -->
+			<!-- 		<div class="filter-menu-item"> -->
+			<!-- 			<p>Physical Therapist</p> -->
+			<!-- 			<div class="toggle-active"> -->
+			<!-- 				<label class="switch"> -->
+			<!-- 					<input value="PT" name="filter" type="checkbox" checked> -->
+			<!-- 					<span class="slider"></span> -->
+			<!-- 				</label> -->	
+			<!-- 			</div> -->
+			<!-- 		</div> -->
+			<!-- 		<div class="filter-menu-item"> -->
+			<!-- 			<p>Patient</p> -->
+			<!-- 			<div class="toggle-active"> -->
+			<!-- 				<label class="switch"> -->
+			<!-- 					<input value="P" name="filter" type="checkbox" checked> -->
+			<!-- 					<span class="slider"></span> -->
+			<!-- 				</label> -->	
+			<!-- 			</div> -->
+			<!-- 		</div> -->
+			<!-- 	</div> -->
+			<!-- 	<div class="filter-menu-section"> -->
+			<!-- 		<p class="filter-menu-section-title"> Status </p> -->
+			<!-- 		<div class="filter-menu-item"> -->
+			<!-- 			<p>Active</p> -->
+			<!-- 			<div class="toggle-active"> -->
+			<!-- 				<label class="switch"> -->
+			<!-- 					<input value="Active" name="filter" type="checkbox" checked> -->
+			<!-- 					<span class="slider"></span> -->
+			<!-- 				</label> -->
+			<!-- 			</div> -->
+			<!-- 		</div> -->
+			<!-- 		<div class="filter-menu-item"> -->
+			<!-- 			<p>Inactive</p> -->
+			<!-- 			<div class="toggle-active"> -->
+			<!-- 				<label class="switch"> -->
+			<!-- 					<input value="Inactive" name="filter" type="checkbox" checked> -->
+			<!-- 					<span class="slider"></span> -->
+			<!-- 				</label> -->
+			<!-- 			</div> -->
+			<!-- 		</div> -->
+			<!-- 	</div> -->
+			<!-- </div> -->
+			<input name="filter" class="search-bar" type="text"  placeholder="Search...">
+			<!-- <div> -->
+			<!-- 	<ion-icon name="settings-outline"></ion-icon> -->
+			<!-- </div> -->
+			<input type="submit" hidden />
+		</form>
+		<div x-data="{ ptmodal: false }" @body-scroll="document.body.style.overflowY = ptmodal ? 'hidden' : ''">
+			<div id="search-results"></div>
+			<!-- Physical Therapist Modal -->
+			<div class="modal" x-show="ptmodal" x-cloak>
+				<div class="modal-bg-profile" x-show="ptmodal" x-transition.opacity.duration.300ms>
+					<div class="profile-page-grid-container">
+						<div class="profile-page-card-grid-container">
+							<div id="accountdetail" class="profile-page-card" style="z-index: 0" @click.away="ptmodal = false; $dispatch('body-scroll', {});" x-show="ptmodal" x-transition.scale.duration.300ms>
+								<div class="profile-picture"></div>
+								<h3 class="name">{{pt.first_name}} {{pt.last_name}}</h3>
+								<div class="account-type"><h6>{{pt.role}}</h6></div>
+
+								<div class="profile-page-card-body">
+									<div class="info-group">
+										<h6 class="label">Birthdate</h6>
+										<p class="info">{{pt.birthdate}}</p>
+									</div>
+									<div class="info-group">
+										<h6 class="label">Age</h6>
+										<p class="info">{{pt.age}}</p>
+									</div>
+									<div class="info-group">
+										<h6 class="label">Sex</h6>
+										<p class="info">{{pt.sex}}</p>
+									</div>
+									<div class="info-group">
+										<h6 class="label">Email</h6>
+										<p class="info">{{pt.email}}</p>
+									</div>
+									<div class="info-group">
+										<h6 class="label">Phone Number</h6>
+										<p class="info">{{pt.contact_number}}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- <p> -->
+		<!-- 	Sample Content -->
+		<!-- </p> -->
+	</div>
+	{% include 'webapp/footer.html' %}
+</div>
+{% endblock content %}

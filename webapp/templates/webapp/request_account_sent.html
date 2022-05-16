@@ -1,0 +1,22 @@
+{% extends 'webapp/base.html' %}
+
+{% block title %}Account Request Sent{% endblock title %}
+
+{% block content %}
+<div class="request-account-grid-container">
+	<div class="request-account-form">
+		<div class="request-account-form-title">
+			<h1>Request Sent</h1>
+			<p>Your request has been sent for evaluation. Please check your email for updates</p>
+		</div>
+        <div class="request-account-form-container">
+			<div style="display: flex; justify-content: center">
+				<a class="button-primary" href="{% url 'webapp:login' %}">
+					Back to Login	
+				</a>
+			</div>
+        </div>
+	</div>
+	{% include 'webapp/footer.html' %}
+</div>
+{% endblock content %}
