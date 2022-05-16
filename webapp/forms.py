@@ -11,9 +11,10 @@ class AccountRequestForm(ModelForm):
 
     class Meta:
         model = AccountRequest
-        fields = ["email"]
+        fields = ["email", "role"]
         widgets = {
             "email": EmailInput(),
+            "email": TextInput(),
         }
 
 

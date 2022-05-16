@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.hashers import make_password
 from django.views.decorators.http import require_POST, require_GET
 from django.core.mail import send_mail
 
@@ -52,7 +52,6 @@ def request_account(request):
         request_form = AccountRequestForm(request.POST)
         print(request_form)
         if request_form.is_valid():
-            #request_form.save()
             instance = request_form.save()
             
             #Send email notifying user about their request
@@ -263,13 +262,13 @@ def toggle_is_active(request, pk):
 def account_request_action(request, action, pk):
     account_request = AccountRequest.objects.get(pk=pk)
     temp_pass = re.search(r"\w+(?=@)", account_request.email).group()
-    print(temp_pass)
+    print(account_request.role)
     if not Account.objects.filter(email=account_request.email).exists():
         if action == "approve":
             Account.objects.create(
                 email=account_request.email,
                 role=account_request.role,
-                password=temp_pass,
+                password=make_password(temp_pass),
             )
             account_request.status = "approved"
             account_request.save(update_fields=["status"])

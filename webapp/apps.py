@@ -16,4 +16,4 @@ class WebappConfig(AppConfig):
             dispatch_uid="unique_id",
         )
 
-        pre_save.connect(signals.create_profile, sender=AccountRequest)
+        #pre_save.connect(signals.create_profile, sender=AccountRequest)
