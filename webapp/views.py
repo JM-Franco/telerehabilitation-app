@@ -52,7 +52,7 @@ def request_account(request):
         request_form = AccountRequestForm(request.POST)
         print(request_form)
         if request_form.is_valid():
-            request_form.save()
+            #request_form.save()
             instance = request_form.save()
             
             #Send email notifying user about their request

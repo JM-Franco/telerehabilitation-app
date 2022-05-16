@@ -22,18 +22,11 @@ def update_account_request(sender, instance, created, **kwargs):
         )
 
 
-def create_profile(sender, instance, **kwargs):
-    # if created:
-    #     if instance.role == "SA":
-    #         pass
-    #     elif instance.role == "PT":
-    #         PhysicalTherapistProfile.objects.create(account=instance)
-    #     else:
-    #         PatientProfile.objects.create(account=instance)
-
-    if instance.role == "SA":
-        pass
-    elif instance.role == "PT":
-        PhysicalTherapistProfile.objects.create(account=instance)
-    else:
-        PatientProfile.objects.create(account=instance)
+def create_profile(sender, instance, created,  **kwargs):
+    if created:
+        if instance.role == "SA":
+            pass
+        elif instance.role == "PT":
+            PhysicalTherapistProfile.objects.create(account=instance)
+        else:
+            PatientProfile.objects.create(account=instance)
