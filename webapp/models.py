@@ -80,31 +80,57 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
     def has_module_perms(self, app_label):
         return True
-
-class SystemAdmin(models.Model):
-    account_ptr = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True, null=True)
-    
-class PhysicalTherapist(models.Model):
-    account_ptr = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True, null=True)
-    
-class Patient(models.Model):
-    account_ptr = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True, null=True)
   
+class SystemAdminProfile(models.Model):
+    account = models.OneToOneField(
+        Account, on_delete=models.CASCADE, null=True, blank=True
+    )
+    address = models.CharField(max_length=225, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.account.first_name} {self.account.last_name}'s Profile"
+
+class PhysicalTherapistProfile(models.Model):
+    account = models.OneToOneField(
+        Account, on_delete=models.CASCADE, null=True, blank=True
+    )
+    address = models.CharField(max_length=225, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.account.first_name} {self.account.last_name}'s Profile"
+
+class PatientProfile(models.Model):
+    account = models.OneToOneField(
+        Account, on_delete=models.CASCADE, null=True, blank=True
+    )
+    address = models.CharField(max_length=225, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.account.first_name} {self.account.last_name}'s Profile"
+
 class Clinic_Hours(models.Model):
-    fk = models.ForeignKey(PhysicalTherapist, default=None, on_delete=models.CASCADE)
+    pt = models.ForeignKey(PhysicalTherapistProfile, default=None, on_delete=models.CASCADE)
     start_clinic_time = models.DateTimeField(verbose_name='start clinic hours', auto_now_add=False)
     end_clinic_time = models.DateTimeField(verbose_name='end clinic hours', auto_now_add=False)
 
 class Teleconsultation_Hours(models.Model):
-    fk = models.ForeignKey(PhysicalTherapist, default=None, on_delete=models.CASCADE)
+    pt = models.ForeignKey(PhysicalTherapistProfile, default=None, on_delete=models.CASCADE)
     start_tc_time = models.DateTimeField(verbose_name='start teleconsultation hours', auto_now_add=False)
     end_tc_time = models.DateTimeField(verbose_name='end teleconsultation hours', auto_now_add=False)
 
 class Appointment(models.Model):
-    patient_fk = models.ForeignKey(Patient, default=None, on_delete=models.CASCADE)
-    pt_fk = models.ForeignKey(PhysicalTherapist, default=None, on_delete=models.CASCADE)
+    patient= models.ForeignKey(PatientProfile, default=None, on_delete=models.CASCADE)
+    pt = models.ForeignKey(PhysicalTherapistProfile, default=None, on_delete=models.CASCADE)
     type = models.CharField(max_length=16, choices=[('teleconsultation', 'teleconsultation'), ('clinical', 'Clinical')], default='teleconsultation')
     status = models.CharField(max_length=9, choices=[('pending', 'Pending'), ('finished', 'Finished'), ('cancelled', 'Cancelled')], default='pending')
+
+class Messages(models.Model):
+    receiver = models.ForeignKey(Account, default=None, on_delete=models.CASCADE, related_name='receiver')
+    sender = models.ForeignKey(Account, default=None, on_delete=models.CASCADE, related_name='sender')
+    subject = models.CharField(max_length=256, default='Subject')
+    text = models.CharField(max_length=256, default='Hello')
+    date_sent = models.DateTimeField(verbose_name='date sent', auto_now_add=True)
+
 
 class AccountRequest(models.Model):
     email = models.EmailField(max_length=225)
@@ -131,30 +157,5 @@ class AccountRequest(models.Model):
     def __str__(self):
         return f"{self.email} - {self.role}"
 
-class PhysicalTherapistProfile(models.Model):
-    account = models.OneToOneField(
-        Account, on_delete=models.CASCADE, null=True, blank=True
-    )
-    address = models.CharField(max_length=225, null=True, blank=True)
 
-    def __str__(self):
-        return f"{self.account.first_name} {self.account.last_name}'s Profile"
-
-
-class ClinicHours(models.Model):
-    account = models.ForeignKey(
-        Account, on_delete=models.CASCADE, null=True, blank=True
-    )
-
-    def __str__(self):
-        return f"{self.account.first_name} {self.account.last_name} clinic hour"
-
-
-class PatientProfile(models.Model):
-    account = models.OneToOneField(
-        Account, on_delete=models.CASCADE, null=True, blank=True
-    )
-    address = models.CharField(max_length=225, null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.account.first_name} {self.account.last_name}'s Profile"
+    

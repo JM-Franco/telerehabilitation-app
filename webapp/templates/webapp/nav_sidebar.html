@@ -95,7 +95,7 @@
       <div class="nav-item {% if request.resolver_match.view_name == 'webapp:messages' %}active{% endif %}">
           <ion-icon class="nav-icon" name="mail-outline"></ion-icon>
           <p>Messages</p>
-          <a href="#">
+          <a href="{% url 'webapp:messages' %}">
               <span style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1"></span>
           </a>
       </div>

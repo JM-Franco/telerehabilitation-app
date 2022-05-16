@@ -25,6 +25,15 @@ urlpatterns = [
     # P-related
     path("p_search/", views.p_search, name="p_search"),
     path("p_records/", views.p_records, name="p_records"),
+    path('messages/', views.messages, name='messages'),
+    path('messages/view_messages/<int:user_id>/', views.view_messages, name='view_messages'),
+    path('send_message/', views.send_message, name='send_message'),
+    path('patient/appointments/', views.appointments_page, name='appointments'),
+    path('view_appointments/', views.view_appointments, name='view_appointments'),
+    path('physical_therapists/request_appointment/', views.request_appointment, name='request appointment'),
+    path('physical_therapists/', views.physical_therapists, name='physical_therapists'),
+    path('physical_therapists/<int:user_id>/', views.view_profile_pt, name='view_profile_pt'),
+    path('physical_therapists/appointment_hours/<int:user_id>/', views.view_pt_appointment_hours, name='view_pt_appointment_hours'),
     # Reset Password
     path(
         "reset_password/",
