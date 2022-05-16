@@ -14,7 +14,7 @@
 					<p>Filters</p>
 				</button>
 			</div>
-			<div class="filter-menu" style="grid-template-columns: repeat(2, 1fr);" x-show="open" @click.outside="open = false"  x-transition>
+			<div class="filter-menu" style="grid-template-columns: repeat(2, 1fr);" x-show="open" @click.outside="open = false"  x-transition x-cloak>
 				<div class="filter-menu-section">
 					<p class="filter-menu-section-title">Roles</p>
 					<div class="filter-menu-item">
@@ -74,7 +74,7 @@
 		<!-- Display Requests -->
 		<div id="account_requests">
 			{% for account_request in account_requests %}
-				<div x-data="{ open: true }" x-show="open" x-transition.duration.500ms class="account-requests-item" id="whaddup2">
+				<div x-data="{ open: true }" x-show="open" x-transition.duration.500ms class="account-requests-item">
 					<h6>{{account_request.email}}</h6>
 					<h6 style="margin-left:16px;">{{account_request.get_role_display}}</h6>
 					<p style="margin-left: 16px">{{account_request.get_status_display}}</p>
@@ -96,7 +96,9 @@
 					{% endif %}
 				</div>
 			{% empty %}
-				<p>Nada</p>
+				<div style="display: flex; justify-content: center">
+					<h3>No results found</h3>
+				</div>
 			{% endfor %}
 		</div>
 	</div>

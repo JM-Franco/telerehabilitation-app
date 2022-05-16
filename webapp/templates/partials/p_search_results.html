@@ -1,0 +1,15 @@
+{% for pt in pts %}
+	<div class="accounts-item" style="align-items: center" @click="ptmodal = true; $dispatch('body-scroll', {});" hx-get="{% url 'webapp:get_account_detail_view' pt.pk %}" hx-target="#accountdetail">
+		<div class="profile-picture" style="border-radius: 25px; background-color: gray; height: 100px; width: 100px"> </div>
+        <div class="name">
+            <h6>Name</h6>
+            <p>{{pt.first_name}} {{pt.last_name}}</p>
+        </div>
+        <div class="email">
+            <h6>Email</h6>
+            <p>{{pt.email}}</p>
+        </div>
+    </div>
+{% empty %}
+    Nada
+{% endfor %}
