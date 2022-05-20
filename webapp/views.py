@@ -11,7 +11,6 @@ from django.utils.safestring import mark_safe
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
-
 from .models import *
 from .forms import *
 from .decorators import *
@@ -19,7 +18,7 @@ from .utils import *
 import calendar
 import re
 from datetime import timedelta, datetime, date
-
+import datetime
 # Create your views here.
 
 @unauthenticated_user
@@ -269,7 +268,7 @@ def appointments_page(request):
 @login_required(login_url='/')
 @allowed_users(allowed_roles=['P'])
 def view_appointments(request):
-    patient = PatientProfile.objects.filter(id=request.user.id).get()
+    patient = PatientProfile.objects.filter(account_id=request.user.id).get()
     appointments_data = Appointment.objects.filter(patient_id = patient.id).all()
     data = {'appointments':appointments_data}
     return render(request, 'webapp/patient/view_appointments.html', data)
@@ -289,7 +288,8 @@ def request_appointment(request):
         data.pt_id = PhysicalTherapistProfile.objects.filter(account_id=pt_chosen.id).get().id
         
         # Temp fix
-        data.date = datetime.date.today()
+        data.start_time = request.POST.get('sched')
+        data.end_time = request.POST.get('sched')
         data.save()
         return redirect('/')
 

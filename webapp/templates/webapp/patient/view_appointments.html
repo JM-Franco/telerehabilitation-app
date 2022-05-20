@@ -4,88 +4,7 @@
   {% include 'webapp/nav_sidebar.html' %}
   <div class="main-content-area">
     <h1 class="main-content-title">Appointments</h1>
-    <form
-      class="search"
-      x-data="{ open: false }"
-      hx-get="{% url 'webapp:accounts_search' %}"
-      hx-target="#accounts"
-    >
-      <div class="dropdown">
-        <button class="dropdown-button" type="button" @click="open = !open">
-          <ion-icon name="filter-outline"></ion-icon>
-          <p>Filters</p>
-        </button>
-      </div>
-      <div
-        class="filter-menu"
-        style="grid-template-columns: repeat(2, 1fr)"
-        x-show="open"
-        @click.outside="open = false"
-        x-transition
-      >
-        <div class="filter-menu-section">
-          <p class="filter-menu-section-title">Roles</p>
-          <div class="filter-menu-item">
-            <p>System Admin</p>
-            <div class="toggle-active">
-              <label class="switch">
-                <input value="SA" name="filter" type="checkbox" checked />
-                <span class="slider"></span>
-              </label>
-            </div>
-          </div>
-          <div class="filter-menu-item">
-            <p>Physical Therapist</p>
-            <div class="toggle-active">
-              <label class="switch">
-                <input value="PT" name="filter" type="checkbox" checked />
-                <span class="slider"></span>
-              </label>
-            </div>
-          </div>
-          <div class="filter-menu-item">
-            <p>Patient</p>
-            <div class="toggle-active">
-              <label class="switch">
-                <input value="P" name="filter" type="checkbox" checked />
-                <span class="slider"></span>
-              </label>
-            </div>
-          </div>
-        </div>
-        <div class="filter-menu-section">
-          <p class="filter-menu-section-title">Status</p>
-          <div class="filter-menu-item">
-            <p>Active</p>
-            <div class="toggle-active">
-              <label class="switch">
-                <input value="Active" name="filter" type="checkbox" checked />
-                <span class="slider"></span>
-              </label>
-            </div>
-          </div>
-          <div class="filter-menu-item">
-            <p>Inactive</p>
-            <div class="toggle-active">
-              <label class="switch">
-                <input value="Inactive" name="filter" type="checkbox" checked />
-                <span class="slider"></span>
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <input
-        name="textfilter"
-        class="search-bar"
-        type="text"
-        placeholder="Search..."
-      />
-      <!-- <div> -->
-      <!-- 	<ion-icon name="settings-outline"></ion-icon> -->
-      <!-- </div> -->
-      <input type="submit" hidden />
-    </form>
+
     <div id="accounts">
       {% for item in appointments %}
       <div class="accounts-item">
@@ -105,26 +24,17 @@
           <h6>Date</h6>
           <p>{{item.start_time}}</p>
         </div>
+        {% if item.status == "reschedule" %}
+        <a class="button-primary button-text" href="/physical_therapists/request_appointment"> Reschedule </a>
+        {% else %}
+        {% endif %}
       </div>
+
+
       {% empty %} Nada {% endfor %}
     </div>
   </div>
   {% include 'webapp/footer.html' %}
 </div>
-<script>
-  function search() {
-    console.log(document.querySelector("#filter").value);
-    let filter = document.getElementById("filter").value.toUpperCase();
-    let results = document.getElementsByClassName("accounts-item");
 
-    for (let i = 0; i < results.length; i++) {
-      let name = results[i].querySelector(".name p").innerText;
-      if (name.toUpperCase().includes(filter)) {
-        results[i].style.display = "";
-      } else {
-        results[i].style.display = "none";
-      }
-    }
-  }
-</script>
 {% endblock content %}
