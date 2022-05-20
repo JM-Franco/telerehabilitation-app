@@ -95,7 +95,7 @@
         </div>
         <div class="role">
           <h6>PT</h6>
-          <p>{{item.pt_fk.account_ptr.first_name}} {{item.pt_fk.account_ptr.last_name}}</p>
+          <p>Dr. {{item.pt.account.first_name}} {{item.pt.account.last_name}}</p>
         </div>
         <div class="role">
           <h6>Status</h6>
@@ -103,7 +103,7 @@
         </div>
         <div class="email">
           <h6>Date</h6>
-          <p>{{item.date}}</p>
+          <p>{{item.start_time}}</p>
         </div>
       </div>
       {% empty %} Nada {% endfor %}

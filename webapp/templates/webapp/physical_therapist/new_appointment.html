@@ -1,0 +1,25 @@
+{% extends 'webapp/base.html' %}
+
+{% block title %}Appointments{% endblock title %}
+
+{% block content %}
+<div class="main-grid-container">
+	{% include 'webapp/nav_sidebar.html' %}
+	<div class="main-content-area">
+		<h1>Appointments</h1>
+        <div class="clearfix">
+            <a class="btn btn-info left" href="{% url 'webapp:calendar' %}"> Calendar </a>
+          </div>
+          
+          <form method="post">
+            {% csrf_token %}
+            <table class="form form-table">
+              {{ form }}
+              <tr><td colspan="2"><button type="submit" class="btn btn-info right"> Submit </button></td></tr>
+            </table>
+          </form>
+	</div>
+
+	{% include 'webapp/footer.html' %}
+</div>
+{% endblock content %}

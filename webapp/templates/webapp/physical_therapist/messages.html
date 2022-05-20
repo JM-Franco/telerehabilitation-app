@@ -22,6 +22,10 @@
               </div>
 
 
+              <!-- <div class="role">
+                <h6>Body</h6>
+                <p>{{msg.text}}</p>
+              </div> -->
               <a
                 class="button-primary button-text"
                 href="view_messages_sent/{{msg.sender.id}}/"
@@ -40,7 +44,7 @@
           <br>
       <a
       class="button-primary button-text"
-      href="/send_message"
+      href="{% url 'webapp:pt_send_message' %}"
     >
       Write a message
     </a>

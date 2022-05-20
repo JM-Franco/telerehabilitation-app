@@ -108,6 +108,9 @@ class AccountAdmin(UserAdmin):
         else:
             return self.inline_p
 
+class AppointmentAdmin(admin.ModelAdmin):
+    list_display = ['patient_id', 'pt_id',  'title',  'description',  'status',  'start_time', 'end_time']
 
 admin.site.register(Account, AccountAdmin)
 admin.site.register(AccountRequest)
+admin.site.register(Appointment, AppointmentAdmin)

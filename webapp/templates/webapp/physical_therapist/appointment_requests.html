@@ -1,0 +1,84 @@
+{% extends 'webapp/base.html' %} {% block title %}Appointment Requests{%endblock title %} {% block content %}
+<div class="main-grid-container">
+  {% include 'webapp/nav_sidebar.html' %}
+  <div class="main-content-area">
+    <h1 class="main-content-title">Appointment Requests</h1>
+
+    <!-- Display Requests -->
+    <div id="appointments_requests">
+      {% for appointments_request in appointments_requests %}
+      <div
+        x-data="{ open: true }"
+        x-show="open"
+        x-transition.duration.500ms
+        class="account-requests-item"
+      >
+        <p> Patient: {{appointments_request.patient.account.first_name}} {{appointments_request.patient.account.last_name}}</p>
+        <p> Start time: {{appointments_request.start_time}} </p>
+        <p> End time: {{appointments_request.end_time}} </p>
+        
+        <p style="margin-left: 16px">
+          type: {{appointments_request.type}}
+        </p>
+        {% if appointments_request.status == 'accepted' %}
+        <div
+          @click="open = false"
+          hx-trigger="click"
+          hx-post="{% url 'webapp:appointments_request_action' action='approve' id=appointments_request.id  %}"
+          style="pointer-events: none"
+        >
+          <ion-icon class="accept" name="checkmark-outline"></ion-icon>
+        </div>
+
+        {% elif appointments_request.status == 'reschedule' %}
+        <div
+          @click="open = false"
+          hx-trigger="click"
+          hx-post="{% url 'webapp:appointments_request_action' action='reschedule' id=appointments_request.id  %}"
+          style="pointer-events: none"
+        >
+          <ion-icon class="deny" name="close-outline"></ion-icon>
+        </div>
+        {% elif appointments_request.status == 'cancelled' %}
+        <div
+          @click="open = false"
+          hx-trigger="click"
+          hx-post="{% url 'webapp:appointments_request_action' action='deny' id=appointments_request.id  %}"
+          style="pointer-events: none"
+        >
+          <ion-icon class="deny" name="close-outline"></ion-icon>
+        </div>
+        {% else %}
+        <div
+          @click="open = false"
+          hx-trigger="click"
+          hx-post="{% url 'webapp:appointments_request_action' action='approve' id=appointments_request.id  %}"
+        >
+          <ion-icon class="accept" name="checkmark-outline"></ion-icon>
+        </div>
+        <div
+        @click="open = false"
+        hx-trigger="click"
+        hx-post="{% url 'webapp:appointments_request_action' action='reschedule' id=appointments_request.id  %}"
+      >
+        <ion-icon class="accept" name="clipboard-outline"></ion-icon>
+      </div>
+        <div
+          @click="open = false"
+          hx-trigger="click"
+          hx-post="{% url 'webapp:appointments_request_action' action='deny' id=appointments_request.id  %}"
+        >
+          <ion-icon class="deny" name="close-outline"></ion-icon>
+        </div>
+        {% endif %}
+      </div>
+      {% empty %}
+      <div style="display: flex; justify-content: center">
+        <h3>No results found</h3>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% include 'webapp/footer.html' %}
+</div>
+{% endblock content %}

@@ -6,6 +6,7 @@ from django.contrib.auth.models import (
 )
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
 
 # Regex to validate ONLY Philippine numbers
 phone_regex = RegexValidator(
@@ -88,7 +89,7 @@ class SystemAdminProfile(models.Model):
     address = models.CharField(max_length=225, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.account.first_name} {self.account.last_name}'s Profile"
+        return f"{self.account.first_name} {self.account.last_name}"
 
 class PhysicalTherapistProfile(models.Model):
     account = models.OneToOneField(
@@ -97,7 +98,7 @@ class PhysicalTherapistProfile(models.Model):
     address = models.CharField(max_length=225, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.account.first_name} {self.account.last_name}'s Profile"
+        return f"{self.account.first_name} {self.account.last_name}"
 
 class PatientProfile(models.Model):
     account = models.OneToOneField(
@@ -106,7 +107,7 @@ class PatientProfile(models.Model):
     address = models.CharField(max_length=225, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.account.first_name} {self.account.last_name}'s Profile"
+        return f"{self.account.first_name} {self.account.last_name}"
 
 class Clinic_Hours(models.Model):
     pt = models.ForeignKey(PhysicalTherapistProfile, default=None, on_delete=models.CASCADE)
@@ -122,7 +123,16 @@ class Appointment(models.Model):
     patient= models.ForeignKey(PatientProfile, default=None, on_delete=models.CASCADE)
     pt = models.ForeignKey(PhysicalTherapistProfile, default=None, on_delete=models.CASCADE)
     type = models.CharField(max_length=16, choices=[('teleconsultation', 'teleconsultation'), ('clinical', 'Clinical')], default='teleconsultation')
-    status = models.CharField(max_length=9, choices=[('pending', 'Pending'), ('finished', 'Finished'), ('cancelled', 'Cancelled')], default='pending')
+    status = models.CharField(max_length=10, choices=[('pending', 'Pending'), ('accepted', 'Accepted'), ('reschedule', 'Reschedule'), ('cancelled', 'Cancelled')], default='pending')
+    title = models.TextField(default="text title")
+    description = models.TextField(default="text description")
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    
+    @property
+    def get_html_url(self):
+        url = reverse('webapp:edit_appointment', args=(self.id,))
+        return f'<a href="{url}">{self.patient.account.first_name.capitalize()} {self.patient.account.last_name.capitalize()} <br> {self.start_time.strftime("%I:%M %p")} - {self.end_time.strftime("%I:%M %p")} <br> Status: {self.status} <br> Type: {self.type} </a>'
 
 class Messages(models.Model):
     receiver = models.ForeignKey(Account, default=None, on_delete=models.CASCADE, related_name='receiver')
