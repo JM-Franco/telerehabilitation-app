@@ -30,11 +30,11 @@ Telemedicine is a way to access healthcare appointments with healthcare provider
 		Note: If the patient was patient of another physical therapist in the past, the current physical therapist should still be able to view his past records with  the physical therapist. (i.e. view - [ ] C. iii-iv.)
 
 	- [ ] Appointments Tab (Monthly Calendar Format)
-		- [ ] View calendar of scheduled clinic or teleconsultation appointments
-		- [ ] View a specific clinic/teleconsultation appointment
-		- [ ] Send clinic/teleconsultation appointment reminders to patients
-		- [ ] View patient requests for clinic/teleconsultation appointments
-		- [ ] Approve, suggest an alternative schedule, or deny a patient request for clinic/teleconsultation appointment
+		- [x] View calendar of scheduled clinic or teleconsultation appointments
+		- [x] View a specific clinic/teleconsultation appointment
+		- [x] Send clinic/teleconsultation appointment reminders to patients
+		- [x] View patient requests for clinic/teleconsultation appointments
+		- [x] Approve, suggest an alternative schedule, or deny a patient request for clinic/teleconsultation appointment
 		- [ ] Update patient Record
 			- [ ] Input patient general clinical history
 			- [ ] Input patient  physio clinical history
