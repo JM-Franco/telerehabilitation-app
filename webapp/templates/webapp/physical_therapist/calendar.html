@@ -1,0 +1,26 @@
+{% extends 'webapp/base.html' %}
+
+{% block title %}Calendar{% endblock title %}
+
+{% block content %}
+
+<div class="main-grid-container">
+	{% include 'webapp/nav_sidebar.html' %}
+	<div class="main-content-area">
+		<h1>Calendar</h1>
+	
+        <div id="container">
+            <div class="clearfix">
+                <a class="left button-primary button-text" href="{% url 'webapp:calendar' %}?{{ prev_month }}"> Previous Month </a>
+                <a class="right button-primary button-text" href="{% url 'webapp:calendar' %}?{{ next_month }} "> Next Month </a>
+                <a class="right button-primary button-text" href="{% url 'webapp:new_appointment' %}"> New Appointment </a>
+            </div>
+            
+            {{ calendar }}
+        </div>
+	
+	</div>
+
+	
+</div>
+{% endblock content %}

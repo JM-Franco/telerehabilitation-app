@@ -8,8 +8,11 @@
 
 
 	<div class="main-content-area">
-		<h1>{{ doctor }}</h1>
+		<h1>{{ patient }}</h1>
         <div id="accounts">
+
+          {% with selected="my string" %}
+          {% endwith %}
             {% for msg in received_messages %}
             <div class="accounts-item">
             <div class="name">
@@ -32,10 +35,11 @@
           <br>
       <a
       class="button-primary button-text"
-      href="/send_message"
+      href="{% url 'webapp:pt_send_message'  %}"
     >
      Reply
     </a>
+
 
 		</p>
 	</div>
