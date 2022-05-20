@@ -10,17 +10,20 @@
         <form method='post' >
             {% csrf_token %}
 		<h2>Request Apppointment</h2>
-        <button type="submit" class="button-primary button-text" > Request Appointment </button>
+        
       <select name="appointment_type" id="appointment_type">
         <option value="clinical">Clinical Appointment</option>
         <option value="teleconsultation">Teleconsultation Appointment</option>
       </select>
-
+      <br>
+        <label for="sched">Start Date and Time:</label>
+        <input type="datetime-local" id="sched" name="sched">
       <select name="pt_chosen" id="pt_chosen">
       {% for account in pt_accounts %}
         <option value="{{account.id}}">{{account.first_name}} {{account.last_name}}</option>
       {% endfor %}
     </select>
+    <button type="submit" class="button-primary button-text" > Request Appointment </button>
 </form>
 	</div>
 	{% include 'webapp/footer.html' %}
