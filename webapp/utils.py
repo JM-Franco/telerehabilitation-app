@@ -36,7 +36,7 @@ class Calendar(HTMLCalendar):
 
 		events = Appointment.objects.filter(pt_id = self.id, start_time__year=self.year, start_time__month=self.month, status="accepted")
 	   
-		cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
+		cal = f'<table border="1" cellpadding="1" cellspacing="0" class="calendar">\n'
 		cal += f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'
 		cal += f'{self.formatweekheader()}\n'
 		

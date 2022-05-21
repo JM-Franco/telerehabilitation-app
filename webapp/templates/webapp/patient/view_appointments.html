@@ -25,7 +25,7 @@
           <p>{{item.start_time}}</p>
         </div>
         {% if item.status == "reschedule" %}
-        <a class="button-primary button-text" href="/physical_therapists/request_appointment"> Reschedule </a>
+        <a class="button-primary button-text" href="/physical_therapists/reschedule_appointment/{{item.id}}"> Reschedule </a>
         {% else %}
         {% endif %}
       </div>

@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
@@ -119,6 +120,20 @@ class Teleconsultation_Hours(models.Model):
     start_tc_time = models.DateTimeField(verbose_name='start teleconsultation hours', auto_now_add=False)
     end_tc_time = models.DateTimeField(verbose_name='end teleconsultation hours', auto_now_add=False)
 
+
+class AppointmentManager(models.Manager):
+    """ Event manager """
+
+    def get_all_events(self):
+        apt = Appointment.objects.filter(is_active=True, is_deleted=False)
+        return apt
+
+    def get_running_events(self):
+        running_apt = Appointment.objects.filter(
+            end_time__gte=datetime.now().date(),
+        ).order_by("start_time")
+        return running_apt
+
 class Appointment(models.Model):
     patient= models.ForeignKey(PatientProfile, default=None, on_delete=models.CASCADE)
     pt = models.ForeignKey(PhysicalTherapistProfile, default=None, on_delete=models.CASCADE)
@@ -128,7 +143,7 @@ class Appointment(models.Model):
     description = models.TextField(default="text description")
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    
+    objects = AppointmentManager()
     @property
     def get_html_url(self):
         url = reverse('webapp:edit_appointment', args=(self.id,))
