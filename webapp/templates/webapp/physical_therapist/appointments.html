@@ -15,13 +15,26 @@
         x-transition.duration.500ms
         class="account-requests-item"
       >
-        <p> Patient: {{appointments_request.patient.account.first_name}} {{appointments_request.patient.account.last_name}}</p>
-        <p> Start time: {{appointments_request.start_time}} </p>
-        <p> End time: {{appointments_request.end_time}} </p>
-        <p> Status: {{appointments_request.status}} </p>
-        <p style="margin-left: 16px">
-          type: {{appointments_request.type}}
-        </p>
+      <div class="accounts-item">
+        <div class="name">        
+          <h6>Patient</h6>
+          <p>{{appointments_request.patient.account.first_name}} {{appointments_request.patient.account.last_name}}</p>
+        </div>
+<div class="name">   
+        <h6>Start time</h6>
+        <p>{{appointments_request.start_time}} </p></div>
+<div class="name">   
+        <h6>End time</h6>
+        <p>{{appointments_request.end_time}} </p></div>
+        <div class="name">   
+        <h6>Status</h6>
+        <p>{{appointments_request.status}} </p></div>
+        <div class="name">     
+        <h6>Type</h6>
+        <p>{{appointments_request.type}} </p></div>
+      </div>
+
+
         {% if appointments_request.status == 'accepted' %}
         <div
         @click="open = false"
