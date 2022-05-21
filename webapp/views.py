@@ -17,7 +17,8 @@ from .decorators import *
 from .utils import *
 import calendar
 import re
-from datetime import timedelta, datetime, date
+from datetime import timedelta, date
+from datetime import datetime as dt
 import datetime
 # Create your views here.
 
@@ -143,15 +144,10 @@ def patients(request):
 @login_required(login_url='/')
 @allowed_users(allowed_roles=['PT'])
 def pt_appointments(request):
-    return render(request, 'webapp/physical_therapist/appointments.html')
-
-@login_required(login_url='/')
-@allowed_users(allowed_roles=['PT'])
-def pt_appointment_requests(request):
     pt = PhysicalTherapistProfile.objects.filter(account_id=request.user.id).get()
-    appointments_requests = Appointment.objects.filter(status="pending", pt_id = pt.id)
+    appointments_requests = Appointment.objects.filter(pt_id = pt.id).exclude(status="cancelled")
     data = {"appointments_requests": appointments_requests}
-    return render(request, 'webapp/physical_therapist/appointment_requests.html', data)
+    return render(request, 'webapp/physical_therapist/appointments.html', data)
 
 @require_POST
 @login_required(login_url="/")
@@ -218,6 +214,19 @@ def pt_view_messages_sent(request, user_id):
     data = {"sent_messages" : sent_messages, 'patient' : patient, 'id' :user_id}
     return render(request, 'webapp/physical_therapist/view_messages_sent.html', data)
 
+def appointment(request, event_id=None):
+    instance = Appointment()
+    if event_id:
+        instance = get_object_or_404(Appointment, pk=event_id)
+    else:
+        instance = Appointment()
+    
+    form = AppointmentForm(request.POST or None, instance=instance)
+    if request.POST and form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse('webapp:calendar'))
+    return render(request, 'webapp/physical_therapist/new_appointment.html', {'form': form})
+
 # P-related views
 
 @login_required(login_url="/")
@@ -283,7 +292,7 @@ def appointments_page(request):
 @allowed_users(allowed_roles=['P'])
 def view_appointments(request):
     patient = PatientProfile.objects.filter(account_id=request.user.id).get()
-    appointments_data = Appointment.objects.filter(patient_id = patient.id).all()
+    appointments_data = Appointment.objects.filter(patient_id = patient.id).exclude(status="cancelled")
     data = {'appointments':appointments_data}
     return render(request, 'webapp/patient/view_appointments.html', data)
 
@@ -305,10 +314,25 @@ def request_appointment(request):
         data.start_time = request.POST.get('sched')
         data.end_time = request.POST.get('sched')
         data.save()
-        return redirect('/')
+        return redirect(reverse('webapp:view_appointments'))
 
     return render(request, 'webapp/patient/request_appointment_page.html', data)
 
+@login_required(login_url='/')
+@allowed_users(allowed_roles=['P'])
+def resched_appointment(request, request_id):
+    appointment = Appointment.objects.get(id = request_id)
+
+    if request.method == 'POST':
+        appointment.type = request.POST.get('appointment_type')
+    
+        appointment.status = "pending"
+        appointment.start_time = request.POST.get('sched')
+        appointment.end_time = request.POST.get('sched')
+        appointment.save()
+        return redirect(reverse('webapp:view_appointments'))
+
+    return render(request, 'webapp/patient/reschedule_appointment_page.html')
 
 @login_required(login_url='/')
 def physical_therapists(request):
@@ -467,52 +491,34 @@ def p_search_results(request):
     return render(request, "partials/p_search_results.html", data)
 
 
+class CalendarViewNew(generic.View):
+    template_name = "webapp/physical_therapist/calendar.html"
+    form_class = AppointmentForm
+
+    def get(self, request, *args, **kwargs):
+        forms = self.form_class()
+
+        pt = PhysicalTherapistProfile.objects.filter(account_id=request.user.id).get()
+        appointments = Appointment.objects.filter(status="accepted").filter(pt_id = pt.id).exclude(status="cancelled")
+        apt_list = []
+        # start: '2020-09-16T16:00:00'
+        for apt in appointments:
+            print(apt.start_time)
+            details = f"{apt.patient.account.first_name.capitalize()} {apt.patient.account.last_name.capitalize()} - {apt.type}"
+            fixed_time_start = apt.start_time + timedelta(hours=8)
+            fixed_time_end = apt.end_time + timedelta(hours=8)
+            
+            apt_list.append(
+                {
+                    "title": details,
+                    "link":  apt.get_html_url,
+                    "start": fixed_time_start.strftime("%Y-%m-%dT%H:%M:%S"),
+                    "end": fixed_time_end.strftime("%Y-%m-%dT%H:%M:%S"),
+                }
+            )
+        context = {"events": apt_list}
+        return render(request, self.template_name, context)
+
+
 # Calendar funcs
 
-class CalendarView(generic.ListView):
-    model = Appointment
-    template_name = 'webapp/physical_therapist/calendar.html'
-
-    def get_context_data(self, **kwargs):
-        pt = PhysicalTherapistProfile.objects.filter(account_id=self.request.user.id).get()
-        context = super().get_context_data(**kwargs)
-        d = get_date(self.request.GET.get('month', None))
-        cal = Calendar(d.year, d.month, pt.id)
-        html_cal = cal.formatmonth(withyear=True)
-        context['calendar'] = mark_safe(html_cal)
-        context['prev_month'] = prev_month(d)
-        context['next_month'] = next_month(d)
-        return context
-
-def get_date(req_day):
-    if req_day:
-        year, month = (int(x) for x in req_day.split('-'))
-        return date(year, month, day=1)
-    return datetime.today()
-
-
-def prev_month(d):
-    first = d.replace(day=1)
-    prev_month = first - timedelta(days=1)
-    month = 'month=' + str(prev_month.year) + '-' + str(prev_month.month)
-    return month
-
-def next_month(d):
-    days_in_month = calendar.monthrange(d.year, d.month)[1]
-    last = d.replace(day=days_in_month)
-    next_month = last + timedelta(days=1)
-    month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
-    return month
-
-def appointment(request, event_id=None):
-    instance = Appointment()
-    if event_id:
-        instance = get_object_or_404(Appointment, pk=event_id)
-    else:
-        instance = Appointment()
-    
-    form = AppointmentForm(request.POST or None, instance=instance)
-    if request.POST and form.is_valid():
-        form.save()
-        return HttpResponseRedirect(reverse('webapp:calendar'))
-    return render(request, 'webapp/physical_therapist/new_appointment.html', {'form': form})

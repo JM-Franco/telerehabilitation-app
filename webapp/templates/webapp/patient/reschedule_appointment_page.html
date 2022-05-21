@@ -1,0 +1,28 @@
+{% extends 'webapp/base.html' %}
+
+{% block title %}Dashboard{% endblock title %}
+
+{% block content %}
+<div class="main-grid-container">
+	{% include 'webapp/nav_sidebar.html' %}
+
+	<div class="main-content-area">
+        <form method='post' >
+            {% csrf_token %}
+		<h2>Reschedule Apppointment</h2>
+        
+      <select name="appointment_type" id="appointment_type">
+        <option value="clinical">Clinical Appointment</option>
+        <option value="teleconsultation">Teleconsultation Appointment</option>
+      </select>
+      <br>
+        <label for="sched">Start Date and Time:</label>
+        <input type="datetime-local" id="sched" name="sched">
+
+    <button type="submit" class="button-primary button-text"> Submit </button>
+</form>
+	</div>
+	{% include 'webapp/footer.html' %}
+</div>
+
+{% endblock content %}

@@ -106,7 +106,7 @@ p {
 /* ========== Breakpoints ========== */
 /* ========== Fixed Styles ========== */
 a {
-  color: #9bf6ff;
+  color: #000;
 }
 @media only screen and (min-width: 481px) and (max-width: 1024px) {
   a {
@@ -813,3 +813,7 @@ ion-icon {
 }
 
 /*# sourceMappingURL=style.css.map */
+.calendar-box {
+  background-color: rgba(255, 255, 255, 0.616);
+
+}
