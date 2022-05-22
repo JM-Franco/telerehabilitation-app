@@ -265,13 +265,24 @@ def account_request_action(request, action, pk):
     print(account_request.role)
     if not Account.objects.filter(email=account_request.email).exists():
         if action == "approve":
-            Account.objects.create(
+            ac = Account.objects.create(
                 email=account_request.email,
                 role=account_request.role,
                 password=make_password(temp_pass),
             )
             account_request.status = "approved"
             account_request.save(update_fields=["status"])
+
+            if account_request.role == 'P':
+                account_fk = PatientProfile.objects.create(account_id=ac.id)
+                account_fk.save()
+            elif account_request.role == 'PT':
+                account_fk = PhysicalTherapistProfile.objects.create(account_id=ac.id)
+                account_fk.save()
+            elif account_request.role == 'SA':
+                account_fk = SystemAdminProfile.objects.create(account_id=ac.id)
+                account_fk.save()
+
         elif action == "deny":
             account_request.status = "denied"
             account_request.save(update_fields=["status"])
