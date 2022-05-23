@@ -1,6 +1,5 @@
 {% extends 'webapp/base.html' %} {% block title %}Appointments{% endblock title%} {% block content %}
 <div class="main-grid-container">
-<<<<<<< HEAD
   {% include 'webapp/nav_sidebar.html' %}
   <div class="main-content-area">
     <h1 class="main-content-title">Appointments</h1>
@@ -237,177 +236,6 @@
     </div>
   </div>
   {% include 'webapp/footer.html' %}
-=======
-    {% include 'webapp/nav_sidebar.html' %}
-	<div class="main-content-area">
-		<h1 class="main-content-title">Appointments</h1>
-		<form class="search" x-data="{ open: false }" >
-			<div class="dropdown">
-				<button class="dropdown-button" type="button" @click="open = !open">
-					<ion-icon name="filter-outline"></ion-icon>
-					<p>Filters</p>
-				</button>
-			</div>
-			<div class="filter-menu" style="grid-template-columns: repeat(2, 1fr);" x-show="open" @click.outside="open = false"  x-transition x-cloak>
-				<div class="filter-menu-section">
-					<p class="filter-menu-section-title">Roles</p>
-					<div class="filter-menu-item">
-						<p>System Admin</p>
-						<div class="toggle-active">
-							<label class="switch">
-								<input value="SA" name="filter" type="checkbox" checked>
-								<span class="slider"></span>
-							</label>	
-						</div>
-					</div>
-					<div class="filter-menu-item">
-						<p>Physical Therapist</p>
-						<div class="toggle-active">
-							<label class="switch">
-								<input value="PT" name="filter" type="checkbox" checked>
-								<span class="slider"></span>
-							</label>	
-						</div>
-					</div>
-					<div class="filter-menu-item">
-						<p>Patient</p>
-						<div class="toggle-active">
-							<label class="switch">
-								<input value="P" name="filter" type="checkbox" checked>
-								<span class="slider"></span>
-							</label>	
-						</div>
-					</div>
-				</div>
-				<div class="filter-menu-section">
-					<p class="filter-menu-section-title"> Status </p>
-					<div class="filter-menu-item">
-						<p>Active</p>
-						<div class="toggle-active">
-							<label class="switch">
-								<input value="Active" name="filter" type="checkbox" checked>
-								<span class="slider"></span>
-							</label>
-						</div>
-					</div>
-					<div class="filter-menu-item">
-						<p>Inactive</p>
-						<div class="toggle-active">
-							<label class="switch">
-								<input value="Inactive" name="filter" type="checkbox" checked>
-								<span class="slider"></span>
-							</label>
-						</div>
-					</div>
-				</div>
-			</div>
-			<input name="textfilter" class="search-bar" type="text"  placeholder="Search...">
-			<!-- <div> -->
-			<!-- 	<ion-icon name="settings-outline"></ion-icon> -->
-			<!-- </div> -->
-			<input type="submit" hidden />
-		</form>
-		<div>
-			<div id="">
-				{% for appointments_request in appointments_requests %}
-        
-
-          <div x-data="{ open: true }" x-show="open" x-transition.duration.500ms class="appointment-requests-item" >
-            <div class="appointment-item">
-              <div class="name" style="margin-right: 50px; margin-left: -50px;">
-                <h6 >Name</h6>
-                <p>{{appointments_request.patient.account.first_name}} {{appointments_request.patient.account.last_name}}</p>
-              </div>
-              <div class="name" style="margin-right: 50px;">
-                <h6>Status</h6>
-                <p>{{appointments_request.status}}</p>
-              </div>
-              <div class="name" style="margin-right: 50px;">
-                <h6>Time</h6>
-                <p>{{appointments_request.start_time}} <br> {{appointments_request.end_time}}</p>
-              </div>
-              <div class="name"style="margin-right: 50px;" >
-                <h6>Type</h6>
-                <p>{{appointments_request.type}} </p>
-              </div>
-            </div>
-          {% if appointments_request.status == 'accepted' %}
-          <div @click="open = false" hx-trigger="click" hx-post="{% url 'webapp:appointments_request_action' action='reschedule' id=appointments_request.id  %}">
-            <ion-icon class="accept" name="clipboard-outline"></ion-icon>
-          </div>
-          <div @click="open = false" hx-trigger="click" hx-post="{% url 'webapp:appointments_request_action' action='deny' id=appointments_request.id  %}">
-            <ion-icon class="deny" name="close-outline"></ion-icon>
-          </div>
-          {% elif appointments_request.status == 'reschedule' %}
-          <div @click="open = false" hx-trigger="click" hx-post="{% url 'webapp:appointments_request_action' action='approve' id=appointments_request.id  %}">
-            <ion-icon class="accept" name="checkmark-outline"></ion-icon>
-          </div>
-          <div @click="open = false" hx-trigger="click" hx-post="{% url 'webapp:appointments_request_action' action='deny' id=appointments_request.id  %}">
-            <ion-icon class="deny" name="close-outline"></ion-icon>
-          </div> {% elif appointments_request.status == 'cancelled' %} <div @click="open = false" hx-trigger="click" hx-post="{% url 'webapp:appointments_request_action' action='deny' id=appointments_request.id  %}" style="pointer-events: none">
-            <ion-icon class="deny" name="close-outline"></ion-icon>
-          </div>
-          {% else %}
-          <div @click="open = false" hx-trigger="click" hx-post="{% url 'webapp:appointments_request_action' action='approve' id=appointments_request.id  %}">
-            <ion-icon class="accept" name="checkmark-outline"></ion-icon>
-          </div>
-          <div @click="open = false" hx-trigger="click" hx-post="{% url 'webapp:appointments_request_action' action='reschedule' id=appointments_request.id  %}">
-            <ion-icon class="accept" name="clipboard-outline"></ion-icon>
-          </div>
-          <div @click="open = false" hx-trigger="click" hx-post="{% url 'webapp:appointments_request_action' action='deny' id=appointments_request.id  %}">
-            <ion-icon class="deny" name="close-outline"></ion-icon>
-          </div>
-          {% endif %}
-        </div> 
-				{% empty %}
-					<div style="display: flex; justify-content: cneter">
-						<h3>No results found</h3>
-					</div>
-				{% endfor %}
-			</div>
-			<!-- Account Detail Modal -->
-			<div class="modal" x-show="accountmodal" x-cloak>
-				<div class="modal-bg-profile" x-show="accountmodal" x-transition.opacity.duration.300ms>
-					<div class="profile-page-grid-container">
-						<div class="profile-page-card-grid-container">
-							<div id="accountdetail" class="profile-page-card" style="z-index: 0" @click.away="accountmodal = false; $dispatch('body-scroll', {});" x-show="accountmodal" x-transition.scale.duration.300ms>
-								<div class="profile-picture"></div>
-								<h3 class="name"></h3>
-								<div class="account-type"><h6></h6></div>
-
-								<div class="profile-page-card-body">
-									<div class="info-group">
-										<h6 class="label">Birthdate</h6>
-										<p class="info"></p>
-									</div>
-									<div class="info-group">
-										<h6 class="label">Age</h6>
-										<p class="info"></p>
-									</div>
-									<div class="info-group">
-										<h6 class="label">Sex</h6>
-										<p class="info"></p>
-									</div>
-									<div class="info-group">
-										<h6 class="label">Email</h6>
-										<p class="info"></p>
-									</div>
-									<div class="info-group">
-										<h6 class="label">Phone Number</h6>
-										<p class="info"></p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-
-	</div>
-    {% include 'webapp/footer.html' %}
->>>>>>> b9fd8f9d73e8e03052752c322583a5f40b539b6d
 </div>
 
 <!--<div class="modal" x-data="{ open: false }" x-show="open" @body-scroll="document.body.style.overflowY = open ? 'hidden' : ''" x-init="() => { setTimeout(() => { open = true; $dispatch('body-scroll', {}) }, 500); };">-->
@@ -428,7 +256,6 @@
 <!--</div>-->
 
 <script>
-<<<<<<< HEAD
   function search() {
     console.log(document.querySelector("#filter").value);
     let filter = document.getElementById("filter").value.toUpperCase();
@@ -443,21 +270,5 @@
       }
     }
   }
-=======
-	function search() {
-        console.log(document.querySelector("#filter").value)
-        let filter = document.getElementById('filter').value.toUpperCase();
-        let results = document.getElementsByClassName('accounts-item');
-
-        for (let i=0; i<(results.length); i++) {
-            let name = results[i].querySelector('.name p').innerText;
-            if (name.toUpperCase().includes(filter)){
-                results[i].style.display = '';
-            } else {
-                results[i].style.display = 'none';
-            } 
-        }
-    }
->>>>>>> b9fd8f9d73e8e03052752c322583a5f40b539b6d
 </script>
 {% endblock content %}

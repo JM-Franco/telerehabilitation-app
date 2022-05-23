@@ -138,7 +138,7 @@ class Appointment(models.Model):
     patient= models.ForeignKey(PatientProfile, default=None, on_delete=models.CASCADE)
     pt = models.ForeignKey(PhysicalTherapistProfile, default=None, on_delete=models.CASCADE)
     type = models.CharField(max_length=16, choices=[('teleconsultation', 'teleconsultation'), ('clinical', 'Clinical')], default='teleconsultation')
-    status = models.CharField(max_length=10, choices=[('pending', 'Pending'), ('accepted', 'Accepted'), ('reschedule', 'Reschedule'), ('cancelled', 'Cancelled')], default='pending')
+    status = models.CharField(max_length=10, choices=[('pending', 'Pending'), ('accepted', 'Accepted'), ('reschedule', 'Reschedule'), ('cancelled', 'Cancelled'), ('finished', 'Finished')], default='pending')
     title = models.TextField(default="text title")
     description = models.TextField(default="text description")
     start_time = models.DateTimeField()

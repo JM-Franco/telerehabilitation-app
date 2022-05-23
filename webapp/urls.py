@@ -20,7 +20,7 @@ urlpatterns = [
     path("active_patients/", views.active_patients, name="active_patients"),
     path("inactive_patients/", views.inactive_patients, name="inactive_patients"),
     # PT-related
-    path("calendar/", views.CalendarViewNew.as_view(), name="calendar"),
+    path("calendar/", views.CalendarViewPT.as_view(), name="calendar"),
     path("calendar/new", views.appointment, name="new_appointment"),
     path("calendar/edit/(?P<event_id>\d+)/$", views.appointment, name="edit_appointment"),
     path("patients/", views.patients, name="patients"),
