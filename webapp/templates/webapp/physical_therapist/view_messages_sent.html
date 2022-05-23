@@ -1,0 +1,42 @@
+{% extends 'webapp/base.html' %}
+
+{% block title %}Appointments{% endblock title %}
+
+{% block content %}
+<div class="main-grid-container">
+	{% include 'webapp/nav_sidebar.html' %}
+
+
+	<div class="main-content-area">
+		<h1>Sent</h1>
+        <div id="accounts">
+
+          {% with selected="my string" %}
+          {% endwith %}
+            {% for msg in sent_messages %}
+            <div class="accounts-item">
+            <div class="name">
+                <h6>Sent</h6>
+               
+            </div>
+              <div class="name">
+                <h6>Body</h6>
+                <p>{{msg.text}}</p>
+              </div>
+              <div class="name">
+                <h6>Time</h6>
+                <p>{{msg.date_sent}}</p>
+              </div>
+            </div>
+            {% empty %} Nada {% endfor %}
+
+
+          </div>
+          <br>
+
+		</p>
+	</div>
+	{% include 'webapp/footer.html' %}
+</div>
+
+{% endblock content %}

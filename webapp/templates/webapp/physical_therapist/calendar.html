@@ -1,0 +1,62 @@
+{% extends 'webapp/base.html' %}
+{% load static %}
+{% block title %}Calendar{% endblock title %}
+
+{% block extracss %} <link href="{% static 'css/calendar.css' %}" rel="stylesheet" />{% endblock extracss %}
+
+{% block content %}
+
+<div class="main-grid-container">
+	{% include 'webapp/nav_sidebar.html' %}
+	<div class="main-content-area">
+		<h1>Calendar</h1>
+	
+        <div id="container">
+
+            <!-- <div class="calendar-box">{{ calendar }}</div> -->
+            <div class="calendar-box">
+                <div id="calendar"></div>
+            </div>
+        </div>
+	
+	</div>
+</div>
+
+{% block extrascripts %}
+  <script src="{% static 'js/main.js' %}"></script>
+  <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var today = new Date();
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          
+          headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay,list'
+          },
+          initialDate: today,
+          navLinks: true, // can click day/week names to navigate views
+          selectable: true,
+          selectMirror: true,
+          
+
+          eventClick: function(arg) {
+            console.log(arg.event._def.extendedProps.link.match(/href="([^"]*)/)[1])
+            window.open(arg.event._def.extendedProps.link.match(/href="([^"]*)/)[1]);
+          },
+
+
+
+          events: {{ events|safe }},        
+
+        });
+
+        calendar.render();
+      });
+
+  </script>
+{% endblock extrascripts %}
+
+{% endblock content %}

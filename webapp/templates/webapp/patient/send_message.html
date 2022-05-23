@@ -16,7 +16,7 @@
 				<input type="text" name="text">
 				<select name="pt_id" id="pt_id">
 					{% for account in pt_accounts %}
-					  <option value="{{account.id}}">{{account.account_ptr.first_name}} {{account.account_ptr.last_name}}</option>
+					  <option value="{{account.id}}">{{account.account.first_name}} {{account.account.last_name}}</option>
 					{% endfor %}
 				  </select>
 

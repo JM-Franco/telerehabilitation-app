@@ -1,0 +1,49 @@
+{% extends 'webapp/base.html' %}
+
+{% block title %}Messages{% endblock title %}
+
+{% block content %}
+<div class="main-grid-container">
+	{% include 'webapp/nav_sidebar.html' %}
+
+
+	<div class="main-content-area">
+		<h1>{{ patient }}</h1>
+        <div id="accounts">
+
+          {% with selected="my string" %}
+          {% endwith %}
+            {% for msg in received_messages %}
+            <div class="accounts-item">
+            <div class="name">
+                <h6>From</h6>
+                <p>{{msg.sender.first_name}} {{msg.sender.last_name}}</p>
+            </div>
+              <div class="name">
+                <h6>Body</h6>
+                <p>{{msg.text}}</p>
+              </div>
+              <div class="name">
+                <h6>Time</h6>
+                <p>{{msg.date_sent}}</p>
+              </div>
+            </div>
+            {% empty %} Nada {% endfor %}
+
+
+          </div>
+          <br>
+      <a
+      class="button-primary button-text"
+      href="{% url 'webapp:pt_send_message'  %}"
+    >
+     Reply
+    </a>
+
+
+		</p>
+	</div>
+	{% include 'webapp/footer.html' %}
+</div>
+
+{% endblock content %}

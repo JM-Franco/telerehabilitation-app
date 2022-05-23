@@ -8,7 +8,7 @@
 
 
 	<div class="main-content-area">
-		<h1>Messages</h1>
+		<h1>{{ doctor }}</h1>
         <div id="accounts">
             {% for msg in received_messages %}
             <div class="accounts-item">
@@ -27,30 +27,15 @@
             </div>
             {% empty %} Nada {% endfor %}
 
-            {% for msg in sent_messages %}
-            <div class="accounts-item">
-            <div class="name">
-                <h6>Sent</h6>
-                
-            </div>
-              <div class="name">
-                <h6>Body</h6>
-                <p>{{msg.text}}</p>
-              </div>
-              <div class="name">
-                <h6>Time</h6>
-                <p>{{msg.date_sent}}</p>
-              </div>
-            </div>
-            {% empty %} Nada {% endfor %}
+
           </div>
+          <br>
       <a
       class="button-primary button-text"
       href="/send_message"
     >
      Reply
     </a>
-
 
 		</p>
 	</div>
