@@ -94,7 +94,11 @@ def edit_profile(request, pk):
     return render(request, "webapp/edit_profile.html", data)
 
 
+<<<<<<< Updated upstream:telerehab_app/webapp/views.py
 @login_required(login_url="/")
+=======
+@login_required(login_url='/')
+>>>>>>> Stashed changes:webapp/views.py
 def dashboard(request):
     user = request.user
     data = {"user": user}
@@ -106,13 +110,31 @@ def dashboard(request):
 
 @login_required(login_url="/")
 @allowed_users(allowed_roles=["SA"])
+def active_patients(request):
+    active_patients = Account.objects.filter('is_active'==True).all()
+    data = {"active_patients": allowed_users}
+    return render(request, "webapp/sytem_admin/active_patients.html", data)
+
+@login_required(login_url="/")
+@allowed_users(allowed_roles=["SA"])
+def inactive_patients(request):
+    inactive_patients = Account.objects.filter('is_active'==False).all()
+    data = {"inactive_patients": inactive_patients}
+    return render(request, "webapp/system_admin/inactive_patients.html", data)
+
+@login_required(login_url="/")
+@allowed_users(allowed_roles=["SA"])
 def account_requests(request):
     account_requests = AccountRequest.objects.filter(status="pending")
     data = {"account_requests": account_requests}
     return render(request, "webapp/system_admin/account_requests.html", data)
 
+<<<<<<< Updated upstream:telerehab_app/webapp/views.py
 
 @login_required(login_url="/")
+=======
+@login_required(login_url='/')
+>>>>>>> Stashed changes:webapp/views.py
 @allowed_users(allowed_roles=["SA"])
 def accounts(request):
     accounts = Account.objects.all().order_by("-is_active")

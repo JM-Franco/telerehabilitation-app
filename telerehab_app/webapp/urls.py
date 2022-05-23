@@ -17,6 +17,8 @@ urlpatterns = [
     # SA-related
     path("account_requests/", views.account_requests, name="account_requests"),
     path("accounts/", views.accounts, name="accounts"),
+    path("active_patients/", views.active_patients, name="active_patients"),
+    path("inactive_patients/", views.inactive_patients, name="inactive_patients"),
     # PT-related
     path("patients/", views.patients, name="patients"),
     path("appointments/", views.appointments, name="appointments"),
