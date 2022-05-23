@@ -228,6 +228,7 @@ def appointment(request, event_id=None):
         return HttpResponseRedirect(reverse('webapp:calendar'))
     return render(request, 'webapp/physical_therapist/new_appointment.html', {'form': form})
 
+<<<<<<< HEAD
 class CalendarViewNew(generic.View):
     template_name = "webapp/physical_therapist/calendar.html"
     form_class = AppointmentForm
@@ -257,6 +258,8 @@ class CalendarViewNew(generic.View):
         return render(request, self.template_name, context)
 
 
+=======
+>>>>>>> b9fd8f9d73e8e03052752c322583a5f40b539b6d
 # P-related views
 
 @login_required(login_url="/")
@@ -521,5 +524,39 @@ def p_search_results(request):
     return render(request, "partials/p_search_results.html", data)
 
 
+<<<<<<< HEAD
 
 
+=======
+class CalendarViewNew(generic.View):
+    template_name = "webapp/physical_therapist/calendar.html"
+    form_class = AppointmentForm
+
+    def get(self, request, *args, **kwargs):
+        forms = self.form_class()
+
+        pt = PhysicalTherapistProfile.objects.filter(account_id=request.user.id).get()
+        appointments = Appointment.objects.filter(status="accepted").filter(pt_id = pt.id).exclude(status="cancelled")
+        apt_list = []
+        # start: '2020-09-16T16:00:00'
+        for apt in appointments:
+            print(apt.start_time)
+            details = f"{apt.patient.account.first_name.capitalize()} {apt.patient.account.last_name.capitalize()} - {apt.type}"
+            fixed_time_start = apt.start_time + timedelta(hours=8)
+            fixed_time_end = apt.end_time + timedelta(hours=8)
+            
+            apt_list.append(
+                {
+                    "title": details,
+                    "link":  apt.get_html_url,
+                    "start": fixed_time_start.strftime("%Y-%m-%dT%H:%M:%S"),
+                    "end": fixed_time_end.strftime("%Y-%m-%dT%H:%M:%S"),
+                }
+            )
+        context = {"events": apt_list}
+        return render(request, self.template_name, context)
+
+
+# Calendar funcs
+
+>>>>>>> b9fd8f9d73e8e03052752c322583a5f40b539b6d
