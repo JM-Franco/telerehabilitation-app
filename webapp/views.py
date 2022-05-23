@@ -116,6 +116,20 @@ def accounts(request):
     data = {'accounts':accounts}
     return render(request, 'webapp/system_admin/accounts.html', data)
 
+@login_required(login_url='/')
+@allowed_users(allowed_roles=['SA'])
+def active_patients(request):
+    accounts = Account.objects.all().objects.filter(is_active=True)
+    data = {'active_patients':active_patients}
+    return render(request, "webapp/system_admin/active_patients.html", data)
+
+@login_required(login_url='/')
+@allowed_users(allowed_roles=['SA'])
+def inactive_patients(request):
+    accounts = Account.objects.all().objects.filter(is_active=True)
+    data = {'inactive_patients':inactive_patients}
+    return render(request, "webapp/system_admin/inactive_patients.html", data)
+
 # PT-related views
 
 @login_required(login_url='/')
