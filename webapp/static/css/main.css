@@ -1460,6 +1460,8 @@ A VERTICAL event
     position: relative;
   }
 
-  .margin-below {
-   margin-bottom: 2px; 
+  .resched-button {
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
   }

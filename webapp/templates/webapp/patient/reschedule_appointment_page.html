@@ -7,20 +7,23 @@
 	{% include 'webapp/nav_sidebar.html' %}
 
 	<div class="main-content-area">
-        <form method='post' >
-            {% csrf_token %}
-		<h2>Reschedule Apppointment</h2>
-        
-      <select name="appointment_type" id="appointment_type">
-        <option value="clinical">Clinical Appointment</option>
-        <option value="teleconsultation">Teleconsultation Appointment</option>
-      </select>
-      <br>
-        <label for="sched">Start Date and Time:</label>
-        <input type="datetime-local" id="sched" name="sched">
+    <h1>Reschedule Apppointment</h1>
+<div class="request-appointment-div">
+  <form method='post' >
+  {% csrf_token %}
+  <h6>Appointment Type</h6>
+  <select name="appointment_type" id="appointment_type">
+    <option value="clinical">Clinical Appointment</option>
+    <option value="teleconsultation">Teleconsultation Appointment</option>
+  </select>
+  <br>
+    <h6>Start Date and Time</h6>
+    <input type="datetime-local" id="sched" name="sched">
 
-    <button type="submit" class="button-primary button-text"> Submit </button>
+<hr>
+<button type="submit" class="button-primary button-text" > Reschedule Appointment </button>
 </form>
+</div>
 	</div>
 	{% include 'webapp/footer.html' %}
 </div>

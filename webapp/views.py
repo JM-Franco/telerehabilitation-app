@@ -149,7 +149,6 @@ def pt_appointments(request):
     pt = PhysicalTherapistProfile.objects.filter(account_id=request.user.id).get()
     appointments_requests = Appointment.objects.filter(pt_id = pt.id).exclude(Q(status="cancelled") | Q(status="finished"))
     
-    
     # Check if appointment is done
     for apt in appointments_requests:
         # if true apt has passed
@@ -330,12 +329,6 @@ def view_messages_sent(request, user_id):
 @login_required(login_url='/')
 @allowed_users(allowed_roles=['P'])
 def appointments_page(request):
-    return render(request, 'webapp/patient/appointments.html')
-
-
-@login_required(login_url='/')
-@allowed_users(allowed_roles=['P'])
-def view_appointments(request):
     patient = PatientProfile.objects.filter(account_id=request.user.id).get()
     appointments_data = Appointment.objects.filter(patient_id = patient.id).exclude(Q(status="cancelled") | Q(status="finished"))
 
@@ -347,7 +340,7 @@ def view_appointments(request):
             apt.save()
 
     data = {'appointments':appointments_data}
-    return render(request, 'webapp/patient/view_appointments.html', data)
+    return render(request, 'webapp/patient/appointments.html', data)
 
 @login_required(login_url='/')
 @allowed_users(allowed_roles=['P'])
@@ -367,7 +360,7 @@ def request_appointment(request):
         data.start_time = request.POST.get('sched')
         data.end_time = request.POST.get('sched')
         data.save()
-        return redirect(reverse('webapp:view_appointments'))
+        return redirect(reverse('webapp:appointments_page'))
 
     return render(request, 'webapp/patient/request_appointment_page.html', data)
 
@@ -383,7 +376,7 @@ def resched_appointment(request, request_id):
         appointment.start_time = request.POST.get('sched')
         appointment.end_time = request.POST.get('sched') 
         appointment.save()
-        return redirect(reverse('webapp:view_appointments'))
+        return redirect(reverse('webapp:appointments_page'))
 
     return render(request, 'webapp/patient/reschedule_appointment_page.html')
 

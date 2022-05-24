@@ -5,10 +5,9 @@
 {% block content %}
 <div class="main-grid-container">
 	{% include 'webapp/nav_sidebar.html' %}
-
-
 	<div class="main-content-area">
-		<h1>{{ doctor }}</h1>
+		<h1>Received Messages</h1>
+    <hr>
         <div id="accounts">
             {% for msg in received_messages %}
             <div class="accounts-item">
@@ -27,9 +26,8 @@
             </div>
             {% empty %} Nada {% endfor %}
 
-
           </div>
-          <br>
+          <hr>
       <a
       class="button-primary button-text"
       href="/send_message"

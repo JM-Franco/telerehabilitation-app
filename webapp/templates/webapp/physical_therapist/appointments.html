@@ -102,13 +102,16 @@
             </div>
             <div class="name" style="margin-right: 50px">
               <h6>Status</h6>
+              {% if appointments_request.status == "reschedule" %}
+              <p>For reschedule</p>
+              {% else %}
               <p>{{appointments_request.status}}</p>
+              {% endif %}
             </div>
             <div class="name" style="margin-right: 50px">
               <h6>Time</h6>
               <p>
-                {{appointments_request.start_time}} <br />
-                {{appointments_request.end_time}}
+                {{appointments_request.start_time}}
               </p>
             </div>
             <div class="name" style="margin-right: 50px">
@@ -155,6 +158,13 @@
           >
             <ion-icon class="deny" name="close-outline"></ion-icon>
           </div>
+          {% elif appointments_request.status == 'finished' %}
+          <div
+
+          style="pointer-events: none"
+        >
+          <ion-icon class="deny" name="close-outline"></ion-icon>
+        </div>
           {% else %}
           <div
             @click="open = false"
