@@ -6,9 +6,9 @@
 <div class="main-grid-container">
 	{% include 'webapp/nav_sidebar.html' %}
 
-
 	<div class="main-content-area">
-		<h1>Sent</h1>
+		<h1>Sent Messages</h1>
+    <hr>
         <div id="accounts">
 
           {% with selected="my string" %}
@@ -30,9 +30,14 @@
             </div>
             {% empty %} Nada {% endfor %}
 
-
           </div>
-          <br>
+          <hr>
+          <a
+          class="button-primary button-text"
+          href="/send_message"
+        >
+         Send Message
+        </a>
 
 		</p>
 	</div>

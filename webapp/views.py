@@ -17,6 +17,7 @@ from .decorators import *
 from .utils import *
 import calendar
 import re
+import pytz
 from datetime import timedelta, date
 from datetime import datetime as dt
 import datetime
@@ -146,7 +147,15 @@ def patients(request):
 @allowed_users(allowed_roles=['PT'])
 def pt_appointments(request):
     pt = PhysicalTherapistProfile.objects.filter(account_id=request.user.id).get()
-    appointments_requests = Appointment.objects.filter(pt_id = pt.id).exclude(status="cancelled")
+    appointments_requests = Appointment.objects.filter(pt_id = pt.id).exclude(Q(status="cancelled") | Q(status="finished"))
+    
+    # Check if appointment is done
+    for apt in appointments_requests:
+        # if true apt has passed
+        if dt.now().utcnow().replace(tzinfo=pytz.UTC) + timedelta(hours=8) > apt.end_time + timedelta(hours=8):  
+            apt.status = "finished"
+            apt.save()
+
     data = {"appointments_requests": appointments_requests}
     return render(request, 'webapp/physical_therapist/appointments.html', data)
 
@@ -215,6 +224,8 @@ def pt_view_messages_sent(request, user_id):
     data = {"sent_messages" : sent_messages, 'patient' : patient, 'id' :user_id}
     return render(request, 'webapp/physical_therapist/view_messages_sent.html', data)
 
+@login_required(login_url='/')
+@allowed_users(allowed_roles=['PT'])
 def appointment(request, event_id=None):
     instance = Appointment()
     if event_id:
@@ -228,15 +239,18 @@ def appointment(request, event_id=None):
         return HttpResponseRedirect(reverse('webapp:calendar'))
     return render(request, 'webapp/physical_therapist/new_appointment.html', {'form': form})
 
-class CalendarViewNew(generic.View):
+class CalendarViewPT(generic.View):
     template_name = "webapp/physical_therapist/calendar.html"
     form_class = AppointmentForm
 
     def get(self, request, *args, **kwargs):
         forms = self.form_class()
-
-        pt = PhysicalTherapistProfile.objects.filter(account_id=request.user.id).get()
-        appointments = Appointment.objects.filter(status="accepted").filter(pt_id = pt.id).exclude(status="cancelled")
+        if request.user.role == "PT":
+            pt = PhysicalTherapistProfile.objects.filter(account_id=request.user.id).get()
+            appointments = Appointment.objects.filter(status="accepted").filter(pt_id = pt.id).exclude(status="cancelled")
+        elif request.user.role == "P":
+            p = PatientProfile.objects.filter(account_id=request.user.id).get()
+            appointments = Appointment.objects.filter(status="accepted").filter(patient_id = p.id).exclude(status="cancelled")
         apt_list = []
         # start: '2020-09-16T16:00:00'
         for apt in appointments:
@@ -288,7 +302,7 @@ def send_message(request):
         data.receiver_id = pt.account.id
         data.sender_id = request.user.id
         data.save()
-        return redirect('/')
+        return redirect(reverse('webapp:messages'))
     pt_accounts = PhysicalTherapistProfile.objects.all()
     data = {'pt_accounts':pt_accounts}
     return render(request, 'webapp/patient/send_message.html', data)
@@ -315,16 +329,18 @@ def view_messages_sent(request, user_id):
 @login_required(login_url='/')
 @allowed_users(allowed_roles=['P'])
 def appointments_page(request):
-    return render(request, 'webapp/patient/appointments.html')
-
-
-@login_required(login_url='/')
-@allowed_users(allowed_roles=['P'])
-def view_appointments(request):
     patient = PatientProfile.objects.filter(account_id=request.user.id).get()
-    appointments_data = Appointment.objects.filter(patient_id = patient.id).exclude(status="cancelled")
+    appointments_data = Appointment.objects.filter(patient_id = patient.id).exclude(Q(status="cancelled") | Q(status="finished"))
+
+    # Check if appointment is done
+    for apt in appointments_data:
+        # if true apt has passed
+        if dt.now().utcnow().replace(tzinfo=pytz.UTC) + timedelta(hours=8) > apt.end_time + timedelta(hours=8):  
+            apt.status = "finished"
+            apt.save()
+
     data = {'appointments':appointments_data}
-    return render(request, 'webapp/patient/view_appointments.html', data)
+    return render(request, 'webapp/patient/appointments.html', data)
 
 @login_required(login_url='/')
 @allowed_users(allowed_roles=['P'])
@@ -344,7 +360,7 @@ def request_appointment(request):
         data.start_time = request.POST.get('sched')
         data.end_time = request.POST.get('sched')
         data.save()
-        return redirect(reverse('webapp:view_appointments'))
+        return redirect(reverse('webapp:appointments_page'))
 
     return render(request, 'webapp/patient/request_appointment_page.html', data)
 
@@ -358,9 +374,9 @@ def resched_appointment(request, request_id):
     
         appointment.status = "pending"
         appointment.start_time = request.POST.get('sched')
-        appointment.end_time = request.POST.get('sched')
+        appointment.end_time = request.POST.get('sched') 
         appointment.save()
-        return redirect(reverse('webapp:view_appointments'))
+        return redirect(reverse('webapp:appointments_page'))
 
     return render(request, 'webapp/patient/reschedule_appointment_page.html')
 

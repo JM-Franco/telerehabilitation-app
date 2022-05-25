@@ -197,11 +197,11 @@
     </a>
   </div>
   <div
-    class="nav-item {% if request.resolver_match.view_name == 'webapp:appointments' %}active{% endif %}"
+    class="nav-item {% if request.resolver_match.view_name == 'webapp:appointments_page' %}active{% endif %}"
   >
     <ion-icon class="nav-icon" name="calendar-outline"></ion-icon>
     <p>Appointments</p>
-    <a href="{% url 'webapp:appointments' %}">
+    <a href="{% url 'webapp:appointments_page' %}">
       <span
         style="
           position: absolute;

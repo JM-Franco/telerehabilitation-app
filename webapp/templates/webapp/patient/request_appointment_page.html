@@ -7,24 +7,28 @@
 	{% include 'webapp/nav_sidebar.html' %}
 
 	<div class="main-content-area">
-        <form method='post' >
-            {% csrf_token %}
-		<h2>Request Apppointment</h2>
-        
+    <h1>Request Apppointment</h1>
+    <div class="request-appointment-div">
+      <form method='post' >
+      {% csrf_token %}
+      <h6>Appointment Type</h6>
       <select name="appointment_type" id="appointment_type">
         <option value="clinical">Clinical Appointment</option>
         <option value="teleconsultation">Teleconsultation Appointment</option>
       </select>
       <br>
-        <label for="sched">Start Date and Time:</label>
+        <h6>Start Date and Time</h6>
         <input type="datetime-local" id="sched" name="sched">
+        <h6>Physical Therapist</h6>
       <select name="pt_chosen" id="pt_chosen">
       {% for account in pt_accounts %}
         <option value="{{account.id}}">{{account.first_name}} {{account.last_name}}</option>
       {% endfor %}
     </select>
+    <hr>
     <button type="submit" class="button-primary button-text" > Request Appointment </button>
 </form>
+</div>
 	</div>
 	{% include 'webapp/footer.html' %}
 </div>

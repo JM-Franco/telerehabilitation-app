@@ -1443,3 +1443,25 @@ A VERTICAL event
   .fc-theme-bootstrap a:not([href]) {
     color: inherit; /* natural color for navlinks */
   }
+
+  .message-div {
+    width: 80%; 
+    height: auto;
+    margin: 0 auto;
+    padding: 10px;
+    position: relative;
+  }
+
+  .request-appointment-div {
+    width: 50%; 
+    height: auto;
+    margin: 0 auto;
+    padding: 10px;
+    position: relative;
+  }
+
+  .resched-button {
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
+  }
