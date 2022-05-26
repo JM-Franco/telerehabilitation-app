@@ -108,6 +108,7 @@ def dashboard(request):
         pt = PhysicalTherapistProfile.objects.filter(account_id=user.id).get()
         clinic_hours = list(Clinic_Hours.objects.filter(pt_id=pt.id).order_by('id'))
         data = {'user': user, 'clinic_hours': clinic_hours}
+        print(clinic_hours)
     else:
         data = {'user':user}
     return render(request, 'webapp/dashboard.html', data)
