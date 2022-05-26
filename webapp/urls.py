@@ -20,15 +20,12 @@ urlpatterns = [
     path("active_patients/", views.active_patients, name="active_patients"),
     path("inactive_patients/", views.inactive_patients, name="inactive_patients"),
     # PT-related
-<<<<<<< HEAD
-    path("create_clinic_hours/<int:pk>", views.create_clinic_hours, name="create_clinic_hours"),
-    path("dashboard/edit_clinic_hours/<int:pk>", views.edit_clinic_hours, name="edit_clinic_hours"),
-    path("dashboard/delete_clinic_hours/<int:pk>", views.delete_clinic_hours, name="delete_clinic_hours"),
-=======
     path("calendar/", views.CalendarViewPT.as_view(), name="calendar"),
     path("calendar/new", views.appointment, name="new_appointment"),
     path("calendar/edit/(?P<event_id>\d+)/$", views.appointment, name="edit_appointment"),
->>>>>>> e384a7dc189c95ad573b32b46090bd9e74a7ed6d
+    path("create_clinic_hours/<int:pk>", views.create_clinic_hours, name="create_clinic_hours"),
+    path("dashboard/edit_clinic_hours/<int:pk>", views.edit_clinic_hours, name="edit_clinic_hours"),
+    path("dashboard/delete_clinic_hours/<int:pk>", views.delete_clinic_hours, name="delete_clinic_hours"),
     path("patients/", views.patients, name="patients"),
     path("appointments/", views.pt_appointments, name="pt_appointments"),
     path("teleconferencing/", views.teleconferencing, name="teleconferencing"),
