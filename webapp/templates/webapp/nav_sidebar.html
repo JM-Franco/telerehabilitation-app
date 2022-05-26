@@ -1,27 +1,22 @@
-<div
-  class="nav-sidebar"
-  x-data="{ profilemodal: false }"
-  @body-scroll="document.body.style.overflowY = profilemodal ? 'hidden' : ''"
->
+<div class="nav-sidebar" x-data="{ profilemodal: false }" @body-scroll="document.body.style.overflowY = profilemodal ? 'hidden' : ''">
   <div class="nav-item">
-    <div
-      class="profile-nav-item"
-      @click="profilemodal = true; $dispatch('body-scroll', {});"
-    >
-      <div class="profile-picture"></div>
-      <div class="profile-label">
-        <p>{{user.first_name}} {{user.last_name}}</p>
-        <!-- <a href="{% url 'webapp:profile_page' %}"> -->
-        <!--     <p>{{user.first_name}} {{user.last_name}}</p> -->
-        <!-- </a> -->
-        <p class="caption-text">{{user.get_role_display}}</p>
+      <div class="profile-nav-item" @click="profilemodal = true; $dispatch('body-scroll', {});">
+          <div class="profile-picture"></div>
+          <div class="profile-label">
+              <p>{{user.first_name}} {{user.last_name}}</p>
+              <!-- <a href="{% url 'webapp:profile_page' %}"> -->
+              <!--     <p>{{user.first_name}} {{user.last_name}}</p> -->
+              <!-- </a> -->
+              <p class="caption-text">
+                  {{user.get_role_display}}
+              </p>
+          </div>
       </div>
-    </div>
-    <div class="logout-icon">
-      <a href="{% url 'webapp:logout' %}">
-        <ion-icon name="log-out-outline"></ion-icon>
-      </a>
-    </div>
+      <div class="logout-icon">
+          <a href="{% url 'webapp:logout' %}">
+              <ion-icon name="log-out-outline"></ion-icon>		
+          </a>
+      </div>
   </div>
   <!-- <div class="nav-item {% if request.resolver_match.view_name == 'webapp:dashboard' %}active{% endif %}"> -->
   <!--     <ion-icon class="nav-icon" name="speedometer-outline"></ion-icon> -->
@@ -272,4 +267,5 @@
 
   <!-- User Profile Modal -->
   {% include 'webapp/profile_modal.html' %}
+  
 </div>
