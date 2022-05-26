@@ -1,0 +1,128 @@
+{% extends 'webapp/base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Create Clinic Hours - {{user.first_name}} {{user.last_name}}{% endblock title %}
+
+{% block content %}
+
+
+
+<div class="profile-page-grid-container">
+	<div class="profile-page-card-grid-container">
+		<form method="post" action="">
+			{% csrf_token %}
+			<div class="profile-page-card">
+				<h4 style="margin-bottom: 2vh;">Create Clinic Hours</h4>
+				<div class="profile-page-card-body">
+					<div class="info-group">
+						<h6 class="label">Weekday</h6>
+						<p class="info">{% render_field create_clinic_hours_form.weekday %}</p>
+					</div>
+					<div class="info-group">
+					</div>
+					<div class="info-group">
+						<h6 class="label">Start Time</h6>
+						<p class="info">{% render_field create_clinic_hours_form.hours_start type="time" %}</p>
+					</div>
+					<div class="info-group">
+						<h6 class="label">End Time</h6>
+						<p class="info">{% render_field create_clinic_hours_form.hours_end type="time" %}</p>
+					</div>
+					<div class="info-group" id="dynamic-group">
+						<form>
+							<div id="form_empty_layer">
+								<p>{{ create_clinic_hours_form.errors }}</p>
+							</div>
+							<button type="button" class="button-primary button-text" id="add-another">add hours</button> </br> </br>
+							<button type="button" class="button-primary button-text" id="delete-field" style="background-color: rgba(224, 73, 53, 0.912);">delete field</button> 
+							</br></br>
+							<input type="hidden" name="total_input_fields" placeholder="0"/>
+							<p>{{ create_clinic_hours_form.errors }}</p>
+						</form>
+					</div>
+			</div>
+			<div class="profile-button-group">
+				<div class="profile-button-section">
+					<button type="submit" class="button-primary button-text">Submit</button>
+				</div>
+				<div class="profile-button-section">
+                    <a class="button-primary button-text" href="{% url 'webapp:dashboard' %}">Back</a>
+                </div>
+			</div>
+			<input type="hidden" name="prevpath" value="{{ request.GET.prevpath }}"/>
+			<input type="submit" hidden />
+		</form>
+	</div>
+</div>
+
+<script>
+	// check how many times elements with this name attribute exist: extra_field_*
+	form_count = $('input[name*="extra_field_*"]').length;
+
+	// when the button 'add another' is clicked then create a new input element
+	$(document.body).on("click", "#add-another",function(e) {
+	start_time_div = $(`<div class="info-group">
+					  		<h6>Start Time</h6>
+							<input type="time" style="margin-bottom: 2vh;"/>
+					  	</div>`);
+	end_time_div = $(`<div class="info-group">
+							<h6>End Time</h6>
+							<input type="time" style="margin-bottom: 2vh;"/>
+						</div>`);
+	var max = 2;
+	if(form_count < max){
+		$("#add-another").show();
+		// add a name attribute with a corresponding number (form_count)
+		start_time_div.attr('name', 'extra_div_start_' + form_count);
+		end_time_div.attr('name', 'extra_div_end_' + form_count);
+
+		// append the new element in the html
+		$("#form_empty_layer").append(start_time_div);
+		$("#form_empty_layer").append(end_time_div);
+
+		console.log(form_count);
+		//set name attribute for appended element's time input
+		$(`#form_empty_layer > div:nth-child(${2 + (form_count * 2)}) > input[type=time]`).attr('name', 'extra_field_start_' + form_count);
+		$(`#form_empty_layer > div:nth-child(${3 + (form_count * 2)}) > input[type=time]`).attr('name', 'extra_field_end_' + form_count);
+		
+		// increment the form_count variable
+		form_count ++;
+	} 
+	if(form_count >= max){
+		$("#add-another").hide();
+	}
+	if(form_count > 0){
+		$("#delete-field").show();
+	}
+	// save the form_count to another input element
+	$("[name=total_input_fields]").val(form_count);
+
+	});
+
+	//function to delete dynamically generated fields
+	$("#dynamic-group").on("click", "#delete-field",function(e) {
+	// decrement the form_count variable
+	form_count --;
+
+	var min = 0;
+	if(form_count <= min){
+		$("#delete-field").hide();
+	}
+	if(form_count > min){
+		$("#delete-field").show();
+		$("#add-another").show();
+	}
+
+	console.log(form_count);
+	hour_start_div = document.querySelector(`#form_empty_layer > div:nth-child(${2 + (form_count * 2)})`);
+	hour_end_div = document.querySelector(`#form_empty_layer > div:nth-child(${3 + (form_count * 2)})`);
+
+	$(hour_start_div).remove();
+	$(hour_end_div).remove();
+	
+	// save the form_count to another input element 
+	$("[name=total_input_fields]").val(form_count);
+	});
+</script>
+
+{% endblock content %}

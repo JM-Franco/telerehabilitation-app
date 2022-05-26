@@ -18,6 +18,9 @@ urlpatterns = [
     path("account_requests/", views.account_requests, name="account_requests"),
     path("accounts/", views.accounts, name="accounts"),
     # PT-related
+    path("create_clinic_hours/<int:pk>", views.create_clinic_hours, name="create_clinic_hours"),
+    path("dashboard/edit_clinic_hours/<int:pk>", views.edit_clinic_hours, name="edit_clinic_hours"),
+    path("dashboard/delete_clinic_hours/<int:pk>", views.delete_clinic_hours, name="delete_clinic_hours"),
     path("patients/", views.patients, name="patients"),
     path("appointments/", views.appointments, name="appointments"),
     path("teleconferencing/", views.teleconferencing, name="teleconferencing"),

@@ -83,10 +83,10 @@ WSGI_APPLICATION = 'telerehab_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'telerehab_app',
+        'NAME': 'telerehab_app_main',
         # 'NAME': 'e_chart_test' <-- for testing purposes
         'USER': 'postgres',
-        'PASSWORD': '1234',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '5432' 
     }
