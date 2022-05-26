@@ -1,25 +1,33 @@
 {% extends 'webapp/base.html' %}
 
-{% block title %}Dashboard{% endblock title %}
+{% block title %}Message{% endblock title %}
 
 {% block content %}
 <div class="main-grid-container">
 	{% include 'webapp/nav_sidebar.html' %}
 	<div class="main-content-area">
 		<h1>Send Message</h1>
-		<div class="request-account-form-card">
+		<div class="message-div">
 			<form method='post'>
 				{% csrf_token %}
-				<h6>Subject</h6>
-				<input type="text" name="subject">
-				<h6>Text</h6>
-				<input type="text" name="text">
+				<h6>To</h6>
 				<select name="pt_id" id="pt_id">
 					{% for account in pt_accounts %}
-					  <option value="{{account.id}}">{{account.account_ptr.first_name}} {{account.account_ptr.last_name}}</option>
+					  <option value="{{account.id}}">{{account.account.first_name}} {{account.account.last_name}}</option>
 					{% endfor %}
 				  </select>
+				 <hr> 
+				<h6>Subject</h6>
+				<input type="text" name="subject">
+				<br>
+				<h6>Text</h6>
+				
+				<div class="form-group">
+					<textarea class="form-control" name="text" rows="3"></textarea>
+				</div>
 
+				  <br>
+				  <hr>
 				<div style="display: flex; justify-content: center">
 					<button type="submit" class="button-primary button-text" href="{% url 'webapp:login' %}"> Submit </button>
 				</div>

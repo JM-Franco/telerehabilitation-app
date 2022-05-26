@@ -106,7 +106,7 @@ p {
 /* ========== Breakpoints ========== */
 /* ========== Fixed Styles ========== */
 a {
-  color: #9bf6ff;
+  color: #000;
 }
 @media only screen and (min-width: 481px) and (max-width: 1024px) {
   a {
@@ -583,6 +583,7 @@ ion-icon {
 .main-grid-container .main-content-area .main-content-title {
   margin-bottom: 2.5rem;
 }
+
 .main-grid-container .main-content-area .account-requests-item {
   box-sizing: border-box;
   border-radius: 25px;
@@ -813,3 +814,68 @@ ion-icon {
 }
 
 /*# sourceMappingURL=style.css.map */
+.calendar-box {
+  background-color: rgba(255, 255, 255, 0.616);
+
+}
+
+.main-grid-container .main-content-area .appointment-requests-item {
+    box-sizing: border-box;
+    border-radius: 25px;
+    background-color: #6064d2;
+    color: white;
+    padding: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .main-grid-container .main-content-area .appointment-requests-item div {
+    display: flex;
+    align-items: left;
+    cursor: pointer;
+    border-radius: 15px;
+    transition: all 0.5s ease-in-out;
+    padding: 2px;
+  }
+  .main-grid-container .main-content-area .appointment-requests-item div:hover {
+    background-color: #6064d2;
+  }
+  .main-grid-container .main-content-area .appointment-requests-item div:first-of-type {
+    margin-left: auto;
+  }
+  .main-grid-container .main-content-area .appointment-requests-item div:not(:last-child) {
+    margin-right: auto;
+  }
+  .main-grid-container .main-content-area .appointment-requests-item div ion-icon {
+    font-size: 2rem;
+  }
+  .main-grid-container .main-content-area .appointment-requests-item div ion-icon.accept {
+    color: #caffbf;
+  }
+  .main-grid-container .main-content-area .appointment-requests-item div ion-icon.deny {
+    color: #ffadad;
+  }
+  .main-grid-container .main-content-area .appointment-requests-item:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+
+  .main-grid-container .main-content-area .appointment-item {
+    box-sizing: border-box;
+    border-radius: 25px;
+    background-color: #6064d2;
+    color: white;
+    padding: 4rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 1rem;
+    cursor: pointer;
+  }
+  .main-grid-container .main-content-area .appointment-item:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+  .main-grid-container .main-content-area .appointment-item .name, .main-grid-container .main-content-area .appointment-item .role, .main-grid-container .main-content-area .appointment-item .email {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start
+  }

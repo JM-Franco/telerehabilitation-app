@@ -1,22 +1,27 @@
-<div class="nav-sidebar" x-data="{ profilemodal: false }" @body-scroll="document.body.style.overflowY = profilemodal ? 'hidden' : ''">
+<div
+  class="nav-sidebar"
+  x-data="{ profilemodal: false }"
+  @body-scroll="document.body.style.overflowY = profilemodal ? 'hidden' : ''"
+>
   <div class="nav-item">
-      <div class="profile-nav-item" @click="profilemodal = true; $dispatch('body-scroll', {});">
-          <div class="profile-picture"></div>
-          <div class="profile-label">
-              <p>{{user.first_name}} {{user.last_name}}</p>
-              <!-- <a href="{% url 'webapp:profile_page' %}"> -->
-              <!--     <p>{{user.first_name}} {{user.last_name}}</p> -->
-              <!-- </a> -->
-              <p class="caption-text">
-                  {{user.get_role_display}}
-              </p>
-          </div>
+    <div
+      class="profile-nav-item"
+      @click="profilemodal = true; $dispatch('body-scroll', {});"
+    >
+      <div class="profile-picture"></div>
+      <div class="profile-label">
+        <p>{{user.first_name}} {{user.last_name}}</p>
+        <!-- <a href="{% url 'webapp:profile_page' %}"> -->
+        <!--     <p>{{user.first_name}} {{user.last_name}}</p> -->
+        <!-- </a> -->
+        <p class="caption-text">{{user.get_role_display}}</p>
       </div>
-      <div class="logout-icon">
-          <a href="{% url 'webapp:logout' %}">
-              <ion-icon name="log-out-outline"></ion-icon>		
-          </a>
-      </div>
+    </div>
+    <div class="logout-icon">
+      <a href="{% url 'webapp:logout' %}">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </a>
+    </div>
   </div>
   <!-- <div class="nav-item {% if request.resolver_match.view_name == 'webapp:dashboard' %}active{% endif %}"> -->
   <!--     <ion-icon class="nav-icon" name="speedometer-outline"></ion-icon> -->
@@ -27,87 +32,244 @@
   <!-- </div> -->
 
   {% if request.user.role == 'SA' %}
-      <div class="nav-item {% if request.resolver_match.view_name == 'webapp:account_requests' %}active{% endif %}">
-          <ion-icon class="nav-icon" name="reader-outline"></ion-icon>
-          <p>Requests</p>
-          <a href="{% url 'webapp:account_requests' %}">
-              <span style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1"></span>
-          </a>
-      </div>
-      <div class="nav-item {% if request.resolver_match.view_name == 'webapp:accounts' %}active{% endif %}">
-          <ion-icon class="nav-icon" name="people"></ion-icon>
-          <p>Accounts</p>
-          <a href="{% url 'webapp:accounts' %}">
-              <span style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1"></span>
-          </a>
-      </div>
+  <div
+    class="nav-item {% if request.resolver_match.view_name == 'webapp:account_requests' %}active{% endif %}"
+  >
+    <ion-icon class="nav-icon" name="reader-outline"></ion-icon>
+    <p>Requests</p>
+    <a href="{% url 'webapp:account_requests' %}">
+      <span
+        style="
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          z-index: 1;
+        "
+      ></span>
+    </a>
+  </div>
+  <div
+    class="nav-item {% if request.resolver_match.view_name == 'webapp:accounts' %}active{% endif %}"
+  >
+    <ion-icon class="nav-icon" name="people"></ion-icon>
+    <p>Accounts</p>
+    <a href="{% url 'webapp:accounts' %}">
+      <span
+        style="
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          z-index: 1;
+        "
+      ></span>
+    </a>
+  </div>
   {% elif request.user.role == 'PT' %}
-      <div class="nav-item {% if request.resolver_match.view_name == 'webapp:patients' %}active{% endif %}">
-          <ion-icon class="nav-icon" name="people-circle-outline"></ion-icon>
-          <p>Patients</p>
-          <a href="{% url 'webapp:patients' %}">
-              <span style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1"></span>
-          </a>
-      </div>
-      <div class="nav-item {% if request.resolver_match.view_name == 'webapp:appointments' %}active{% endif %}">
-          <ion-icon class="nav-icon" name="calendar-outline"></ion-icon>
-          <p>Appointments</p>
-          <a href="{% url 'webapp:appointments' %}">
-              <span style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1"></span>
-          </a>
-      </div>
-      <div class="nav-item {% if request.resolver_match.view_name == 'webapp:teleconferencing' %}active{% endif %}">
-          <ion-icon class="nav-icon" name="videocam-outline"></ion-icon>
-          <p>Teleconferencing</p>
-          <a href="{% url 'webapp:teleconferencing' %}">
-              <span style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1"></span>
-          </a>
-      </div>
-      <div class="nav-item {% if request.resolver_match.view_name == 'webapp:resources' %}active{% endif %}">
-          <ion-icon class="nav-icon" name="book-outline"></ion-icon>
-          <p>Resources</p>
-          <a href="{% url 'webapp:resources' %}">
-              <span style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1"></span>
-          </a>
-      </div>
-{% elif request.user.role == 'P' %}
-      <div class="nav-item {% if request.resolver_match.view_name == 'webapp:p_search' %}active{% endif %}">
-          <ion-icon class="nav-icon" name="search-outline"></ion-icon>
-          <p>Search</p>
+  <div
+    class="nav-item {% if request.resolver_match.view_name == 'webapp:patients' %}active{% endif %}"
+  >
+    <ion-icon class="nav-icon" name="people-circle-outline"></ion-icon>
+    <p>Patients</p>
+    <a href="{% url 'webapp:patients' %}">
+      <span
+        style="
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          z-index: 1;
+        "
+      ></span>
+    </a>
+  </div>
+  <div
+    class="nav-item {% if request.resolver_match.view_name == 'webapp:pt_appointments' %}active{% endif %}"
+  >
+    <ion-icon class="nav-icon" name="calendar-outline"></ion-icon>
+    <p>Appointments</p>
+    <a href="{% url 'webapp:pt_appointments' %}">
+      <span
+        style="
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          z-index: 1;
+        "
+      ></span>
+    </a>
+  </div>
+  <div
+    class="nav-item {% if request.resolver_match.view_name == 'webapp:teleconferencing' %}active{% endif %}"
+  >
+    <ion-icon class="nav-icon" name="videocam-outline"></ion-icon>
+    <p>Teleconferencing</p>
+    <a href="{% url 'webapp:teleconferencing' %}">
+      <span
+        style="
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          z-index: 1;
+        "
+      ></span>
+    </a>
+  </div>
+  <div
+    class="nav-item {% if request.resolver_match.view_name == 'webapp:resources' %}active{% endif %}"
+  >
+    <ion-icon class="nav-icon" name="book-outline"></ion-icon>
+    <p>Resources</p>
+    <a href="{% url 'webapp:resources' %}">
+      <span
+        style="
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          z-index: 1;
+        "
+      ></span>
+    </a>
+  </div>
+  <div
+    class="nav-item {% if request.resolver_match.view_name == 'webapp:calendar' %}active{% endif %}"
+  >
+    <ion-icon class="nav-icon" name="calendar-outline"></ion-icon>
+    <p>Calendar</p>
+    <a href="{% url 'webapp:calendar' %}">
+      <span
+        style="
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          z-index: 1;
+        "
+      ></span>
+    </a>
+  </div>
+  <div
+  class="nav-item {% if request.resolver_match.view_name == 'webapp:pt_messages' %}active{% endif %}"
+>
+  <ion-icon class="nav-icon" name="mail-outline"></ion-icon>
+  <p>Messages</p>
+  <a href="{% url 'webapp:pt_messages' %}">
+    <span
+      style="
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1;
+      "
+    ></span>
+  </a>
+</div>
+  {% elif request.user.role == 'P' %}
+  <div
+    class="nav-item {% if request.resolver_match.view_name == 'webapp:p_search' %}active{% endif %}"
+  >
+    <ion-icon class="nav-icon" name="search-outline"></ion-icon>
+    <p>Search</p>
     <a href="{% url 'webapp:p_search' %}">
-              <span style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1"></span>
-          </a>
-      </div>
-      <div class="nav-item {% if request.resolver_match.view_name == 'webapp:appointments' %}active{% endif %}">
-          <ion-icon class="nav-icon" name="calendar-outline"></ion-icon>
-          <p>Appointments</p>
-          <a href="{% url 'webapp:appointments' %}">
-              <span style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1"></span>
-          </a>
-      </div>
-      <div class="nav-item {% if request.resolver_match.view_name == 'webapp:p_records' %}active{% endif %}">
-          <ion-icon class="nav-icon" name="folder-open-outline"></ion-icon>
-          <p>Records</p>
+      <span
+        style="
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          z-index: 1;
+        "
+      ></span>
+    </a>
+  </div>
+  <div
+    class="nav-item {% if request.resolver_match.view_name == 'webapp:appointments_page' %}active{% endif %}"
+  >
+    <ion-icon class="nav-icon" name="calendar-outline"></ion-icon>
+    <p>Appointments</p>
+    <a href="{% url 'webapp:appointments_page' %}">
+      <span
+        style="
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          z-index: 1;
+        "
+      ></span>
+    </a>
+  </div>
+  <div
+    class="nav-item {% if request.resolver_match.view_name == 'webapp:p_records' %}active{% endif %}"
+  >
+    <ion-icon class="nav-icon" name="folder-open-outline"></ion-icon>
+    <p>Records</p>
     <a href="{% url 'webapp:p_records' %}">
-              <span style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1"></span>
-          </a>
-      </div>
-      <div class="nav-item {% if request.resolver_match.view_name == 'webapp:physical_therapists' %}active{% endif %}">
-        <ion-icon class="nav-icon" name="person-outline"></ion-icon>
-        <p>Physical Therapists</p>
-        <a href="{% url 'webapp:physical_therapists' %}">
-            <span style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1"></span>
-        </a>
-    </div>
-      <div class="nav-item {% if request.resolver_match.view_name == 'webapp:messages' %}active{% endif %}">
-          <ion-icon class="nav-icon" name="mail-outline"></ion-icon>
-          <p>Messages</p>
-          <a href="{% url 'webapp:messages' %}">
-              <span style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1"></span>
-          </a>
-      </div>
+      <span
+        style="
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          z-index: 1;
+        "
+      ></span>
+    </a>
+  </div>
+  <div
+    class="nav-item {% if request.resolver_match.view_name == 'webapp:physical_therapists' %}active{% endif %}"
+  >
+    <ion-icon class="nav-icon" name="person-outline"></ion-icon>
+    <p>Physical Therapists</p>
+    <a href="{% url 'webapp:physical_therapists' %}">
+      <span
+        style="
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          z-index: 1;
+        "
+      ></span>
+    </a>
+  </div>
+  <div
+    class="nav-item {% if request.resolver_match.view_name == 'webapp:messages' %}active{% endif %}"
+  >
+    <ion-icon class="nav-icon" name="mail-outline"></ion-icon>
+    <p>Messages</p>
+    <a href="{% url 'webapp:messages' %}">
+      <span
+        style="
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          z-index: 1;
+        "
+      ></span>
+    </a>
+  </div>
   {% endif %}
 
   <!-- User Profile Modal -->
-{% include 'webapp/profile_modal.html' %}
+  {% include 'webapp/profile_modal.html' %}
 </div>

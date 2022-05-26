@@ -17,23 +17,36 @@ urlpatterns = [
     # SA-related
     path("account_requests/", views.account_requests, name="account_requests"),
     path("accounts/", views.accounts, name="accounts"),
+    path("active_patients/", views.active_patients, name="active_patients"),
+    path("inactive_patients/", views.inactive_patients, name="inactive_patients"),
     # PT-related
+<<<<<<< HEAD
     path("create_clinic_hours/<int:pk>", views.create_clinic_hours, name="create_clinic_hours"),
     path("dashboard/edit_clinic_hours/<int:pk>", views.edit_clinic_hours, name="edit_clinic_hours"),
     path("dashboard/delete_clinic_hours/<int:pk>", views.delete_clinic_hours, name="delete_clinic_hours"),
+=======
+    path("calendar/", views.CalendarViewPT.as_view(), name="calendar"),
+    path("calendar/new", views.appointment, name="new_appointment"),
+    path("calendar/edit/(?P<event_id>\d+)/$", views.appointment, name="edit_appointment"),
+>>>>>>> e384a7dc189c95ad573b32b46090bd9e74a7ed6d
     path("patients/", views.patients, name="patients"),
-    path("appointments/", views.appointments, name="appointments"),
+    path("appointments/", views.pt_appointments, name="pt_appointments"),
     path("teleconferencing/", views.teleconferencing, name="teleconferencing"),
     path("resources", views.resources, name="resources"),
+    path('pt/messages/', views.pt_messages, name='pt_messages'),
+    path('pt/messages/view_messages/<int:user_id>/', views.pt_view_messages, name='pt_view_messages'),
+    path('pt/messages/view_messages_sent/<int:user_id>/', views.pt_view_messages_sent, name='pt_view_messages_sent'),
+    path('pt/send_message/', views.pt_send_message, name='pt_send_message'),
     # P-related
     path("p_search/", views.p_search, name="p_search"),
     path("p_records/", views.p_records, name="p_records"),
     path('messages/', views.messages, name='messages'),
     path('messages/view_messages/<int:user_id>/', views.view_messages, name='view_messages'),
+    path('messages/view_messages_sent/<int:user_id>/', views.view_messages_sent, name='view_messages_sent'),
     path('send_message/', views.send_message, name='send_message'),
-    path('patient/appointments/', views.appointments_page, name='appointments'),
-    path('view_appointments/', views.view_appointments, name='view_appointments'),
+    path('patient/appointments/', views.appointments_page, name='appointments_page'),
     path('physical_therapists/request_appointment/', views.request_appointment, name='request appointment'),
+    path('physical_therapists/reschedule_appointment/<int:request_id>', views.resched_appointment, name='reschedule_appointment'),
     path('physical_therapists/', views.physical_therapists, name='physical_therapists'),
     path('physical_therapists/<int:user_id>/', views.view_profile_pt, name='view_profile_pt'),
     path('physical_therapists/appointment_hours/<int:user_id>/', views.view_pt_appointment_hours, name='view_pt_appointment_hours'),
@@ -81,6 +94,11 @@ urlpatterns = [
         "htmx/account_request_action/<str:action>/<int:pk>/",
         views.account_request_action,
         name="account_request_action",
+    ),
+        path(
+        "htmx/appointments_request_action/<str:action>/<int:id>/",
+        views.appointments_request_action,
+        name="appointments_request_action",
     ),
     path(
         "htmx/account_requests_search/",

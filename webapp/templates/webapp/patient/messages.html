@@ -12,28 +12,30 @@
         <div id="accounts">
             {% for msg in messages %}
             <div class="accounts-item">
-                <div class="name">
-                    <h6>From</h6>
-                    <p>Dr. {{msg.sender.first_name}} {{msg.sender.last_name}}</p>
-                  </div>
               <div class="name">
                 <h6>Time</h6>
                 <p>{{msg.date_sent}}</p>
               </div>
-
-              <!-- <div class="role">
-                <h6>Body</h6>
-                <p>{{msg.text}}</p>
-              </div> -->
+              <div class="name">
+                <h6>Name</h6>
+                <p>{{msg.sender.first_name}} {{msg.sender.last_name}}</p>
+              </div>
               <a
                 class="button-primary button-text"
-                href="/messages/view_messages/{{msg.sender.id}}/"
+                href="view_messages_sent/{{msg.sender.id}}/"
               >
-                View
+                View Sent Messages
               </a>
+              <a
+              class="button-primary button-text"
+              href="view_messages/{{msg.sender.id}}/"
+            >
+              View Received Messages
+            </a>
             </div>
-            {% empty %} Nada {% endfor %}
+            {% empty %} <p>Empty</p> {% endfor %}
           </div>
+          <br>
       <a
       class="button-primary button-text"
       href="/send_message"
