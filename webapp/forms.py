@@ -40,6 +40,7 @@ class EditProfileForm(ModelForm):
             "contact_number": TextInput(),
         }
 
+<<<<<<< HEAD
 class createClinicHoursForm(ModelForm):
     extra_field_count = CharField(widget=HiddenInput(), required=False)
     hours_start= TimeField(widget=TimeInput(), required=True)
@@ -76,6 +77,8 @@ class createClinicHoursForm(ModelForm):
             raise ValidationError("Time field is empty!")
         return True
 
+=======
+>>>>>>> main
 class AppointmentForm(ModelForm):
   class Meta:
     model = Appointment
