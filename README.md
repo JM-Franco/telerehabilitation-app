@@ -15,10 +15,12 @@ Telemedicine is a way to access healthcare appointments with healthcare provider
 	- [x] Profile Tab
 		- [x] View profile
 		- [x] Update profile
-		- [ ] Create clinic hours (input time, day Ex. MWF 9am-12noon; 1pm-4pm
-		- [ ] Update clinic hours
+		- [X] Create clinic hours (input time, day Ex. MWF 9am-12noon; 1pm-4pm
+		- [X] Update clinic hours
+		- [X] Delete clinic hours
 		- [ ] Create teleconsultation hours
 		- [ ] Update teleconsultationhours
+		- [ ] Delete teleconsultationhours
 
 	- [ ] Patients Tab
 		- [ ] View active patients (i.e. patients with scheduled current or future clinic/teleconsultation appointment)

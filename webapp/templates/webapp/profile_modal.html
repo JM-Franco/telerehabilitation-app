@@ -42,19 +42,70 @@
 								<h6 class="label">Phone Number</h6>
 								<p class="info">{{user.contact_number}}</p>
 							</div>
+							<div class="info-group">
+							</div>
+							{% if user.role == 'PT' %}
+							<div class="info-group">
+								<h4 class="label">Clinic Hours</h4>
+								{% for field in clinic_hours %}
+								<p style="margin-bottom: 1vh;">
+										<a href="edit_clinic_hours/{{ field.id }}" name="edit-link" style="display: none; color: rgb(87, 213, 255);">Edit</a>
+										{{ field.get_weekday_display }}
+										<a href="delete_clinic_hours/{{ field.id }}" name="delete-link" style="display: none; color: rgb(197, 20, 20);">Delete</a>
+										{% for hour in field.hours %}
+										<ul>
+											<li>
+												<p>
+													from {{ hour.0 }} to 
+													{{ hour.1 }}
+												</p>
+											</li>
+										</ul>
+									{% empty %}
+										<p style="size: 2em;">Nothing to display.</p>
+									{% endfor %}
+								</p>
+								{% endfor %}
+							</div>
+							{% endif %}
 						</div>
 					</div>
 					<div class="profile-button-group">
 						<div class="profile-button-section">
-							<a class="button-primary" href="{% url 'webapp:edit_profile' request.user.pk %}?prevpath={{ request.path|urlencode }}">Edit Profile</a>
+							<a class="button-primary" id="edit-profile" href="{% url 'webapp:edit_profile' request.user.pk %}?prevpath={{ request.path|urlencode }}">Edit Profile</a>
 						</div>
-						<div class="profile-button-section"></div>
+						{% if user.role == 'PT' %}
+						<div class="profile-button-section">
+							<a class="button-primary" id="create-clinic-hours" href="{% url 'webapp:create_clinic_hours' request.user.pk %}?prevpath={{ request.path|urlencode }}">Create Clinic Hours</a>
+						</div>
+						<div class="profile-button-section" style="margin-top: 2vh;">
+							<a class="button-primary" id="edit-clinic-hours">Edit Clinic Hours</a>
+						</div>
+						{% endif %}
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<!-- Jquery -->
+<script>
+	$.fn.extend({
+    toggleText: function(a, b){
+        return this.text(this.text() == b ? a : b);
+    }
+	});
+	$(document).ready(function(){
+	  $("#edit-clinic-hours").click(function(){
+		$("a[name='edit-link']").toggle();
+		$("a[name='delete-link']").toggle();
+		$("#edit-profile").toggle();
+		$("#create-clinic-hours").toggle();
+		$("#edit-clinic-hours").toggleText('Edit Clinic Hours', 'Back');
+	  });
+	});
+</script>
 
 <!-- Previous Attempts -->
 <!-- <div x-data="{ open: false }" x-init="() => { setTimeout(() => { open = true }, 3000); }"> -->

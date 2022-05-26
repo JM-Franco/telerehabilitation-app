@@ -1,3 +1,4 @@
+from operator import add
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -103,8 +104,12 @@ def edit_profile(request, pk):
 @login_required(login_url='/')
 def dashboard(request):
     user = request.user
-    data = {'user':user}
-    print(data)
+    if user.role == 'PT':
+        pt = PhysicalTherapistProfile.objects.filter(account_id=user.id).get()
+        clinic_hours = list(Clinic_Hours.objects.filter(pt_id=pt.id).order_by('id'))
+        data = {'user': user, 'clinic_hours': clinic_hours}
+    else:
+        data = {'user':user}
     return render(request, 'webapp/dashboard.html', data)
 
 # SA-related views
@@ -138,6 +143,81 @@ def inactive_patients(request):
     return render(request, "webapp/system_admin/inactive_patients.html", data)
 
 # PT-related views
+
+@login_required(login_url="/")
+def create_clinic_hours(request, pk):
+    create_clinic_hours_form = createClinicHoursForm()
+    if request.method == "POST":
+        prevpath = request.POST.get("prevpath")
+        create_clinic_hours_form = createClinicHoursForm(request.POST, extra=request.POST.get('extra_field_count'))
+        if request.POST.get('total_input_fields') == "":
+            extra_field_count = 0
+        else:
+            extra_field_count = int(request.POST.get('total_input_fields'))
+        extra_hours_list = []
+        if extra_field_count > 0:
+            # assemble additional hours to [hour_start, hour_end]
+            for count in range(extra_field_count):
+                extra_hours = []
+                extra_field_start = f"extra_field_start_{str(count)}"
+                extra_field_end = f"extra_field_end_{str(count)}"
+                hours_start = request.POST.get(extra_field_start)
+                hours_end = request.POST.get(extra_field_end)
+                # formatted_hours_start = datetime.datetime.strptime(hours_start, '%H:%M').time()
+                # formatted_hours_end = datetime.datetime.strptime(hours_end, '%H:%M').time()
+                extra_hours.append(hours_start)
+                extra_hours.append(hours_end)
+                extra_hours_list.append(extra_hours)
+        print(create_clinic_hours_form.errors)
+        if create_clinic_hours_form.is_valid():
+            # required input hours 
+            hours_start = create_clinic_hours_form['hours_start'].data # get value of field in django form
+            hours_end = create_clinic_hours_form['hours_end'].data
+            clinic_hours = create_clinic_hours_form.save(commit=False)
+            clinic_hours.hours = [[hours_start, hours_end]]
+            # if there are extra hours
+            if len(extra_hours_list) > 0:
+                for extra_hours in extra_hours_list:
+                    if create_clinic_hours_form.has_non_empty_extra_fields(extra_hours[0], extra_hours[1]):
+                        clinic_hours.hours.append(extra_hours)
+            clinic_hours.pt = PhysicalTherapistProfile.objects.filter(account_id=request.user.id).get()
+            create_clinic_hours_form.save()
+            return redirect(prevpath)
+        # code here
+    data = {"create_clinic_hours_form": create_clinic_hours_form}
+    return render(request, "webapp/physical_therapist/create_clinic_hours.html", data)
+
+@login_required(login_url="/")
+def edit_clinic_hours(request, pk):
+    ch = Clinic_Hours.objects.filter(id=pk).get() 
+    additional_hours = Clinic_Hours.objects.filter(id=pk) # queryset
+    edit_clinic_hours_form = createClinicHoursForm(instance=ch)
+    if request.method == "POST":
+        edit_clinic_hours_form = createClinicHoursForm(request.POST, instance=ch)
+        print(edit_clinic_hours_form.errors)
+        if edit_clinic_hours_form.is_valid():
+            edit_clinic_hours_form.save()
+            field_count = int(request.POST.get('total_input_fields'))
+            hours_list = []
+            for count in range(field_count):
+                hours = []
+                # get hour start and hour end values
+                field_start = f"extra_field_start_{str(count)}"
+                field_end = f"extra_field_end_{str(count)}"
+                hours_start = request.POST.get(field_start)
+                hours_end = request.POST.get(field_end)
+                hours = [hours_start, hours_end]
+                hours_list.append(hours)
+            ch.hours = hours_list
+            ch.save()
+            return redirect('/dashboard')
+    data = {"edit_clinic_hours_form": edit_clinic_hours_form, "clinic_hours": ch, "add_hours": additional_hours}
+    return render(request, "webapp/physical_therapist/edit_clinic_hours.html", data)
+
+def delete_clinic_hours(request, pk):
+    selected_time = Clinic_Hours.objects.filter(id=pk).get()
+    selected_time.delete()
+    return redirect('/dashboard')
 
 @login_required(login_url='/')
 def patients(request):

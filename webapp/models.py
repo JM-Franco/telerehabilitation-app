@@ -5,6 +5,7 @@ from django.contrib.auth.models import (
     BaseUserManager,
     PermissionsMixin,
 )
+from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
@@ -112,8 +113,21 @@ class PatientProfile(models.Model):
 
 class Clinic_Hours(models.Model):
     pt = models.ForeignKey(PhysicalTherapistProfile, default=None, on_delete=models.CASCADE)
-    start_clinic_time = models.DateTimeField(verbose_name='start clinic hours', auto_now_add=False)
-    end_clinic_time = models.DateTimeField(verbose_name='end clinic hours', auto_now_add=False)
+    weekday = models.CharField(
+        verbose_name="weekday",
+        max_length=5,
+        choices=[
+            ('MON', 'Monday'),
+            ('TUES', 'Tuesday'),
+            ('WED', 'Wednesday'),
+            ('THURS', 'Thursday'),
+            ('FRI', 'Friday'),
+            ('SAT', 'Saturday'),
+            ('SUN', 'Sunday'),
+        ],
+        default='MON',
+    )
+    hours = ArrayField(ArrayField(models.TimeField(verbose_name='hours', auto_now_add=False)))
 
 class Teleconsultation_Hours(models.Model):
     pt = models.ForeignKey(PhysicalTherapistProfile, default=None, on_delete=models.CASCADE)
