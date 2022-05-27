@@ -1,8 +1,16 @@
-{% extends 'webapp/base.html' %} {% block content %}
+{% extends 'webapp/base.html' %}
 
-<div class="profile-page-grid-container">
-  <div class="profile-page-card-grid-container">
-    <div class="profile-page-card" style="background-color: transparent">
+{% block title %}PT{% endblock title %}
+
+{% block content %}
+
+<div class="">
+  <div class="profile-page-grid-container">
+  <div class="profile-page-card-grid-container"> {% for account in pt_account %}
+    <div class="profile-page-card" style="z-index: 0">
+      <!--
+      Used to create a notch where the profile picture goes
+    
       <svg>
         <defs>
           <mask id="circle">
@@ -11,30 +19,51 @@
           </mask>
         </defs>
         <rect x="0" y="0" mask="url(#circle)" />
-      </svg>
-      <div id="accounts">
-        {% for account in pt_account %}
-        <div class="profile-page-card-body">
-          <div class="info-group">
-            <h6 class="label">Name</h6>
-            <p class="info">{{account.first_name}} {{account.last_name}}</p>
-          </div>
-          <div class="info-group">
-            <h6 class="label">Email</h6>
-            <p class="info">{{account.email}}</p>
-          </div>
-          <div class="info-group">
-            <h6 class="label">Birthday</h6>
-            <p class="info">{{account.birthdate}}</p>
-          </div>
-          <div class="info-group">
-            <h6 class="label">Contact #</h6>
-            <p class="info">{{account.contact_number}}</p>
-          </div>
+      </svg> -->
+      <div class="profile-picture"></div>
+      <h3 class="name">{{account.first_name}} {{account.last_name}}</h3>
+      <div class="account-type"><h6>{{account.get_role_display}}</h6></div>
+    
+      <div class="profile-page-card-body">
+        <div class="info-group">
+          <h6 class="label">Birthdate</h6>
+          <p class="info">{{account.birthdate}}</p>
         </div>
-        {% empty %} Nada {% endfor %}
+        <div class="info-group">
+          <h6 class="label">Email</h6>
+          <p class="info">{{account.email}}</p>
+        </div>
+        <div class="info-group">
+          <h6 class="label">Phone Number</h6>
+          <p class="info">{{account.contact_number}}</p>
+        </div>
+        <div class="info-group">
+          <h4 class="label">Clinic Hours</h4>
+          {% for field in clinic_hours %}
+          <p style="margin-bottom: 1vh;">
+              <a href="edit_clinic_hours/{{ field.id }}" name="edit-link" style="display: none; color: rgb(87, 213, 255);">Edit</a>
+              {{ field.get_weekday_display }}
+              <a href="delete_clinic_hours/{{ field.id }}" name="delete-link" style="display: none; color: rgb(197, 20, 20);">Delete</a>
+              {% for hour in field.hours %}
+              <ul>
+                <li>
+                  <p>
+                    from {{ hour.0 }} to 
+                    {{ hour.1 }}
+                  </p>
+                </li>
+              </ul>
+            {% empty %}
+              <p style="size: 2em;">Nothing to display.</p>
+            {% endfor %}
+          </p>
+          {% endfor %}
+        </div>
       </div>
-    </div>
+    </div> {% empty %} Nada {% endfor %}
   </div>
 </div>
+</div>
+
 {% endblock content %}
+

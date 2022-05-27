@@ -18,7 +18,8 @@
       </select>
       <br>
         <h6>Start Date and Time</h6>
-        <input type="datetime-local" id="sched" name="sched">
+        <input type="datetime-local" id="sched" name="sched" required>
+        <input type="datetime-local" id="sched_end" name="sched_end" hidden>
         <h6>Physical Therapist</h6>
       <select name="pt_chosen" id="pt_chosen">
       {% for account in pt_accounts %}
