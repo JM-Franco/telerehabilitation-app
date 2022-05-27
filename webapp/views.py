@@ -440,6 +440,7 @@ def request_appointment(request):
         # Temp fix
         data.start_time = request.POST.get('sched')
         data.end_time = request.POST.get('sched')
+
         data.save()
         return redirect(reverse('webapp:appointments_page'))
 
@@ -471,9 +472,11 @@ def physical_therapists(request):
 
 @login_required(login_url='/')
 def view_profile_pt(request, user_id):
+    pt = PhysicalTherapistProfile.objects.get(account_id=user_id)
     pt_account = Account.objects.filter(id=user_id)
-    data = {'pt_account':pt_account}
-    #print(data)
+    clinic_hours = list(Clinic_Hours.objects.filter(pt_id=pt.id).order_by('id'))
+    data = {'pt_account':pt_account, 'clinic_hours': clinic_hours}
+    print(clinic_hours)
     return render(request, 'webapp/patient/pt_profile_page.html', data)
 
 @login_required(login_url='/')

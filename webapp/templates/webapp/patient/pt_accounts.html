@@ -98,18 +98,18 @@
           <h6>Email</h6>
           <p>{{account.email}}</p>
         </div>
+
+        <div class="number">
+          <h6>Contact No.</h6>
+          <p>{{account.contact_number}}</p>
+        </div>
         <a
           class="button-primary button-text"
           href="/physical_therapists/{{ account.id }}"
         >
           View Profile
         </a>
-        <a
-          class="button-primary button-text"
-          href="/physical_therapists/appointment_hours/{{ account.id }}"
-        >
-          View Clinic Hours
-        </a>
+
       </div>
       {% empty %} Nada {% endfor %}
     </div>
