@@ -1,0 +1,58 @@
+{% extends 'webapp/base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Edit Clinic Hours - {{user.first_name}} {{user.last_name}}{% endblock title %}
+
+{% block content %}
+
+
+<div class="profile-page-grid-container">
+	<div class="profile-page-card-grid-container">
+		<form method="post" action="">
+			{% csrf_token %}
+			<div class="profile-page-card">
+				<h4 style="margin-bottom: 2vh;">Edit Teleconsultation Hours</h4>
+				<div class="profile-page-card-body">
+					<div class="info-group">
+						<h6 class="label">Weekday</h6>
+						<p class="info">{% render_field editTeleconsultationHoursForm.teleconsultation_weekday %}</p>
+					</div>
+					<div class="info-group"></div>
+					<div class="info-group">
+						<form>
+							<div id="form_empty_layer">
+                                {% for field in add_hours %}
+                                    {% for hour in field.teleconsultation_hours %}
+                                        <div class="info-group">
+                                            <h6 class="label">Start Time</h6>
+                                            <input type="time" name="extra_field_start_{{ forloop.counter0}}" value="{{ hour.0|cut:'a.m.'|cut:'p.m.' }}">
+                                        </div>
+                                        <div class="info-group">
+                                            <h6 class="label">End Time</h6>
+                                            <input type="time" name="extra_field_end_{{ forloop.counter0}}" value="{{ hour.1|cut:'a.m.'|cut:'p.m.' }}">
+                                        </div>
+                                    {% endfor %}
+                                {% endfor %}
+							</div>
+							</br>
+							</br></br>
+							<input type="hidden" name="hours_start" value="{{ teleconsultation_hours.teleconsultation_hours.0.0|cut:'a.m.'|cut:'p.m.' }}">
+							<input type="hidden" name="hours_end" value="{{ teleconsultation_hours.teleconsultation_hours.0.1|cut:'a.m.'|cut:'p.m.' }}">
+							<input type="hidden" name="total_input_fields" value="{{ teleconsultation_hours.teleconsultation_hours|length }}"/>
+							<p>{{ editTeleconsultationHoursForm.errors }}</p>
+						</form>
+					</div>
+				</div>
+			<div class="profile-button-group">
+				<div class="profile-button-section">
+					<button type="submit" class="button-primary button-text">Submit</button>
+				</div>
+				<div class="profile-button-section">
+                    <a class="button-primary button-text" href="{% url 'webapp:dashboard' %}">Back</a>
+                </div>
+			</div>
+		</form>
+	</div>
+</div>
+
+{% endblock content %}

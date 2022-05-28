@@ -131,8 +131,8 @@ class Clinic_Hours(models.Model):
 
 class Teleconsultation_Hours(models.Model):
     pt = models.ForeignKey(PhysicalTherapistProfile, default=None, on_delete=models.CASCADE)
-    start_tc_time = models.DateTimeField(verbose_name='start teleconsultation hours', auto_now_add=False)
-    end_tc_time = models.DateTimeField(verbose_name='end teleconsultation hours', auto_now_add=False)
+    teleconsultation_weekday = models.CharField(max_length=9,choices=[('MON', 'Monday'), ('TUE', 'Tuesday'), ('WED', 'Wednesday'), ('THU', 'Thursday'), ('FRI', 'Friday'), ('SAT', 'Saturday'), ('SUN', "Sunday")], default='MON')
+    teleconsultation_hours = ArrayField(ArrayField(models.TimeField(verbose_name = 'teleconsultation_time', auto_now_add=False)))
 
 
 class AppointmentManager(models.Manager):

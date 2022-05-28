@@ -49,9 +49,9 @@
 								<h4 class="label">Clinic Hours</h4>
 								{% for field in clinic_hours %}
 								<p style="margin-bottom: 1vh;">
-										<a href="edit_clinic_hours/{{ field.id }}" name="edit-link" style="display: none; color: rgb(87, 213, 255);">Edit</a>
+										<a href="{% url 'webapp:edit_clinic_hours' field.id%}" name="edit-link" style="display: none; color: rgb(87, 213, 255);">Edit</a>
 										{{ field.get_weekday_display }}
-										<a href="delete_clinic_hours/{{ field.id }}" name="delete-link" style="display: none; color: rgb(197, 20, 20);">Delete</a>
+										<a href="{% url 'webapp:delete_clinic_hours' field.id%}" name="delete-link" style="display: none; color: rgb(197, 20, 20);">Delete</a>
 										{% for hour in field.hours %}
 										<ul>
 											<li>
@@ -67,6 +67,24 @@
 								</p>
 								{% endfor %}
 							</div>
+							<div class="info-group">
+								<h4 class="label">Teleconsultation Hours</h4>
+								{% for field in teleconsultation_hours %}
+								<p style="margin-bottom: 1vh;">
+									<a href="{% url 'webapp:edit_tc_hours' field.id%}" name="edit-link" style="display: none; color: rgb(87, 213, 255);">Edit</a>
+									{{ field.get_teleconsultation_weekday_display }} 
+									<a href="{% url 'webapp:delete_tc_hours' field.id%}" name="delete-link" style="display: none; color: rgb(197, 20, 20);">Delete</a>
+									{% for hour in field.teleconsultation_hours %}
+									<ul>
+										<li>
+												From {{ hour.0 }} to 
+												{{ hour.1 }}
+										</li>
+									</ul>
+									{% endfor %}
+								</p>
+								{% endfor %}
+							</div>
 							{% endif %}
 						</div>
 					</div>
@@ -76,10 +94,13 @@
 						</div>
 						{% if user.role == 'PT' %}
 						<div class="profile-button-section">
-							<a class="button-primary" id="create-clinic-hours" href="{% url 'webapp:create_clinic_hours' request.user.pk %}?prevpath={{ request.path|urlencode }}">Create Clinic Hours</a>
+							<a class="button-primary" id="create-clinic-hours" href="{% url 'webapp:create_clinic_hours' request.user.pk %}">Create Clinic Hours</a>
 						</div>
 						<div class="profile-button-section" style="margin-top: 2vh;">
-							<a class="button-primary" id="edit-clinic-hours">Edit Clinic Hours</a>
+							<a class="button-primary" id="edit-clinic-hours">Edit Clinic/Teleconsultation Hours</a>
+						</div>
+						<div class="profile-button-section" style="margin-top: 2vh;">
+							<a class="button-primary" id="create-tc-hours" href ="{% url 'webapp:create_tc_hours' request.user.pk %}">Create Teleconsultation Hours</a>
 						</div>
 						{% endif %}
 					</div>
@@ -101,8 +122,9 @@
 		$("a[name='edit-link']").toggle();
 		$("a[name='delete-link']").toggle();
 		$("#edit-profile").toggle();
+		$("#create-tc-hours").toggle();
 		$("#create-clinic-hours").toggle();
-		$("#edit-clinic-hours").toggleText('Edit Clinic Hours', 'Back');
+		$("#edit-clinic-hours").toggleText('Edit Clinic/Teleconsultation Hours', 'Back');
 	  });
 	});
 </script>

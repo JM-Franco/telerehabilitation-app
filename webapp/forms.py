@@ -91,3 +91,32 @@ class AppointmentForm(ModelForm):
     # input_formats to parse HTML5 datetime-local input to datetime field
     self.fields['start_time'].input_formats = ('%Y-%m-%dT%H:%M',)
     self.fields['end_time'].input_formats = ('%Y-%m-%dT%H:%M',)
+
+class createTeleconsultationHours(ModelForm):
+    extra_field_count = CharField(widget=HiddenInput(), required=False)
+    hours_start = TimeField(widget=TimeInput(), required=True)
+    hours_end = TimeField(widget=TimeInput(), required=True)
+
+    class Meta:
+        model = Teleconsultation_Hours
+        fields = [
+            "teleconsultation_weekday",
+            "teleconsultation_hours",
+        ]
+        exclude = ['pt', 'teleconsultation_hours']
+        widgets = {
+            "teleconsultation_weekday": Select(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        extra_fields = kwargs.pop('extra', 0)
+        
+        if not extra_fields:
+                extra_fields = 0
+
+        super(createTeleconsultationHours, self).__init__(*args, **kwargs)
+        self.fields['extra_field_count'].initial = extra_fields
+
+        for index in range(int(extra_fields)):
+            self.fields['extra_field_{index}'.format(index=index)] = \
+                ModelForm.TimeInput(required=False)

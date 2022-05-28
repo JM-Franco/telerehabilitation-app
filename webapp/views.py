@@ -107,7 +107,8 @@ def dashboard(request):
     if user.role == 'PT':
         pt = PhysicalTherapistProfile.objects.filter(account_id=user.id).get()
         clinic_hours = list(Clinic_Hours.objects.filter(pt_id=pt.id).order_by('id'))
-        data = {'user': user, 'clinic_hours': clinic_hours}
+        teleconsultation_hours = list(Teleconsultation_Hours.objects.filter(pt_id=pt.id).order_by('id'))
+        data = {'user': user, 'clinic_hours': clinic_hours, 'teleconsultation_hours': teleconsultation_hours}
         print(clinic_hours)
     else:
         data = {'user':user}
@@ -149,7 +150,7 @@ def inactive_patients(request):
 def create_clinic_hours(request, pk):
     create_clinic_hours_form = createClinicHoursForm()
     if request.method == "POST":
-        prevpath = request.POST.get("prevpath")
+
         create_clinic_hours_form = createClinicHoursForm(request.POST, extra=request.POST.get('extra_field_count'))
         if request.POST.get('total_input_fields') == "":
             extra_field_count = 0
@@ -183,7 +184,7 @@ def create_clinic_hours(request, pk):
                         clinic_hours.hours.append(extra_hours)
             clinic_hours.pt = PhysicalTherapistProfile.objects.filter(account_id=request.user.id).get()
             create_clinic_hours_form.save()
-            return redirect(prevpath)
+            return redirect('/dashboard')
         # code here
     data = {"create_clinic_hours_form": create_clinic_hours_form}
     return render(request, "webapp/physical_therapist/create_clinic_hours.html", data)
@@ -258,11 +259,15 @@ def appointments_request_action(request, action, id):
 
 @login_required(login_url='/')
 def teleconferencing(request):
-    return render(request, 'webapp/physical_therapist/teleconferencing.html')    
+    user = request.user
+    data = {'user':user}
+    return render(request, 'webapp/physical_therapist/teleconferencing.html', data)    
 
 @login_required(login_url='/')
 def resources(request):
-    return render(request, 'webapp/physical_therapist/resources.html')
+    user = request.user
+    data = {'user':user}
+    return render(request, 'webapp/physical_therapist/resources.html', data)
 
 @login_required(login_url='/')
 @allowed_users(allowed_roles=['PT'])
@@ -318,7 +323,8 @@ def appointment(request, event_id=None):
     if request.POST and form.is_valid():
         form.save()
         return HttpResponseRedirect(reverse('webapp:calendar'))
-    return render(request, 'webapp/physical_therapist/new_appointment.html', {'form': form})
+
+    return render(request, 'webapp/physical_therapist/new_appointment.html', data )
 
 class CalendarViewPT(generic.View):
     template_name = "webapp/physical_therapist/calendar.html"
@@ -350,6 +356,86 @@ class CalendarViewPT(generic.View):
             )
         context = {"events": apt_list}
         return render(request, self.template_name, context)
+
+@login_required(login_url='/')
+def create_tc_hours(request, pk):
+    createTeleconsultationHoursForm = createTeleconsultationHours()
+
+    if request.method == "POST": 
+        createTeleconsultationHoursForm = createTeleconsultationHours(request.POST, extra=request.POST.get('extra_field_count'))
+
+        if request.POST.get('total_input_fields') == "":
+            extra_field_count = 0
+        else:
+            extra_field_count = int(request.POST.get('total_input_fields'))
+        extra_hours_list = []
+        if extra_field_count > 0:
+          
+            for count in range(extra_field_count):
+                extra_hours = []
+                extra_field_start = "extra_field_start_" + str(count)
+                extra_field_end = "extra_field_end_" + str(count)
+                hours_start = request.POST.get(extra_field_start)
+                hours_end = request.POST.get(extra_field_end)
+                extra_hours.append(hours_start)
+                extra_hours.append(hours_end)
+                extra_hours_list.append(extra_hours)
+
+        print(createTeleconsultationHoursForm.errors)
+        if createTeleconsultationHoursForm.is_valid():
+ 
+            hours_start = createTeleconsultationHoursForm['hours_start'].data 
+            hours_end = createTeleconsultationHoursForm['hours_end'].data
+            teleconsultation_hours = createTeleconsultationHoursForm.save(commit=False)
+            teleconsultation_hours.teleconsultation_hours = [[hours_start, hours_end]]
+
+            if len(extra_hours_list) > 0:
+                print("here")
+                print( extra_hours_list)
+                for extra_hours in extra_hours_list:
+                    if extra_hours[0] == "" or extra_hours[1] == "":
+                        raise ValidationError("Time field is empty!")
+                    else:
+                        teleconsultation_hours.teleconsultation_hours.append(extra_hours)
+            teleconsultation_hours.pt = PhysicalTherapistProfile.objects.filter(account_id=request.user.id).get()
+            createTeleconsultationHoursForm.save()
+            return redirect("/dashboard")
+
+    data = {"createTeleconsultationHoursForm":createTeleconsultationHoursForm}
+    return(render(request, "webapp/physical_therapist/create_tc_hours.html", data))
+
+@login_required(login_url="/")
+def edit_tc_hours(request, pk):
+    th = Teleconsultation_Hours.objects.filter(id=pk).get() 
+    additional_hours = Teleconsultation_Hours.objects.filter(id=pk) # queryset
+    editTeleconsultationHoursForm = createTeleconsultationHours(instance=th)
+    if request.method == "POST":
+        editTeleconsultationHoursForm = createTeleconsultationHours(request.POST, instance=th)
+        print(editTeleconsultationHoursForm.errors)
+        if editTeleconsultationHoursForm.is_valid():
+            editTeleconsultationHoursForm.save()
+            field_count = int(request.POST.get('total_input_fields'))
+            hours_list = []
+            for count in range(field_count):
+                hours = []
+                # get hour start and hour end values
+                field_start = "extra_field_start_" + str(count)
+                field_end = "extra_field_end_" + str(count)
+                hours_start = request.POST.get(field_start)
+                hours_end = request.POST.get(field_end)
+                hours = [hours_start, hours_end]
+                hours_list.append(hours)
+            th.teleconsultation_hours = hours_list
+            th.save()
+            return redirect('/dashboard')
+    data = {"editTeleconsultationHoursForm": editTeleconsultationHoursForm, "teleconsultation_hours": th, "add_hours": additional_hours}
+    return render(request, "webapp/physical_therapist/edit_tc_hours.html", data)
+
+@login_required(login_url="/")
+def delete_tc_hours(request, pk):
+    selected_time = Teleconsultation_Hours.objects.filter(id=pk).get()
+    selected_time.delete()
+    return redirect('/dashboard')
 
 
 # P-related views

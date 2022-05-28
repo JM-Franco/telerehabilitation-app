@@ -1,0 +1,118 @@
+{% extends 'webapp/base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Create Teleconsultation Hours - {{user.first_name}} {{user.last_name}}{% endblock title %}
+
+{% block content %}
+
+<div class="profile-page-grid-container">
+	<div class="profile-page-card-grid-container">
+		<form method="post" action="">
+			{% csrf_token %}
+			<div class="profile-page-card">
+				<div class="profile-picture"></div>
+				<h6>{{user.first_name}} {{user.last_name}}</h6>
+				<br>
+				<div class="account-type"><h6>{{user.get_role_display}}</h6></div>
+				<div class="profile-page-card-body">
+					<div class="info-group">
+						<h6 class="label">Choose a Weekday:</h6>
+						<p class="info">{% render_field createTeleconsultationHoursForm.teleconsultation_weekday %}</p>
+					</div>
+					<div class="info-group"></div>
+					<div class="info-group">
+						<h6 class="label">Start Time</h6>
+						<p class="info">{% render_field createTeleconsultationHoursForm.hours_start type="time" %}</p>
+					</div>
+					<div class="info-group">
+						<h6 class="label">End Time</h6>
+						<p class="info">{% render_field createTeleconsultationHoursForm.hours_end type="time" %}</p>
+					</div>
+					<div id="form_empty_layer"></div>
+					<div class="info-group"></div>
+					<button type="button" class="button-primary" id="add-another">add hours</button>
+					<br><br>
+					<button type="button" class="button-primary button-text" id="delete-field" hidden="hidden" style="background-color: rgba(224, 73, 53, 0.912);">delete field</button> 
+					<input type="hidden" name="total_input_fields" placeholder="0"/>
+				</div>	
+			</div>
+			<br>
+			<div class="profile-button-group">
+				<div class="profile-button-section">
+					<button type="submit" class="button-primary">Create Teleconsultation Hours</button>
+				</div>
+		</form>
+	</div>
+</div>
+
+<script>
+	form_count = $('input[name*="extra_field_*"]').length;
+	$("#delete-field").hide()
+	// get extra form count so we know what index to use for the next item.
+	
+	$("#add-another").click(function() {
+		start_time = $(`<div class="info-group">
+						<h6 class="label">Start Time</h6>
+						<input type="time" style="margin-bottom: 2vh;"/>
+					</div>`);
+		end_time = $(`</div>
+					<div class="info-group">
+						<h6 class="label" >End Time</h6>
+						<input type="time" style="margin-bottom: 2vh;"/>
+					</div>`);
+
+		var max = 2;
+		if(form_count < max){
+			$("#add-another").show();
+			// add a name attribute with a corresponding number (form_count)
+			start_time.attr('name', 'extra_div_start_' + form_count);
+			end_time.attr('name', 'extra_div_end_' + form_count);
+
+			// append the new element in the html
+			$("#form_empty_layer").append(start_time);
+			$("#form_empty_layer").append(end_time);
+
+			//set name attribute for appended element's time input
+			$(`#form_empty_layer > div:nth-child(${1 + (form_count * 2)}) > input[type=time]`).attr('name', 'extra_field_start_' + form_count);
+			$(`#form_empty_layer > div:nth-child(${2 + (form_count * 2)}) > input[type=time]`).attr('name', 'extra_field_end_' + form_count);
+			
+			// increment the form_count variable
+			form_count ++;
+	} 
+		if(form_count >= max){
+			$("#add-another").hide();
+	}
+		if(form_count > 0){
+			$("#delete-field").show();
+	}
+	// save the form_count to another input element
+		$("[name=total_input_fields]").val(form_count);
+
+	});
+
+	//function to delete dynamically generated fields
+	$("#delete-field").click(function() {
+	// decrement the form_count variabl
+		form_count --;
+		var min = 0;
+		if(form_count <= min){
+			$("#delete-field").hide();
+		}
+		if(form_count > min){
+			$("#delete-field").show();
+			$("#add-another").show();
+		}
+
+		start_time_del = document.querySelector(`#form_empty_layer > div:nth-child(${1 + (form_count * 2)})`);
+		end_time_del = document.querySelector(`#form_empty_layer > div:nth-child(${2 + (form_count * 2)})`);
+
+		$(start_time_del).remove();
+		$(end_time_del).remove();
+		
+		// save the form_count to another input element 
+		$("[name=total_input_fields]").val(form_count);
+		
+	});
+	</script>
+	
+{% endblock content %}
