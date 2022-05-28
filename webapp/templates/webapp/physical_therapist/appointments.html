@@ -134,6 +134,17 @@
           >
             <ion-icon class="deny" name="close-outline"></ion-icon>
           </div>
+          <div
+          @click="open = false"
+          hx-trigger="click"
+          hx-post="{% url 'webapp:pt_remind_apt' pk=appointments_request.patient.account.id apt_id=appointments_request.id %}"
+        >
+        <a
+        class="button-primary button-text"
+      >
+        Send Reminder
+      </a>
+        </div>
           {% elif appointments_request.status == 'reschedule' %}
           <div
             @click="open = false"

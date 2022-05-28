@@ -28,6 +28,7 @@ urlpatterns = [
     path("delete_clinic_hours/<int:pk>", views.delete_clinic_hours, name="delete_clinic_hours"),
     path("patients/", views.patients, name="patients"),
     path("appointments/", views.pt_appointments, name="pt_appointments"),
+    path("remind_appointment/<int:pk>/<int:apt_id>", views.send_apt_reminder, name="pt_remind_apt"),
     path("teleconferencing/", views.teleconferencing, name="teleconferencing"),
     path("resources", views.resources, name="resources"),
     path('pt/messages/', views.pt_messages, name='pt_messages'),
