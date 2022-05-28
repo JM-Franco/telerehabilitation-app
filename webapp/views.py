@@ -257,6 +257,24 @@ def appointments_request_action(request, action, id):
         appointment_request.save(update_fields=["status"])
     return HttpResponse()
 
+def send_apt_reminder(request, pk, apt_id):
+    # pk = user account id
+
+    # Get apt
+    apt = Appointment.objects.filter(id=apt_id).get()
+    if request.method == 'POST':
+        data = Messages()
+        data.subject = f"{apt.type.capitalize()} - Appointment Reminder"
+        time = apt.start_time+ timedelta(hours=8)
+        data.text = f"The {apt.type} appointment is scheduled on {time.strftime('%m.%d.%Y %I:%M %p')}. Thank you."
+        patient = PatientProfile.objects.filter(account_id=pk).get()
+        data.receiver_id = patient.account.id
+        data.sender_id = request.user.id
+        data.save()
+        return redirect('/dashboard')
+
+    return redirect('/dashboard')
+
 @login_required(login_url='/')
 def teleconferencing(request):
     user = request.user
@@ -324,7 +342,7 @@ def appointment(request, event_id=None):
         form.save()
         return HttpResponseRedirect(reverse('webapp:calendar'))
 
-    return render(request, 'webapp/physical_therapist/new_appointment.html', data )
+    return render(request, 'webapp/physical_therapist/new_appointment.html', {'form': form})
 
 class CalendarViewPT(generic.View):
     template_name = "webapp/physical_therapist/calendar.html"
@@ -561,8 +579,9 @@ def view_profile_pt(request, user_id):
     pt = PhysicalTherapistProfile.objects.get(account_id=user_id)
     pt_account = Account.objects.filter(id=user_id)
     clinic_hours = list(Clinic_Hours.objects.filter(pt_id=pt.id).order_by('id'))
-    data = {'pt_account':pt_account, 'clinic_hours': clinic_hours}
-    print(clinic_hours)
+    tc_hours = list(Teleconsultation_Hours.objects.filter(pt_id=pt.id).order_by('id'))
+    data = {'pt_account':pt_account, 'clinic_hours': clinic_hours, 'tc_hours' : tc_hours}
+    print(tc_hours)
     return render(request, 'webapp/patient/pt_profile_page.html', data)
 
 @login_required(login_url='/')

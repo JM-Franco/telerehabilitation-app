@@ -26,10 +26,6 @@
     
       <div class="profile-page-card-body">
         <div class="info-group">
-          <h6 class="label">Birthdate</h6>
-          <p class="info">{{account.birthdate}}</p>
-        </div>
-        <div class="info-group">
           <h6 class="label">Email</h6>
           <p class="info">{{account.email}}</p>
         </div>
@@ -59,8 +55,30 @@
           </p>
           {% endfor %}
         </div>
+        <div class="info-group">
+          <h4 class="label">Teleconsultation Hours</h4>
+          {% for field in tc_hours %}
+          <p style="margin-bottom: 1vh;">
+              <a href="edit_clinic_hours/{{ field.id }}" name="edit-link" style="display: none; color: rgb(87, 213, 255);">Edit</a>
+              {{ field.get_teleconsultation_weekday_display }}
+              <a href="delete_clinic_hours/{{ field.id }}" name="delete-link" style="display: none; color: rgb(197, 20, 20);">Delete</a>
+              {% for hour in field.teleconsultation_hours %}
+              <ul>
+                <li>
+                  <p>
+                    from {{ hour.0 }} to 
+                    {{ hour.1 }}
+                  </p>
+                </li>
+              </ul>
+            {% empty %}
+              <p style="size: 2em;">Nothing to display.</p>
+            {% endfor %}
+          </p>
+          {% endfor %}
+        </div>
       </div>
-    </div> {% empty %} Nada {% endfor %}
+    </div> {% empty %} <p>Empty</p>  {% endfor %}
   </div>
 </div>
 </div>
