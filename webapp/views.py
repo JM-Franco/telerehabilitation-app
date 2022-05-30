@@ -301,6 +301,7 @@ def pt_send_message(request):
         data = Messages()
         data.subject = request.POST.get('subject')
         data.text = request.POST.get('text')
+        print(request.POST.get('p_id'))
         patient = PatientProfile.objects.filter(id=request.POST.get('p_id')).get()
         data.receiver_id = patient.account.id
         data.sender_id = request.user.id

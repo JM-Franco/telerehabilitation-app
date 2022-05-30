@@ -2,7 +2,6 @@
 {% load static %}
 {% block title %}Calendar{% endblock title %}
 
-{% block extracss %} <link href="{% static 'css/calendar.css' %}" rel="stylesheet" />{% endblock extracss %}
 
 {% block content %}
 
@@ -11,15 +10,15 @@
 	<div class="main-content-area">
 		<h1>Calendar</h1>
 	
-        <div id="container">
+       
+      <!-- <div class="calendar-box">{{ calendar }}</div> -->
+      <div class="calendar-box">
+          <div id="calendar"></div>
+      </div>
 
-            <!-- <div class="calendar-box">{{ calendar }}</div> -->
-            <div class="calendar-box">
-                <div id="calendar"></div>
-            </div>
-        </div>
-	
+
 	</div>
+  {% include 'webapp/footer.html' %}
 </div>
 
 {% block extrascripts %}
