@@ -815,8 +815,10 @@ ion-icon {
 
 /*# sourceMappingURL=style.css.map */
 .calendar-box {
-  background-color: rgba(255, 255, 255, 0.616);
-
+  background-color: #ffffff;
+  width: auto;
+  margin-bottom: 1rem;
+  border-radius:15px;
 }
 
 .main-grid-container .main-content-area .appointment-requests-item {
