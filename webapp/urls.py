@@ -17,8 +17,6 @@ urlpatterns = [
     # SA-related
     path("account_requests/", views.account_requests, name="account_requests"),
     path("accounts/", views.accounts, name="accounts"),
-    path("active_patients/", views.active_patients, name="active_patients"),
-    path("inactive_patients/", views.inactive_patients, name="inactive_patients"),
     # PT-related
     path("calendar/", views.CalendarViewPT.as_view(), name="calendar"),
     path("calendar/new", views.appointment, name="new_appointment"),
@@ -27,6 +25,8 @@ urlpatterns = [
     path("edit_clinic_hours/<int:pk>", views.edit_clinic_hours, name="edit_clinic_hours"),
     path("delete_clinic_hours/<int:pk>", views.delete_clinic_hours, name="delete_clinic_hours"),
     path("patients/", views.patients, name="patients"),
+    path("active_patients/", views.active_patients, name="active_patients"),
+    path("inactive_patients/", views.inactive_patients, name="inactive_patients"),
     path("appointments/", views.pt_appointments, name="pt_appointments"),
     path("remind_appointment/<int:pk>/<int:apt_id>", views.send_apt_reminder, name="pt_remind_apt"),
     path("teleconferencing/", views.teleconferencing, name="teleconferencing"),
