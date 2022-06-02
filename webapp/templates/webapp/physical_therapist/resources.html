@@ -1,4 +1,5 @@
 {% extends 'webapp/base.html' %}
+{% load widget_tweaks %}
 
 {% block title %}Resources{% endblock title %}
 
@@ -7,11 +8,73 @@
 	{% include 'webapp/nav_sidebar.html' %}
 	<div class="main-content-area">
 		<h1>Resources</h1>
-		<p>
-			Sample Content
-		</p>
+		<div class="info-group">
+			<h5 class="label">Video Links</h5>
+			{% for url in urls_object %}
+				<div class="profile-button-section">
+					<a class="button-primary" name="delete-link" href="{% url 'webapp:delete_url' url.id%}" 
+					style="background-color: red; display: none;">
+						<ion-icon class="nav-icon" name="remove"></ion-icon><br>
+						<a href="{{ url.urls }}" class="button-primary" style="background-color: #6064d2; margin: 1em;">{{ url.urls }}</a><br><br>
+					</a>
+				</div>
+			{% empty %}
+			<p class="info">Nothing to display.</p>
+			{% endfor %}
+		</div>
+		<br><br>
+		<div class="profile-button-section">
+			<button id="add-links" class="button-primary">Add Links</button>
+		</div>
+		<br>
+		<div class="profile-button-section">
+			<button id="delete-links" class="button-primary" style="background-color: red;">Delete Links</button>
+		</div>
+		<br><br>
+		<form method="post" action="{% url 'webapp:resources' %}" id="add-url-form" style="display: none;">
+			{% csrf_token %}
+			<div class="profile-page-card">
+				<div class="profile-page-card-body">
+					<div class="info-group">
+						<h6 class="label">URL</h6>
+						<p class="info">
+							{% render_field url_form.urls type="url" %}
+						</p>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="profile-button-group">
+				<div class="profile-button-section">
+					<button type="submit" class="button-primary">Submit</button>
+				</div>
+				<div class="profile-button-section"></div>
+			</div>
+		</form>
+		<!-- <div class="profile-button-section">
+			<a class="button-primary" id="create-clinic-hours" href="{% url 'webapp:create_clinic_hours' request.user.pk %}">
+				<ion-icon class="nav-icon" name="add"></ion-icon>
+			</a>
+		</div> -->
 	</div>
+
 
 	{% include 'webapp/footer.html' %}
 </div>
+
+<script>
+	$(document).ready(function(){
+	  $("#add-links").click(function(){
+		$("#add-url-form").toggle();
+		$("#add-links").toggleText('Add Links', 'Back');
+		$("#delete-links").toggle();
+	  });
+	  $("#delete-links").click(function(){
+		$("a[name='delete-link']").toggle();
+		$("#delete-links").toggleText('Delete Links', 'Back');
+		$("#add-links").toggle();
+	  });
+	});
+</script>
+
 {% endblock content %}

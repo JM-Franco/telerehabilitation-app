@@ -275,6 +275,11 @@ def send_apt_reminder(request, pk, apt_id):
 
     return redirect('/dashboard')
 
+def delete_url(request, url_id):
+    selected_url = URLs.objects.filter(id=url_id).get()
+    selected_url.delete()
+    return redirect('/resources')
+
 @login_required(login_url='/')
 def teleconferencing(request):
     user = request.user
@@ -283,9 +288,27 @@ def teleconferencing(request):
 
 @login_required(login_url='/')
 def resources(request):
+    # info for profile modal
     user = request.user
-    data = {'user':user}
+    pt = PhysicalTherapistProfile.objects.filter(account_id=user.id).get()
+    clinic_hours = list(Clinic_Hours.objects.filter(pt_id=pt.id).order_by('id'))
+    teleconsultation_hours = list(Teleconsultation_Hours.objects.filter(pt_id=pt.id).order_by('id'))
+    # resources
+    urls_object = URLs.objects.filter(pt=pt.id).order_by('id')
+    # add url form
+    url_form = addURLForm()
+    if request.method == 'POST':
+        add_URL_form = addURLForm(request.POST)
+        if add_URL_form.is_valid():
+            urls = add_URL_form.save(commit=False)
+            urls.pt = pt
+            urls.save()
+            return redirect('/resources')
+
+    data = {'user': user, 'clinic_hours': clinic_hours, 'teleconsultation_hours': teleconsultation_hours, 
+            'urls_object': urls_object, 'url_form': url_form}
     return render(request, 'webapp/physical_therapist/resources.html', data)
+
 
 @login_required(login_url='/')
 @allowed_users(allowed_roles=['PT'])

@@ -31,6 +31,7 @@ urlpatterns = [
     path("remind_appointment/<int:pk>/<int:apt_id>", views.send_apt_reminder, name="pt_remind_apt"),
     path("teleconferencing/", views.teleconferencing, name="teleconferencing"),
     path("resources", views.resources, name="resources"),
+    path("delete_url/<int:url_id>", views.delete_url, name="delete_url"),
     path('pt/messages/', views.pt_messages, name='pt_messages'),
     path('pt/messages/view_messages/<int:user_id>/', views.pt_view_messages, name='pt_view_messages'),
     path('pt/messages/view_messages_sent/<int:user_id>/', views.pt_view_messages_sent, name='pt_view_messages_sent'),
