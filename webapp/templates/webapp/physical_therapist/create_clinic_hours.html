@@ -63,11 +63,11 @@
 	$(document.body).on("click", "#add-another",function(e) {
 	start_time_div = $(`<div class="info-group">
 					  		<h6>Start Time</h6>
-							<input type="time" style="margin-bottom: 2vh;"/>
+							<input type="time" style="margin-bottom: 2vh;" required/>
 					  	</div>`);
 	end_time_div = $(`<div class="info-group">
 							<h6>End Time</h6>
-							<input type="time" style="margin-bottom: 2vh;"/>
+							<input type="time" style="margin-bottom: 2vh;" required/>
 						</div>`);
 	var max = 2;
 	if(form_count < max){
