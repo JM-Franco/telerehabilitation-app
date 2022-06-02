@@ -86,7 +86,7 @@ DATABASES = {
         'NAME': 'telerehab_app',
         # 'NAME': 'e_chart_test' <-- for testing purposes
         'USER': 'postgres',
-        'PASSWORD': '1234',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '5432' 
     }

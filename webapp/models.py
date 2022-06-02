@@ -197,4 +197,8 @@ class AccountRequest(models.Model):
         return f"{self.email} - {self.role}"
 
 
+class URLs(models.Model):
+    pt = models.ForeignKey(PhysicalTherapistProfile, default=None, on_delete=models.CASCADE)
+    urls = models.URLField(max_length=200)
+
     
