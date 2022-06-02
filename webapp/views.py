@@ -275,11 +275,6 @@ def send_apt_reminder(request, pk, apt_id):
 
     return redirect('/dashboard')
 
-def delete_url(request, url_id):
-    selected_url = URLs.objects.filter(id=url_id).get()
-    selected_url.delete()
-    return redirect('/resources')
-
 @login_required(login_url='/')
 def teleconferencing(request):
     user = request.user
@@ -309,6 +304,10 @@ def resources(request):
             'urls_object': urls_object, 'url_form': url_form}
     return render(request, 'webapp/physical_therapist/resources.html', data)
 
+def delete_url(request, url_id):
+    selected_url = URLs.objects.filter(id=url_id).get()
+    selected_url.delete()
+    return redirect('/resources')
 
 @login_required(login_url='/')
 @allowed_users(allowed_roles=['PT'])
