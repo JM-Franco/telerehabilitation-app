@@ -202,3 +202,24 @@ class URLs(models.Model):
     urls = models.URLField(max_length=200)
 
     
+class File(models.Model):
+    filename = models.CharField(max_length=100)
+    pdf = models.FileField(upload_to='files/pdfs/')
+    
+    def __str__(self):
+        return self.name
+    
+    def delete(self, *args, **kwargs):
+        self.pdf.delete()
+        super().delete(*args, **kwargs)
+
+class Order(models.Model):
+    filename = models.CharField(max_length=100)
+    pdf = models.FileField(upload_to='files/orders/')
+    
+    def __str__(self):
+        return self.name
+    
+    def delete(self, *args, **kwargs):
+        self.pdf.delete()
+        super().delete(*args, **kwargs)

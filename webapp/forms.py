@@ -131,3 +131,13 @@ class addURLForm(ModelForm):
         widgets = {
             "urls": URLInput(),
         }
+
+class FileForm(ModelForm):
+    class Meta:
+        model = File
+        fields = ('filename','pdf')
+
+class OrderForm(ModelForm):
+    class Meta:
+        model = Order
+        fields = ('filename','pdf')
