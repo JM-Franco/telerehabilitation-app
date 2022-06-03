@@ -579,6 +579,7 @@ ion-icon {
   grid-area: main-content;
   min-height: 100vh;
   padding-top: 4rem;
+  animation: transitionIn 1.25s;
 }
 .main-grid-container .main-content-area .main-content-title {
   margin-bottom: 2.5rem;
@@ -906,6 +907,26 @@ ion-icon {
     border-radius: 25px;
     background-color: #6064d2;
     float: right;
+  }
+
+  @keyframes transitionIn {
+    from {
+      opacity: 0;
+      transform: rotateX(-30deg);
+    }
+
+    to {
+      opacity: 1;
+      transform: rotateX(0);
+    }
+  }
+
+  .accounts-item:hover{
+  transform: scale(1.05);
+  }
+
+  .account-requests-item:hover{
+  transform: scale(1.05);
   }
 
   .img-patient-icon {
