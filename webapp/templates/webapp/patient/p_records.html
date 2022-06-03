@@ -5,65 +5,26 @@
 {% block content %}
 <div class="main-grid-container">
 	{% include 'webapp/nav_sidebar.html' %}
+	
 	<div class="main-content-area">
-		<h1>Patient Records</h1>
-
-    	<h3 class="name">{{user.first_name}} {{user.last_name}}</h3>
+		<h1 class="name">{{user.first_name}} {{user.last_name}}</h1>	
 			<div>     
 				<a class="button-primary button-text" href="{% url 'webapp:record_update_info' %}"> Update Personal Information </a>
-			</div>
-
+			</div><br>
 			<div>     
 				<a class="button-primary button-text" href="{% url 'webapp:upload_doctor_orders' %}"> Upload Doctor's order </a>
-			</div>
+			</div><br>
 			<div>     
 				<a class="button-primary button-text" href="{% url 'webapp:upload_file' %}"> Upload Laboratory results </a>
-			</div>
+			</div><br>
 			<div>     
 				<a class="button-primary button-text" href="{% url 'webapp:upload_image' %}"> Upload Image </a>
-			</div>
+			</div><br>
 			<div>     
 				<a class="button-primary button-text" href="{% url 'webapp:upload_video' %}"> Upload Video </a>
-			</div>
-			<h6 class="account-type">{{user.get_role_display}}</h6>
-
-			<div class="profile-page-card-body">
-				<div class="info-group">
-					<h6 class="label">Birthdate</h6>
-					<p class="info">{{user.birthdate}}</p>
-				</div>
-				<div class="info-group">
-					<h6 class="label">Age</h6>
-					<p class="info">{{user.age}}</p>
-				</div>
-				<div class="info-group">
-					<h6 class="label">Sex</h6>
-					<p class="info">{{user.get_sex_display}}</p>
-				</div>
-				<div class="info-group">
-					<h6 class="label">Email</h6>
-					<p class="info">{{user.email}}</p>
-				</div>
-				<div class="info-group">
-					<h6 class="label">Phone Number</h6>
-					<p class="info">{{user.contact_number}}</p>
-				</div>
-			</div>
-
-
+			</div><br>
 			
-		
-			
-		
-			
-		
-
-
-		
 	</div>
-
-	
-
 	{% include 'webapp/footer.html' %}
 </div>
 {% endblock content %}

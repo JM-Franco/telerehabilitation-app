@@ -146,4 +146,8 @@ class ImageForm(ModelForm):
 	class Meta:
 		model = Image	
 		fields = ['image_title','image']
-		
+
+class VideoForm(ModelForm):
+    class Meta:
+        model= Video
+        fields= ["name", "videofile"]

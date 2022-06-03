@@ -649,7 +649,7 @@ def upload_image(request):
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('/p_records/files')
+            return redirect('/p_records/upload_image')
     else:
         form = ImageForm()
     return render(request, 'webapp/patient/upload_image.html', {
@@ -657,14 +657,15 @@ def upload_image(request):
     })
 
 def upload_video(request):
-    context = {}
-    if request.method == 'POST':
-        uploaded_file = request.FILES['document']
-        fs = FileSystemStorage()
-        name = fs.save(uploaded_file.name, uploaded_file)
-        context['url'] = fs.url(name)
-    return render(request, 'webapp/patient/upload_image.html', context)
-
+    videofiles = Video.objects.all()
+    form= VideoForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save()
+    context= {'videofiles': videofiles,
+              'form': form
+              }
+    return render(request, 'webapp/patient/upload_video.html', context)
+    
 def file_list(request):
     files = File.objects.all()
     return render(request, 'webapp/patient/file_list.html',{'files':files})
