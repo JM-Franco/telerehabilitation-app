@@ -1,0 +1,47 @@
+{% extends 'webapp/base.html' %}
+
+{% block title %}Profile{% endblock title %}
+
+{% block content %}
+<div class="main-grid-container">
+  {% include 'webapp/nav_sidebar.html' %}
+  <div class="main-content-area">
+    <h1>Profile</h1>
+    <a class="button-primary button-text"
+              href="{% url 'webapp:patients' %}">
+      
+          Back
+        </a>
+
+    <div id="accounts">
+        {% for account in active_patients %}
+        <div class="accounts-item">
+          <div class="name">
+            <h6>Name:</h6>
+            <p>{{account.first_name}} {{account.last_name}}</p>
+          </div>
+
+          <div class="email">
+            <h6>Email</h6>
+            <p>{{account.email}}</p>
+          </div>
+
+          <div class="number">
+            <h6>Contact No.</h6>
+            <p>{{account.contact_number}}</p>
+          </div>
+          <a
+            class="button-primary button-text"
+            href="{% url 'webapp:patients_profile' %}"
+          >
+            View Full Profile
+          </a>
+
+      </div>
+      {% empty %} <p>Empty</p>  {% endfor %}
+    </div>
+  </div>
+
+  {% include 'webapp/footer.html' %}
+</div>
+{% endblock content %}

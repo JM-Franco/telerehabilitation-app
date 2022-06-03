@@ -7,11 +7,30 @@
 	{% include 'webapp/nav_sidebar.html' %}
 	<div class="main-content-area">
 		<h1>Patients</h1>
-		<p>
-			Sample Content
-		</p>
-	</div>
+		<div class="patients-container">
+			<div class="patients-float-left">	
+				<img src="https://i.ibb.co/F42PBPW/ACTIVE-200-200-px.png" class="img-patient-icon"></a>
+				<div class="view-patients">	
+					
+					<a class="button-primary button-text"
+		          href="{% url 'webapp:active_patients' %}">
+		  
+		      View patients
+		   	</a>
+		   </div>
 
+		 </div>
+			<div class="patients-float-right">	
+		   <img src="https://i.ibb.co/gPhrWD6/ACTIVE-200-200-px-1.png" class="img-patient-icon"></a>
+		   <div class="view-patients">
+		   		<a class="button-primary button-text"
+	          href="{% url 'webapp:inactive_patients' %}">
+	      	View patients
+	    	</a>
+	     </div> 
+	    </div>      
+		</div>
+	</div>
 	{% include 'webapp/footer.html' %}
 </div>
 {% endblock content %}

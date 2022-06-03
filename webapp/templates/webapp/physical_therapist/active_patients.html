@@ -7,9 +7,43 @@
 	{% include 'webapp/nav_sidebar.html' %}
 	<div class="main-content-area">
 		<h1>Active Patients</h1>
-		<p>
-			Sample Content
-		</p>
+		<a class="button-primary button-text"
+		          href="{% url 'webapp:patients' %}">
+		  
+		       <ion-icon name="arrow-back"></ion-icon>
+		   	</a>
+
+		<div id="accounts">
+	      {% for account in active_patients %}
+	      <div class="accounts-item">
+	        <div class="name">
+	          <ion-icon name="person"></ion-icon>
+	          <p>{{account.first_name}} {{account.last_name}}</p>
+	        </div>
+
+	        <div class="email">
+	          <ion-icon name="mail"></ion-icon>
+	          <p>{{account.email}}</p>
+	        </div>
+
+	        <div class="number">
+	          <ion-icon name="call"></ion-icon>
+	          <p>{{account.contact_number}}</p>
+	        </div>
+	        <a
+	          class="button-primary button-text"
+
+	        >
+	          View Full Profile
+	        </a>
+
+      </div>
+      {% empty %} 
+      	<div class="accounts-item">
+	        <p>No record found.</p>
+	    </div>  
+	   {% endfor %}
+    </div>
 	</div>
 
 	{% include 'webapp/footer.html' %}

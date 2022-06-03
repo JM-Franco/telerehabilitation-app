@@ -882,6 +882,42 @@ ion-icon {
     justify-content: flex-start
   }
 
+  .main-grid-container .main-content-area .patients-container {
+    width: 900px;
+    height: 900px;
+    box-sizing: border-box;
+    border-radius: 25px;
+    text-align: center;
+  }
+
+  .main-grid-container .main-content-area .patients-container .patients-float-left {
+    width: 400px;
+    height: 300px;
+    box-sizing: border-box;
+    border-radius: 25px;
+    background-color: #6064d2;
+    float: left;
+  }
+
+  .main-grid-container .main-content-area .patients-container .patients-float-right {
+    width: 400px;
+    height: 300px;
+    box-sizing: border-box;
+    border-radius: 25px;
+    background-color: #6064d2;
+    float: right;
+  }
+
+  .img-patient-icon {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .view-patients {
+    text-align:center;
+  }
+=======
 .teleconferencing {
     font-family: "ABeeZee", sans-serif;
   font-size: 1rem;
@@ -1088,3 +1124,5 @@ ion-icon {
   padding: 50px;
   border-radius: 25px;
 }
+
+
