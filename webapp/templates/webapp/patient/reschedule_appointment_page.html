@@ -1,27 +1,31 @@
 {% extends 'webapp/base.html' %}
 
-{% block title %}Dashboard{% endblock title %}
+{% block title %}Reschedule Appointment{% endblock title %}
 
 {% block content %}
 <div class="main-grid-container">
 	{% include 'webapp/nav_sidebar.html' %}
 
 	<div class="main-content-area">
-    <h1>Reschedule Apppointment</h1>
+    <h1 id="req-app-h1">Reschedule Appointment</h1>
+  <br>
 <div class="request-appointment-div">
   <form method='post' >
   {% csrf_token %}
-  <h6>Appointment Type</h6>
+  <h6>Appointment Type</h6><br>
   <select name="appointment_type" id="appointment_type">
     <option value="clinical">Clinical Appointment</option>
     <option value="teleconsultation">Teleconsultation Appointment</option>
   </select>
-  <br>
-    <h6>Start Date and Time</h6>
+  <br><br>
+    <h6>Start Date and Time</h6><br>
     <input type="datetime-local" id="sched" name="sched">
-
+<br><br>
 <hr>
-<button type="submit" class="button-primary button-text" > Reschedule Appointment </button>
+<br>
+<div style = "text-align: center;">
+<button type="submit" class="button-primary button-text"
+style="margin:0 auto; position:relative;" > Reschedule Appointment </button></div>
 </form>
 </div>
 	</div>

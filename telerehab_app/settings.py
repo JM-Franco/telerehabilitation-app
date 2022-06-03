@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     'webapp.apps.WebappConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -86,6 +88,7 @@ DATABASES = {
     #     'NAME': 'telerehab_app',
     #     # 'NAME': 'e_chart_test' <-- for testing purposes
     #     'USER': 'postgres',
+    #     'PASSWORD': '1234',
     #     'PASSWORD': 'root',
     #     'HOST': 'localhost',
     #     'PORT': '5432' 
@@ -147,13 +150,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/images/'
+MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'webapp/static')
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'webapp/media')
 
 
 # SMTP Configuration

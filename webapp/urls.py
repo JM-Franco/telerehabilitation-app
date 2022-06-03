@@ -36,6 +36,7 @@ urlpatterns = [
     path("appointments/", views.pt_appointments, name="pt_appointments"),
     path("remind_appointment/<int:pk>/<int:apt_id>", views.send_apt_reminder, name="pt_remind_apt"),
     path("teleconferencing/", views.teleconferencing, name="teleconferencing"),
+    path("update_patient_records/", views.update_patient_records, name="update_patient_records"),
     path("resources", views.resources, name="resources"),
     path("delete_url/<int:url_id>", views.delete_url, name="delete_url"),
     path('pt/messages/', views.pt_messages, name='pt_messages'),
@@ -48,6 +49,17 @@ urlpatterns = [
     # P-related
     path("p_search/", views.p_search, name="p_search"),
     path("p_records/", views.p_records, name="p_records"),
+    path('p_records/update_info', views.record_update_info, name='record_update_info'),
+    path('p_records/upload_image', views.upload_image, name='upload_image'),
+    path('p_records/upload_video', views.upload_video, name='upload_video'),
+    path('p_records/files', views.file_list, name='file_list'),
+    path('p_records/upload_file', views.upload_file, name='upload_file'),
+    path('p_records/delete_file/<int:pk>', views.delete_file, name='delete_file'),
+        
+    path('p_records/doctor_orders', views.doctor_orders, name='doctor_orders'),
+    path('p_records/upload_doctor_orders', views.upload_doctor_orders, name='upload_doctor_orders'),
+    path('p_records/delete_order/<int:pk>', views.delete_order, name='delete_order'),
+
     path('messages/', views.messages, name='messages'),
     path('messages/view_messages/<int:user_id>/', views.view_messages, name='view_messages'),
     path('messages/view_messages_sent/<int:user_id>/', views.view_messages_sent, name='view_messages_sent'),
@@ -58,6 +70,7 @@ urlpatterns = [
     path('physical_therapists/', views.physical_therapists, name='physical_therapists'),
     path('physical_therapists/<int:user_id>/', views.view_profile_pt, name='view_profile_pt'),
     path('physical_therapists/appointment_hours/<int:user_id>/', views.view_pt_appointment_hours, name='view_pt_appointment_hours'),
+    
     # Reset Password
     path(
         "reset_password/",

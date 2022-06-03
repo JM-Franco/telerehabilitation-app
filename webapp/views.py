@@ -22,6 +22,8 @@ import pytz
 from datetime import timedelta, date
 from datetime import datetime as dt
 import datetime
+
+from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
 @unauthenticated_user
@@ -291,8 +293,22 @@ def send_apt_reminder(request, pk, apt_id):
 @login_required(login_url='/')
 def teleconferencing(request):
     user = request.user
-    data = {'user':user}
-    return render(request, 'webapp/physical_therapist/teleconferencing.html', data)    
+    pt = PhysicalTherapistProfile.objects.filter(account_id=user.id).get()
+    appointments = Appointment.objects.filter(status="accepted").filter(pt_id = pt.id, type="teleconsultation").exclude(status="cancelled")
+
+    _list=[]
+
+    for apt in appointments:
+            if apt.start_time.date() == datetime.date.today():
+                _list.append(apt)
+    
+    data = {'appointments':_list}
+    return render(request, 'webapp/physical_therapist/teleconferencing.html',data)    
+
+@login_required(login_url="/")
+def update_patient_records(request):
+
+    return render(request,'webapp/physical_therapist/update_patient_records.html')
 
 @login_required(login_url='/')
 def resources(request):
@@ -633,6 +649,115 @@ def view_pt_appointment_hours(request, user_id):
     # print(user_id)
     return render(request, 'webapp/patient/pt_appointment_page.html', data)
 
+def record_update_info(request):
+    edit_profile_form = EditProfileForm(instance=request.user)
+    if request.method == "POST":
+        #prevpath = request.POST.get("prevpath")
+        edit_profile_form = EditProfileForm(request.POST, instance=request.user)
+        if edit_profile_form.is_valid():
+            edit_profile_form.save()
+            return redirect('/p_records')
+    data = {"edit_profile_form": edit_profile_form}
+    return render(request, "webapp/edit_profile.html", data)
+
+'''
+def upload_image(request):
+    context = {}
+    if request.method == 'POST':
+        uploaded_file = request.FILES['document']
+        fs = FileSystemStorage()
+        name = fs.save(uploaded_file.name, uploaded_file)
+        context['url'] = fs.url(name)
+    return render(request, 'webapp/patient/upload_image.html', context)
+'''
+def upload_image(request):
+    images = Image.objects.all()
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('/p_records/upload_image')
+    else:
+        form = ImageForm()
+    return render(request, 'webapp/patient/upload_image.html', {
+        'form': form, 'images':images
+    })
+
+def upload_video(request):
+    videofiles = Video.objects.all()
+    form= VideoForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save()
+    context= {'videofiles': videofiles,
+              'form': form
+              }
+    return render(request, 'webapp/patient/upload_video.html', context)
+    
+def file_list(request):
+    files = File.objects.all()
+    return render(request, 'webapp/patient/file_list.html',{'files':files})
+
+
+def upload_file(request):
+    if request.method == 'POST':
+        form = FileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('p_records/files')
+    else:
+        form = FileForm()
+    return render(request, 'webapp/patient/upload_file.html', {
+        'form': form
+    })
+
+def delete_file(request, pk):
+    if request.method == 'POST':
+        file = File.objects.get(pk=pk)
+        file.delete()
+    return redirect('file_list')
+
+
+
+def doctor_orders(request):
+    orders = File.objects.all()
+    return render(request, 'webapp/patient/doctor_orders.html',{'orders':orders})
+
+
+def upload_doctor_orders(request):
+    if request.method == 'POST':
+        form = FileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('/p_records/doctor_orders')
+    else:
+        form = FileForm()
+    return render(request, 'webapp/patient/upload_doctor_orders.html', {
+        'form': form
+    })
+
+def delete_order(request, pk):
+    if request.method == 'POST':
+        order = File.objects.get(pk=pk)
+        order.delete()
+    return redirect('doctor_orders')
+
+'''
+def doctor_orders(request):
+
+    lastfile= File.objects.last()
+    pdf= lastfile.pdf
+    filename= lastfile.filename
+
+    form= FileForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save()
+    context= {'pdf': pdf,
+              'form': form,
+              'filename': filename
+              }
+    return render(request, 'webapp/patient/doctor_orders.html', context)
+
+'''
 # HTMX
 
 @require_POST
