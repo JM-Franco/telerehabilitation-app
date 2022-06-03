@@ -30,12 +30,12 @@
 	          <ion-icon name="call"></ion-icon>
 	          <p>{{account.contact_number}}</p>
 	        </div>
-	        <a
-	          class="button-primary button-text"
-
-	        >
-	          View Full Profile
-	        </a>
+			<form action="{% url 'webapp:patients_profile' account.first_name %}" method="POST">
+				{% csrf_token %}
+				<button type="submit" name="p_id" value="{{ account.id }}" class="button-primary button-link" >View profile</button> 
+				
+			</form>	
+	        
 
       </div>
       {% empty %} 

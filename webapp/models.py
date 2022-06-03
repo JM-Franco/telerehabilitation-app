@@ -214,6 +214,7 @@ class File(models.Model):
         super().delete(*args, **kwargs)
 
 class Order(models.Model):
+    patient = models.ForeignKey(PatientProfile, default=None, on_delete=models.CASCADE)
     filename = models.CharField(max_length=100)
     pdf = models.FileField(upload_to='files/orders/')
     
@@ -244,4 +245,4 @@ class Video(models.Model):
     videofile= models.FileField(upload_to='videos/', null=True, verbose_name="")
 
     def __str__(self):
-        return self.name + ": " + str(self.videofile)
+        return f"{self.name}: {str(self.videofile)}"

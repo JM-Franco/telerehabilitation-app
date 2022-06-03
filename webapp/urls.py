@@ -26,7 +26,7 @@ urlpatterns = [
     path("delete_clinic_hours/<int:pk>", views.delete_clinic_hours, name="delete_clinic_hours"),
     path("patients/", views.patients, name="patients"),
     path("active_patients/", views.active_patients, name="active_patients"),
-    path("active_patients/patients_profile/", views.patients_profile, name="patients_profile"),
+    path("active_patients/patients_profile/<first_name>", views.patients_profile, name="patients_profile"),
     path("inactive_patients/", views.inactive_patients, name="inactive_patients"),
     path("active_patients/<int:pk>", views.active_patients, name="active_patients"),
     path("inactive_patients/<int:pk>", views.inactive_patients, name="inactive_patients"),
@@ -53,7 +53,7 @@ urlpatterns = [
     path('p_records/upload_file', views.upload_file, name='upload_file'),
     path('p_records/delete_file/<int:pk>', views.delete_file, name='delete_file'),
         
-    path('p_records/doctor_orders', views.doctor_orders, name='doctor_orders'),
+    path('p_records/doctor_orders/', views.doctor_orders, name='doctor_orders'),
     path('p_records/upload_doctor_orders', views.upload_doctor_orders, name='upload_doctor_orders'),
     path('p_records/delete_order/<int:pk>', views.delete_order, name='delete_order'),
 

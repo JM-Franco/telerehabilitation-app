@@ -103,6 +103,8 @@ def edit_profile(request, pk):
     data = {"edit_profile_form": edit_profile_form}
     return render(request, "webapp/edit_profile.html", data)
 
+
+
 @login_required(login_url='/')
 def dashboard(request):
     user = request.user
@@ -220,11 +222,12 @@ def active_patients(request):
    data = {'active_patients':accounts}
    return render(request, "webapp/physical_therapist/active_patients.html", data)
 
-@login_required(login_url='/')
-def patients_profile(request):
-    active_patients = Account.objects.filter(is_active=True)
-    data = {'active_patients':active_patients}
-    return render(request, "webapp/physical_therapist/patient_profile_page.html", data)
+def patients_profile(request,first_name):
+    orders = Order.objects.filter(patient=request.POST.get('p_id'))
+    patient = get_object_or_404(PatientProfile,account_id=request.POST.get('p_id'))
+    context = {'patient' : patient, 'orders':orders}
+    return render(request,'webapp/physical_therapist/patient_profile_page.html', context)
+
 
 @login_required(login_url='/')
 def inactive_patients(request):

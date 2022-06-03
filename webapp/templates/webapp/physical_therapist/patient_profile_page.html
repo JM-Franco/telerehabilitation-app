@@ -7,38 +7,40 @@
   {% include 'webapp/nav_sidebar.html' %}
   <div class="main-content-area">
     <h1>Profile</h1>
-    <a class="button-primary button-text"
-              href="{% url 'webapp:patients' %}">
-      
-          Back
-        </a>
+
+    
 
     <div id="accounts">
-        {% for account in active_patients %}
+        
         <div class="accounts-item">
           <div class="name">
             <h6>Name:</h6>
-            <p>{{account.first_name}} {{account.last_name}}</p>
+            <p>{{patient.account.first_name}} {{patient.last_name}}</p>
           </div>
 
           <div class="email">
             <h6>Email</h6>
-            <p>{{account.email}}</p>
+            <p>{{patient.account.email}}</p>
           </div>
 
           <div class="number">
             <h6>Contact No.</h6>
-            <p>{{account.contact_number}}</p>
+            <p>{{patient.account.contact_number}}</p>
           </div>
-          <a
-            class="button-primary button-text"
-            href="{% url 'webapp:patients_profile' %}"
-          >
-            View Full Profile
-          </a>
+          <div class="name">
+            <h6>Address</h6>
+            <p>{{patient.address}}</p>
+          </div>
+
+         
+
+          <div>     
+            <a class="button-primary button-text" href="{% url 'webapp:doctor_orders' %}"> View Doctor's order </a>
+          </div><br>
+         
 
       </div>
-      {% empty %} <p>Empty</p>  {% endfor %}
+      
     </div>
   </div>
 
