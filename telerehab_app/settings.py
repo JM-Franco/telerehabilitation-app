@@ -88,11 +88,8 @@ DATABASES = {
     #     'NAME': 'telerehab_app',
     #     # 'NAME': 'e_chart_test' <-- for testing purposes
     #     'USER': 'postgres',
-<<<<<<< HEAD
     #     'PASSWORD': '1234',
-=======
     #     'PASSWORD': 'root',
->>>>>>> b536401c64d1ef8e5167b618579f1b49a30b14d0
     #     'HOST': 'localhost',
     #     'PORT': '5432' 
     # }
