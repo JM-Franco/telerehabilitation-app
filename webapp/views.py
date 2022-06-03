@@ -130,20 +130,6 @@ def accounts(request):
     data = {'accounts':accounts}
     return render(request, 'webapp/system_admin/accounts.html', data)
 
-@login_required(login_url='/')
-@allowed_users(allowed_roles=['SA'])
-def active_patients(request):
-    accounts = Account.objects.all().objects.filter(is_active=True)
-    data = {'active_patients':active_patients}
-    return render(request, "webapp/system_admin/active_patients.html", data)
-
-@login_required(login_url='/')
-@allowed_users(allowed_roles=['SA'])
-def inactive_patients(request):
-    accounts = Account.objects.all().objects.filter(is_active=True)
-    data = {'inactive_patients':inactive_patients}
-    return render(request, "webapp/system_admin/inactive_patients.html", data)
-
 # PT-related views
 
 @login_required(login_url="/")
@@ -224,6 +210,19 @@ def delete_clinic_hours(request, pk):
 @login_required(login_url='/')
 def patients(request):
     return render(request, 'webapp/physical_therapist/patients.html')
+
+@login_required(login_url='/')
+def active_patients(request):
+    accounts = Account.objects.all().objects.filter(role='P', is_active=True)
+    data = {'active_patients':active_patients}
+    return render(request, "webapp/physical_therapist/active_patients.html", data)
+
+@login_required(login_url='/')
+def inactive_patients(request):
+    accounts = Account.objects.all().objects.filter(role='P', is_active=False)
+    data = {'inactive_patients':inactive_patients}
+    return render(request, "webapp/physical_therapist/inactive_patients.html", data)
+
 
 @login_required(login_url='/')
 @allowed_users(allowed_roles=['PT'])

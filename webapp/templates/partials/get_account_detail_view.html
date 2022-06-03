@@ -1,26 +1,19 @@
+<!--
 <div class="profile-picture"></div>
-<h3 class="name">{{account.first_name}} {{account.last_name}}</h3>
+-->
+<h3 class="name" style="text-transform:capitalize">{{account.first_name}} {{account.last_name}}</h3>
 <div class="account-type"><h6>{{account.get_role_display}}</h6> </div>
 
 <div class="profile-page-card-body">
-	<div class="info-group">
-		<h6 class="label">Birthdate</h6>
-		<p class="info">{{account.birthdate}}</p>
-	</div>
-	<div class="info-group">
-		<h6 class="label">Age</h6>
-		<p class="info">{{account.age}}</p>
-	</div>
-	<div class="info-group">
-		<h6 class="label">Sex</h6>
-		<p class="info">{{account.get_sex_display}}</p>
-	</div>
-	<div class="info-group">
-		<h6 class="label">Email</h6>
-		<p class="info">{{account.email}}</p>
-	</div>
-	<div class="info-group">
-		<h6 class="label">Phone Number</h6>
-		<p class="info">{{account.contact_number}}</p>
-	</div>
+  <div class="info-group">
+    <h6 class="label">Email</h6>
+    <p class="info">{{account.email}}</p>
+  </div>
+  <div class="info-group">
+    <h6 class="label">Contact Number</h6>
+    <p class="info">{{account.contact_number}}</p>
+  </div>
+  <div class="info-group">
+    <a class="button-primary button-text" href="/physical_therapists/{{ account.id }}">View Hours</a>
+  </div>
 </div>
