@@ -211,11 +211,15 @@ def delete_clinic_hours(request, pk):
 def patients(request):
     return render(request, 'webapp/physical_therapist/patients.html')
 
-@login_required(login_url='/')
-def active_patients(request):
-    active_patients = Account.objects.filter(is_active=True)
-    data = {'active_patients':active_patients}
-    return render(request, "webapp/physical_therapist/active_patients.html", data)
+#@login_required(login_url='/')
+#def active_patients(request):
+#<<<<<<< HEAD
+#    active_patients = Account.objects.filter(is_active=True)
+#=======
+#    accounts = Account.objects.all().objects.filter(role='P', is_active=True)
+#>>>>>>> b536401c64d1ef8e5167b618579f1b49a30b14d0
+#    data = {'active_patients':active_patients}
+#    return render(request, "webapp/physical_therapist/active_patients.html", data)
 
 @login_required(login_url='/')
 def patients_profile(request):
@@ -223,11 +227,15 @@ def patients_profile(request):
     data = {'active_patients':active_patients}
     return render(request, "webapp/physical_therapist/patient_profile_page.html", data)
 
-@login_required(login_url='/')
-def inactive_patients(request):
-    inactive_patients = Account.objects.filter(is_active=False)
-    data = {'inactive_patients':inactive_patients}
-    return render(request, "webapp/physical_therapist/inactive_patients.html", data)
+#@login_required(login_url='/')
+#def inactive_patients(request):
+#<<<<<<< HEAD
+#    inactive_patients = Account.objects.filter(is_active=False)
+#=======
+#    accounts = Account.objects.all().objects.filter(role='P', is_active=False)
+#>>>>>>> b536401c64d1ef8e5167b618579f1b49a30b14d0
+#    data = {'inactive_patients':inactive_patients}
+#    return render(request, "webapp/physical_therapist/inactive_patients.html", data)
 
 
 @login_required(login_url='/')

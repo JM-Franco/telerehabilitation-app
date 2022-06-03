@@ -25,9 +25,14 @@ urlpatterns = [
     path("edit_clinic_hours/<int:pk>", views.edit_clinic_hours, name="edit_clinic_hours"),
     path("delete_clinic_hours/<int:pk>", views.delete_clinic_hours, name="delete_clinic_hours"),
     path("patients/", views.patients, name="patients"),
+<<<<<<< HEAD
     path("active_patients/", views.active_patients, name="active_patients"),
     path("active_patients/patients_profile/", views.patients_profile, name="patients_profile"),
     path("inactive_patients/", views.inactive_patients, name="inactive_patients"),
+=======
+    #path("active_patients/<int:pk>", views.active_patients, name="active_patients"),
+    #path("inactive_patients/<int:pk>", views.inactive_patients, name="inactive_patients"),
+>>>>>>> b536401c64d1ef8e5167b618579f1b49a30b14d0
     path("appointments/", views.pt_appointments, name="pt_appointments"),
     path("remind_appointment/<int:pk>/<int:apt_id>", views.send_apt_reminder, name="pt_remind_apt"),
     path("teleconferencing/", views.teleconferencing, name="teleconferencing"),
