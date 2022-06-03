@@ -881,3 +881,210 @@ ion-icon {
     flex-direction: column;
     justify-content: flex-start
   }
+
+.teleconferencing {
+    font-family: "ABeeZee", sans-serif;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.teleconferencing .user-list tbody td > img {
+    position: relative;
+  max-width: 20%;
+  float: left;
+  margin-right: 15px;
+}
+.teleconferencing .user-list tbody td .user-link {
+  display: block;
+  padding-top: 3px;
+  margin-left: 60px;
+}
+.teleconferencing  .user-list tbody td .user-subhead {
+  font-size: small;
+  font-style: italic;
+}
+
+.teleconferencing  #default_photo{
+  position: relative;
+  max-width: 30%;
+  float: left;
+  font-size:70px;
+}
+
+/* TABLES */
+.teleconferencing .user-link{
+  text-decoration: none;
+  color: white;
+}
+.teleconferencing .table {
+    border-collapse: collapse;
+  width: -moz-available;
+  font-size: x-large;
+  color: white;
+}
+
+.teleconferencing  .table-hover > tbody > tr:hover > td,
+.teleconferencing  .table-hover > tbody > tr:hover > th {
+  background-color: #eee;
+}
+.teleconferencing .table thead > tr > th {
+  border-bottom: 1px solid #C2C2C2;
+  padding-bottom: 0;
+}
+.teleconferencing .table tbody > tr > td {
+  font-size: 0.875em;
+  background: #6064D2;;
+  border-top: 20px solid #DEE2E6;
+  vertical-align: middle;
+  padding: 35px 15px;;
+}
+
+.teleconferencing .table  #opt{
+    color: white;
+    font-size: 3.5vw;
+}
+
+.teleconferencing .table  #opt:hover{
+    color: #00a896;
+}
+
+.teleconferencing h4{
+  color: #495058;
+}
+
+
+.teleconferencing .table thead > tr > th span {
+  border-bottom: 2px solid #C2C2C2;
+  display: inline-block;
+  padding: 0 5px;
+  padding-bottom: 5px;
+  font-weight: normal;
+}
+.teleconferencing .table thead > tr > th > a span {
+  color: #344644;
+}
+.teleconferencing .table thead > tr > th > a span:after {
+  content: "\f0dc";
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+  margin-left: 5px;
+  font-size: 0.75em;
+}
+.teleconferencing .table thead > tr > th > a.asc span:after {
+  content: "\f0dd";
+}
+.teleconferencing .table thead > tr > th > a.desc span:after {
+  content: "\f0de";
+}
+.teleconferencing .table thead > tr > th > a:hover span {
+  text-decoration: none;
+  color: #2bb6a3;
+  border-color: #2bb6a3;
+}
+.teleconferencing .table.table-hover tbody > tr > td {
+  -webkit-transition: background-color 0.15s ease-in-out 0s;
+  transition: background-color 0.15s ease-in-out 0s;
+}
+.teleconferencing .table tbody tr td .call-type {
+  display: block;
+  font-size: 0.75em;
+  text-align: center;
+}
+.teleconferencing .table tbody tr td .first-line {
+  line-height: 1.5;
+  font-weight: 400;
+  font-size: 1.125em;
+}
+.teleconferencing .table tbody tr td .first-line span {
+  font-size: 0.875em;
+  color: #969696;
+  font-weight: 300;
+}
+.teleconferencing .table tbody tr td .second-line {
+  font-size: 0.875em;
+  line-height: 1.2;
+}
+
+/*TOOLTIP */
+
+.teleconferencing .tooltiptext_edit_record {
+  visibility: hidden;
+  width: 120px;
+  background-color: white;
+  color: black;
+  text-align: center;
+  border-radius: 6px;
+  padding: 10px;
+  
+  /* Position the tooltip */
+  position: absolute;
+  font-size: 15px;
+  margin-top: -90px;
+  margin-left: -60px;
+}
+.teleconferencing .edit_record:hover .tooltiptext_edit_record {
+    visibility: visible;
+}
+.teleconferencing .tooltiptext_msg {
+  visibility: hidden;
+  width: 120px;
+  background-color: white;
+  color: black;
+  text-align: center;
+  border-radius: 6px;
+  padding: 10px;
+  
+  /* Position the tooltip */
+  position: absolute;
+  font-size: 15px;
+  margin-top: -50px;
+  margin-left: -60px;
+
+}
+.teleconferencing .msg:hover .tooltiptext_msg {
+    visibility: visible;
+}
+.teleconferencing .tooltiptext_view_record {
+  visibility: hidden;
+  width: 120px;
+  background-color: white;
+  color: black;
+  text-align: center;
+  border-radius: 6px;
+  padding: 10px;
+  
+  /* Position the tooltip */
+  position: absolute;
+  font-size: 15px;
+  margin-top: -100px;
+  margin-left: 20px;
+
+}
+.teleconferencing .view_record:hover .tooltiptext_view_record {
+    visibility: visible;
+}
+
+.teleconferencing .box{
+  padding: 20px;
+}
+.teleconferencing .table  td:first-child{
+
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  min-width: 40%;
+}
+.teleconferencing .table  td:last-child{
+
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+.teleconferencing .no_sched {
+  background-color: #adb5bd;
+  padding: 50px;
+  border-radius: 25px;
+}

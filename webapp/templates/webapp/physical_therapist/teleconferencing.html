@@ -6,12 +6,83 @@
 <div class="main-grid-container">
 	{% include 'webapp/nav_sidebar.html' %}
 	<div class="main-content-area">
-		<h1>Teleconferencing</h1>
-		<p>
-			Sample Content
-		</p>
-	</div>
+		<h1 cla>Teleconferencing</h1>
+		<div class="teleconferencing" >
+			<h4 id="date"></h4>
 
+			{% if appointments %}
+			<table class="table user-list">
+
+				<tbody>
+					
+					{% for apt in appointments %}
+					<tr>
+						<td>
+							<i id="default_photo" class="material-icons" >person_outline</i>
+
+							<div class="view_record">
+								<a href="#" class="user-link">{{ apt.patient.account.first_name | title }} {{apt.patient.account.last_name | title}}</a>
+								<span class="tooltiptext_view_record">View Patient's Record</span>
+							</div>
+							<i class="material-icons" style="position: relative;top: 5px;" >mail</i>
+							<span class="user-subhead">{{apt.patient.account.email}}</span>
+						</td>
+						<td >
+							<p> Start:
+								<h6>{{ apt.start_time|time }}</h6>
+							</p>
+						</td>
+						<td >
+							<p> End:
+								<h6>{{ apt.end_time|time  }}</h6>
+							</p>
+						</td>
+						<td>
+							<div class="edit_record">
+								<a href="{% url 'webapp:update_patient_records' %}" class="table-link">
+									<i id="opt" class="material-icons">edit</i>
+								</a>
+								<span class="tooltiptext_edit_record">Update Patient's Records</span>
+							</div>
+						</td>
+						<td>
+							<div class="msg">
+								<a href="{% url 'webapp:pt_send_message' %}" class="table-link" id="message">
+									<i id="opt" class="material-icons">chat_bubble</i>
+								</a>
+								<span class="tooltiptext_msg">
+									Send message
+								</span>
+							</div>
+						</td>
+
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			{% else %}
+			<div class="no_sched">
+				<h6>No scheduled teleconsultation for today.</h6>
+			</div>
+			{% endif %}
+		</div>
+	</div>
 	{% include 'webapp/footer.html' %}
 </div>
+
+<script>
+	const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+	const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+	const d = new Date();
+	let day = weekday[d.getDay()];
+
+	let month = months[d.getMonth()];
+	let date =day.concat("  -",month,", ", d.getDay(),", ",d.getFullYear() );
+	document.getElementById("date").innerHTML = date;
+</script>
+
+
 {% endblock content %}
+
