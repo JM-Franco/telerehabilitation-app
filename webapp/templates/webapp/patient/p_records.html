@@ -1,15 +1,29 @@
 {% extends 'webapp/base.html' %}
 
-{% block title %}Search{% endblock title %}
+{% block title %}Resources{% endblock title %}
 
 {% block content %}
 <div class="main-grid-container">
 	{% include 'webapp/nav_sidebar.html' %}
+	
 	<div class="main-content-area">
-		<h1>Records</h1>
-		<p>
-			Sample Content
-		</p>
+		<h1 class="name">{{user.first_name}} {{user.last_name}}</h1>	
+			<div>     
+				<a class="button-primary button-text" href="{% url 'webapp:record_update_info' %}"> Update Personal Information </a>
+			</div><br>
+			<div>     
+				<a class="button-primary button-text" href="{% url 'webapp:upload_doctor_orders' %}"> Upload Doctor's order </a>
+			</div><br>
+			<div>     
+				<a class="button-primary button-text" href="{% url 'webapp:upload_file' %}"> Upload Laboratory results </a>
+			</div><br>
+			<div>     
+				<a class="button-primary button-text" href="{% url 'webapp:upload_image' %}"> Upload Image </a>
+			</div><br>
+			<div>     
+				<a class="button-primary button-text" href="{% url 'webapp:upload_video' %}"> Upload Video </a>
+			</div><br>
+			
 	</div>
 	{% include 'webapp/footer.html' %}
 </div>
