@@ -1,6 +1,6 @@
 {% extends 'webapp/base.html' %}
 
-{% block title %}Appointments{% endblock title %}
+{% block title %}Messages{% endblock title %}
 
 {% block content %}
 <div class="main-grid-container">
@@ -9,7 +9,7 @@
 		<h1>Received Messages</h1>
     <hr>
         <div id="accounts">
-            {% for msg in received_messages %}
+            {% for msg in received_messages reversed %}
             <div class="accounts-item">
             <div class="name">
                 <h6>From</h6>
