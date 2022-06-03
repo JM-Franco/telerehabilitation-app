@@ -1,6 +1,6 @@
 {% extends 'webapp/base.html' %}
 
-{% block title %}PT{% endblock title %}
+{% block title %}Physical Therapist Profile{% endblock title %}
 
 {% block content %}
 
@@ -20,62 +20,68 @@
         </defs>
         <rect x="0" y="0" mask="url(#circle)" />
       </svg> -->
+      <!--
       <div class="profile-picture"></div>
-      <h3 class="name">{{account.first_name}} {{account.last_name}}</h3>
+      -->
+      <h3 class="name" style="text-transform:capitalize">{{account.first_name}} {{account.last_name}}</h3>
       <div class="account-type"><h6>{{account.get_role_display}}</h6></div>
     
       <div class="profile-page-card-body">
+        <div class="info-group">
+          <h6 class="label">Age</h6>
+          <p class="info">{{account.age}}</p>
+        </div>
+        <div class="info-group">
+          <h6 class="label">Sex</h6>
+          <p class="info">{{account.sex}}</p>
+        </div>
         <div class="info-group">
           <h6 class="label">Email</h6>
           <p class="info">{{account.email}}</p>
         </div>
         <div class="info-group">
-          <h6 class="label">Phone Number</h6>
+          <h6 class="label">Contact Number</h6>
           <p class="info">{{account.contact_number}}</p>
         </div>
         <div class="info-group">
-          <h4 class="label">Clinic Hours</h4>
-          {% for field in clinic_hours %}
-          <p style="margin-bottom: 1vh;">
-              <a href="edit_clinic_hours/{{ field.id }}" name="edit-link" style="display: none; color: rgb(87, 213, 255);">Edit</a>
-              {{ field.get_weekday_display }}
-              <a href="delete_clinic_hours/{{ field.id }}" name="delete-link" style="display: none; color: rgb(197, 20, 20);">Delete</a>
-              {% for hour in field.hours %}
-              <ul>
-                <li>
-                  <p>
-                    from {{ hour.0 }} to 
-                    {{ hour.1 }}
-                  </p>
-                </li>
-              </ul>
-            {% empty %}
-              <p style="size: 2em;">Nothing to display.</p>
+          <h6 class="label">Clinic Hours</h6>
+          {% if clinic_hours %}
+            {% for field in clinic_hours %}
+              <p style="margin-bottom: 1vh;">
+                  <i>{{ field.get_weekday_display }}</i>
+                  {% for hour in field.hours %}
+                    <ul>
+                      <li>
+                        <p> from {{ hour.0 }} 
+                        to {{ hour.1 }}</p>
+                      </li>
+                    </ul>
+                  {% endfor %}
+              </p>
             {% endfor %}
-          </p>
-          {% endfor %}
+          {% else %}
+            <ul><li><p style="size: 2em;">Not available.</p></li></ul>
+          {% endif %}
         </div>
         <div class="info-group">
-          <h4 class="label">Teleconsultation Hours</h4>
-          {% for field in tc_hours %}
-          <p style="margin-bottom: 1vh;">
-              <a href="edit_clinic_hours/{{ field.id }}" name="edit-link" style="display: none; color: rgb(87, 213, 255);">Edit</a>
-              {{ field.get_teleconsultation_weekday_display }}
-              <a href="delete_clinic_hours/{{ field.id }}" name="delete-link" style="display: none; color: rgb(197, 20, 20);">Delete</a>
-              {% for hour in field.teleconsultation_hours %}
-              <ul>
-                <li>
-                  <p>
-                    from {{ hour.0 }} to 
-                    {{ hour.1 }}
-                  </p>
-                </li>
-              </ul>
-            {% empty %}
-              <p style="size: 2em;">Nothing to display.</p>
+          <h6 class="label">Teleconsultation Hours</h6>
+          {% if tc_hours %}
+            {% for field in tc_hours %}
+              <p style="margin-bottom: 1vh;">
+                  <i>{{ field.get_teleconsultation_weekday_display }}</i>
+                  {% for hour in field.teleconsultation_hours %}
+                    <ul>
+                      <li>
+                        <p> from {{ hour.0 }} 
+                        to {{ hour.1 }}</p>
+                      </li>
+                    </ul>
+                  {% endfor %}
+              </p>
             {% endfor %}
-          </p>
-          {% endfor %}
+          {% else %}
+            <ul><li><p style="size: 2em;">Not available.</p></li></ul>
+          {% endif %}
         </div>
       </div>
     </div> {% empty %} <p>Empty</p>  {% endfor %}

@@ -130,20 +130,6 @@ def accounts(request):
     data = {'accounts':accounts}
     return render(request, 'webapp/system_admin/accounts.html', data)
 
-@login_required(login_url='/')
-@allowed_users(allowed_roles=['SA'])
-def active_patients(request):
-    accounts = Account.objects.all().objects.filter(is_active=True)
-    data = {'active_patients':active_patients}
-    return render(request, "webapp/system_admin/active_patients.html", data)
-
-@login_required(login_url='/')
-@allowed_users(allowed_roles=['SA'])
-def inactive_patients(request):
-    accounts = Account.objects.all().objects.filter(is_active=True)
-    data = {'inactive_patients':inactive_patients}
-    return render(request, "webapp/system_admin/inactive_patients.html", data)
-
 # PT-related views
 
 @login_required(login_url="/")
@@ -226,6 +212,19 @@ def patients(request):
     return render(request, 'webapp/physical_therapist/patients.html')
 
 @login_required(login_url='/')
+def active_patients(request):
+    accounts = Account.objects.all().objects.filter(role='P', is_active=True)
+    data = {'active_patients':active_patients}
+    return render(request, "webapp/physical_therapist/active_patients.html", data)
+
+@login_required(login_url='/')
+def inactive_patients(request):
+    accounts = Account.objects.all().objects.filter(role='P', is_active=False)
+    data = {'inactive_patients':inactive_patients}
+    return render(request, "webapp/physical_therapist/inactive_patients.html", data)
+
+
+@login_required(login_url='/')
 @allowed_users(allowed_roles=['PT'])
 def pt_appointments(request):
     pt = PhysicalTherapistProfile.objects.filter(account_id=request.user.id).get()
@@ -283,9 +282,31 @@ def teleconferencing(request):
 
 @login_required(login_url='/')
 def resources(request):
+    # info for profile modal
     user = request.user
-    data = {'user':user}
+    pt = PhysicalTherapistProfile.objects.filter(account_id=user.id).get()
+    clinic_hours = list(Clinic_Hours.objects.filter(pt_id=pt.id).order_by('id'))
+    teleconsultation_hours = list(Teleconsultation_Hours.objects.filter(pt_id=pt.id).order_by('id'))
+    # resources
+    urls_object = URLs.objects.filter(pt=pt.id).order_by('id')
+    # add url form
+    url_form = addURLForm()
+    if request.method == 'POST':
+        add_URL_form = addURLForm(request.POST)
+        if add_URL_form.is_valid():
+            urls = add_URL_form.save(commit=False)
+            urls.pt = pt
+            urls.save()
+            return redirect('/resources')
+
+    data = {'user': user, 'clinic_hours': clinic_hours, 'teleconsultation_hours': teleconsultation_hours, 
+            'urls_object': urls_object, 'url_form': url_form}
     return render(request, 'webapp/physical_therapist/resources.html', data)
+
+def delete_url(request, url_id):
+    selected_url = URLs.objects.filter(id=url_id).get()
+    selected_url.delete()
+    return redirect('/resources')
 
 @login_required(login_url='/')
 @allowed_users(allowed_roles=['PT'])
