@@ -6,9 +6,9 @@
 <div class="main-grid-container">
 	{% include 'webapp/nav_sidebar.html' %}
 
-
 	<div class="main-content-area">
-		<h1>Sent</h1>
+		<h1>Sent Messages</h1>
+    <hr>
         <div id="accounts">
 
           {% with selected="my string" %}
@@ -28,11 +28,16 @@
                 <p>{{msg.date_sent}}</p>
               </div>
             </div>
-            {% empty %} Nada {% endfor %}
-
+            {% empty %} <p>Empty</p> {% endfor %}
 
           </div>
-          <br>
+          <hr>
+          <a
+          class="button-primary button-text"
+          href="/pt/send_message"
+        >
+         Send Message
+        </a>
 
 		</p>
 	</div>
