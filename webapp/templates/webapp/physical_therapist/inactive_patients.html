@@ -7,10 +7,12 @@
 	{% include 'webapp/nav_sidebar.html' %}
 	<div class="main-content-area">
 		<h1>Inactive Patients</h1>
+		<!--
 		<a class="button-primary button-text"
 		          href="{% url 'webapp:patients' %}">
 		  <ion-icon name="arrow-back"></ion-icon>
 		</a>
+		-->
 		<div id="accounts">
 	      {% for account in active_patients %}
 	      <div class="accounts-item">

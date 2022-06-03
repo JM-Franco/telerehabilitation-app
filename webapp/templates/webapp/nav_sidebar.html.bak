@@ -177,7 +177,7 @@
     class="nav-item {% if request.resolver_match.view_name == 'webapp:p_search' %}active{% endif %}"
   >
     <ion-icon class="nav-icon" name="search-outline"></ion-icon>
-    <p>PT Search</p>
+    <p>Search</p>
     <a href="{% url 'webapp:p_search' %}">
       <span
         style="

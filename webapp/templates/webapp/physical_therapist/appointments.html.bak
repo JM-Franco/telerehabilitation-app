@@ -93,7 +93,7 @@
           class="appointment-requests-item"
         >
           <div class="appointment-item">
-            <div class="name" style="margin-right: 4%; margin-left: 1%">
+            <div class="name" style="margin-right: 4%; margin-left: -4%">
               <h6>Name</h6>
               <p>
                 {{appointments_request.patient.account.first_name}}

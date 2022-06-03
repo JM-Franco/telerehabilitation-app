@@ -7,7 +7,7 @@
 	{% include 'webapp/nav_sidebar.html' %}
 	
 	<div class="main-content-area">
-		<h1 class="name">{{user.first_name}} {{user.last_name}}'s Records</h1>	
+		<h1 class="name">{{user.first_name}} {{user.last_name}}</h1>	
 			<div>     
 				<a class="button-primary button-text" href="{% url 'webapp:record_update_info' %}"> Update Personal Information </a>
 			</div><br>

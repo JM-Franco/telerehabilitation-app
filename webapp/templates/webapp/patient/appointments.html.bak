@@ -34,9 +34,9 @@
           <!-- <h6>Type</h6> -->
           <!-- <p>{{item.type}}</p> -->
           {% if item.type == "clinical" %}
-          <p class="app-clinical" style="text-transform: capitalize;">{{item.type}}</p>
+          <p class="app-clinical">{{item.type}}</p>
           {% elif item.type == "teleconsultation" %}
-          <p class="app-tele" style="text-transform: capitalize;">{{item.type}}</p>
+          <p class="app-tele">{{item.type}}</p>
           {% else %}
           {% endif %}
         </div>
@@ -47,9 +47,9 @@
         <div class="role">
           <!-- <h6>Status</h6> -->
           {% if item.status == "accepted" %}
-          <p class="app-accepted" style="text-transform: capitalize;">{{item.status}}</p>
+          <p class="app-accepted">{{item.status}}</p>
           {% elif item.status == "pending" %}
-          <p class="app-pending" style="text-transform: capitalize;">{{item.status}}</p>
+          <p class="app-pending">{{item.status}}</p>
           {% else %}
           {% endif %}
         </div>

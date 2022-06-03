@@ -15,7 +15,7 @@
 					<a class="button-primary button-text"
 		          href="{% url 'webapp:active_patients' %}">
 		  
-		      View Active Patients
+		      View patients
 		   	</a>
 		   </div>
 
@@ -25,7 +25,7 @@
 		   <div class="view-patients">
 		   		<a class="button-primary button-text"
 	          href="{% url 'webapp:inactive_patients' %}">
-	      	View Inactive Patients
+	      	View patients
 	    	</a>
 	     </div> 
 	    </div>      

@@ -24,12 +24,18 @@
 	          <ion-icon name="call"></ion-icon>
 	          <p>{{account.contact_number}}</p>
 	        </div>
+<<<<<<< Updated upstream
 			<a
 			class="button-primary button-text"
 			href="/p_accounts/{{ account.id }}"
-			>
+		  >
 			View Profile
 		  </a>
+=======
+	        <a class="button-primary button-text">
+	          View Full Profile
+	        </a>
+>>>>>>> Stashed changes
 
       </div>
       {% empty %} 

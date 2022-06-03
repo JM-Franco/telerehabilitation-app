@@ -5,7 +5,6 @@
 {% block content %}
 
 <div class="">
-  {% include 'webapp/nav_sidebar.html' %}
   <div class="profile-page-grid-container">
   <div class="profile-page-card-grid-container"> {% for account in p_account %}
     <div class="profile-page-card" style="z-index: 0">
