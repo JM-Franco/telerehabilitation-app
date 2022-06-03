@@ -177,7 +177,7 @@
     class="nav-item {% if request.resolver_match.view_name == 'webapp:p_search' %}active{% endif %}"
   >
     <ion-icon class="nav-icon" name="search-outline"></ion-icon>
-    <p>Search</p>
+    <p>PT Search</p>
     <a href="{% url 'webapp:p_search' %}">
       <span
         style="
@@ -227,24 +227,7 @@
       ></span>
     </a>
   </div>
-  <div
-    class="nav-item {% if request.resolver_match.view_name == 'webapp:physical_therapists' %}active{% endif %}"
-  >
-    <ion-icon class="nav-icon" name="person-outline"></ion-icon>
-    <p>Physical Therapists</p>
-    <a href="{% url 'webapp:physical_therapists' %}">
-      <span
-        style="
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          top: 0;
-          left: 0;
-          z-index: 1;
-        "
-      ></span>
-    </a>
-  </div>
+
   <div
     class="nav-item {% if request.resolver_match.view_name == 'webapp:messages' %}active{% endif %}"
   >

@@ -616,9 +616,15 @@ def resched_appointment(request, request_id):
 def physical_therapists(request):
     pt_accounts = Account.objects.filter(role="PT")
     data = {'pt_accounts':pt_accounts}
-    #print(data)
     
     return render(request, 'webapp/patient/pt_accounts.html', data)
+
+@login_required(login_url='/')
+def p_account(request, user_id):
+    
+    pt_account = Account.objects.filter(id=user_id)
+    data = {'p_account':pt_account}
+    return render(request, 'webapp/physical_therapist/p_profile_page.html', data)
 
 @login_required(login_url='/')
 def view_profile_pt(request, user_id):

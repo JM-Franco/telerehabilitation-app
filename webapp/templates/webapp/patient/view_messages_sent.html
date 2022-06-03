@@ -13,12 +13,12 @@
 
           {% with selected="my string" %}
           {% endwith %}
-            {% for msg in sent_messages %}
+            {% for msg in sent_messages reversed %}
             <div class="accounts-item">
-            <div class="name">
-                <h6>Sent</h6>
-               
-            </div>
+              <div class="name">
+                <h6>Subject</h6>
+                {{msg.subject}}
+              </div>
               <div class="name">
                 <h6>Body</h6>
                 <p>{{msg.text}}</p>

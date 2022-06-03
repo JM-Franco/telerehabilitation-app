@@ -43,7 +43,7 @@
 
           eventClick: function(arg) {
             console.log(arg.event._def.extendedProps.link.match(/href="([^"]*)/)[1])
-            window.open(arg.event._def.extendedProps.link.match(/href="([^"]*)/)[1]);
+            window.location.href(arg.event._def.extendedProps.link.match(/href="([^"]*)/)[1]);
           },
 
 

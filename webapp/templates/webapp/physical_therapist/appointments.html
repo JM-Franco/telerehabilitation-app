@@ -93,30 +93,30 @@
           class="appointment-requests-item"
         >
           <div class="appointment-item">
-            <div class="name" style="margin-right: 50px; margin-left: -50px">
+            <div class="name" style="margin-right: 4%; margin-left: 1%">
               <h6>Name</h6>
               <p>
                 {{appointments_request.patient.account.first_name}}
                 {{appointments_request.patient.account.last_name}}
               </p>
             </div>
-            <div class="name" style="margin-right: 50px">
+            <div class="name" style="margin-right: 4%">
               <h6>Status</h6>
               {% if appointments_request.status == "reschedule" %}
-              <p>For reschedule</p>
+              <p>To Reschedule</p>
               {% else %}
-              <p>{{appointments_request.status}}</p>
+              <p style="text-transform: capitalize;">{{appointments_request.status}}</p>
               {% endif %}
             </div>
-            <div class="name" style="margin-right: 50px">
+            <div class="name" style="margin-right: 4%">
               <h6>Time</h6>
               <p>
                 {{appointments_request.start_time}}
               </p>
             </div>
-            <div class="name" style="margin-right: 50px">
+            <div class="name" style="margin-right: 4%">
               <h6>Type</h6>
-              <p>{{appointments_request.type}}</p>
+              <p style="text-transform: capitalize;">{{appointments_request.type}}</p>
             </div>
           </div>
           {% if appointments_request.status == 'accepted' %}

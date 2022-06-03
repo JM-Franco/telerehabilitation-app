@@ -7,12 +7,6 @@
 	{% include 'webapp/nav_sidebar.html' %}
 	<div class="main-content-area">
 		<h1>Active Patients</h1>
-		<a class="button-primary button-text"
-		          href="{% url 'webapp:patients' %}">
-		  
-		       <ion-icon name="arrow-back"></ion-icon>
-		   	</a>
-
 		<div id="accounts">
 	      {% for account in active_patients %}
 	      <div class="accounts-item">
@@ -30,12 +24,12 @@
 	          <ion-icon name="call"></ion-icon>
 	          <p>{{account.contact_number}}</p>
 	        </div>
-	        <a
-	          class="button-primary button-text"
-
-	        >
-	          View Full Profile
-	        </a>
+			<a
+			class="button-primary button-text"
+			href="/p_accounts/{{ account.id }}"
+			>
+			View Profile
+		  </a>
 
       </div>
       {% empty %} 

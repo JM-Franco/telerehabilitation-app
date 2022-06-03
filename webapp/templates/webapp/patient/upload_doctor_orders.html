@@ -6,7 +6,7 @@
 <div class="main-grid-container">
 	{% include 'webapp/nav_sidebar.html' %}
 	<div class="main-content-area">
-		<h1>Upload Doctor Orders</h1>
+		<h1>Upload Doctor's Orders</h1>
 
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -14,7 +14,7 @@
             <button type="submit" class="btn btn-primary">Upload file</button>
         </form>  
         
-        <a href="{% url 'webapp:doctor_orders' %}">Doctor Order List</a>
+        <a href="{% url 'webapp:doctor_orders' %}">Uploaded Files</a>
 	</div>
 
   
