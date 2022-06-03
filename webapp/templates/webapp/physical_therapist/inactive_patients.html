@@ -28,11 +28,12 @@
 	          <ion-icon name="call"></ion-icon>
 	          <p>{{account.contact_number}}</p>
 	        </div>
-	        <a
-	          class="button-primary button-text"
-	        >
-	          View Full Profile
-	        </a>
+			<a
+			class="button-primary button-text"
+			href="/p_accounts/{{ account.id }}"
+		  >
+			View Profile
+		  </a>
 	    </div>
 	    	{% empty %} 
 	    		<div class="accounts-item">

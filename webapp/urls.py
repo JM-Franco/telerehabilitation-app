@@ -43,6 +43,7 @@ urlpatterns = [
     path("create_tc_hours/<int:pk>", views.create_tc_hours, name="create_tc_hours"),
     path("edit_tc_hours/<int:pk>", views.edit_tc_hours, name="edit_tc_hours"),
     path("delete_tc_hours/<int:pk>", views.delete_tc_hours, name="delete_tc_hours"),
+    path('p_accounts/<int:user_id>/', views.p_account, name='view_profile_p'),
     # P-related
     path("p_search/", views.p_search, name="p_search"),
     path("p_records/", views.p_records, name="p_records"),
