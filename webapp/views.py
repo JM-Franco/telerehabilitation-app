@@ -278,8 +278,17 @@ def send_apt_reminder(request, pk, apt_id):
 @login_required(login_url='/')
 def teleconferencing(request):
     user = request.user
-    data = {'user':user}
-    return render(request, 'webapp/physical_therapist/teleconferencing.html', data)    
+    pt = PhysicalTherapistProfile.objects.filter(account_id=user.id).get()
+    appointments = Appointment.objects.filter(status="accepted").filter(pt_id = pt.id, type="teleconsultation").exclude(status="cancelled")
+    _list=[]
+
+    for apt in appointments:
+            if apt.start_time.date() == datetime.date.today():
+                _list.append(apt)
+    
+    data = {'appointments':_list}
+    return render(request, 'webapp/physical_therapist/teleconferencing.html',data)    
+
 
 @login_required(login_url='/')
 def resources(request):
