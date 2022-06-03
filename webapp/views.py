@@ -213,13 +213,19 @@ def patients(request):
 
 @login_required(login_url='/')
 def active_patients(request):
-    accounts = Account.objects.all().objects.filter(is_active=True)
+    active_patients = Account.objects.filter(is_active=True)
     data = {'active_patients':active_patients}
     return render(request, "webapp/physical_therapist/active_patients.html", data)
 
 @login_required(login_url='/')
+def patients_profile(request):
+    active_patients = Account.objects.filter(is_active=True)
+    data = {'active_patients':active_patients}
+    return render(request, "webapp/physical_therapist/patient_profile_page.html", data)
+
+@login_required(login_url='/')
 def inactive_patients(request):
-    accounts = Account.objects.all().objects.filter(is_active=False)
+    inactive_patients = Account.objects.filter(is_active=False)
     data = {'inactive_patients':inactive_patients}
     return render(request, "webapp/physical_therapist/inactive_patients.html", data)
 

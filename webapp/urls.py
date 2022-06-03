@@ -26,6 +26,7 @@ urlpatterns = [
     path("delete_clinic_hours/<int:pk>", views.delete_clinic_hours, name="delete_clinic_hours"),
     path("patients/", views.patients, name="patients"),
     path("active_patients/", views.active_patients, name="active_patients"),
+    path("active_patients/patients_profile/", views.patients_profile, name="patients_profile"),
     path("inactive_patients/", views.inactive_patients, name="inactive_patients"),
     path("appointments/", views.pt_appointments, name="pt_appointments"),
     path("remind_appointment/<int:pk>/<int:apt_id>", views.send_apt_reminder, name="pt_remind_apt"),
