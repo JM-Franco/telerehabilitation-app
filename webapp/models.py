@@ -207,7 +207,7 @@ class File(models.Model):
     pdf = models.FileField(upload_to='files/pdfs/')
     
     def __str__(self):
-        return self.name
+        return self.filename
     
     def delete(self, *args, **kwargs):
         self.pdf.delete()
@@ -218,8 +218,24 @@ class Order(models.Model):
     pdf = models.FileField(upload_to='files/orders/')
     
     def __str__(self):
-        return self.name
+        return self.filename
     
     def delete(self, *args, **kwargs):
         self.pdf.delete()
         super().delete(*args, **kwargs)
+
+class Image(models.Model):
+    image_title = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='files/', blank=True)
+    
+    def __str__(self):
+        return self.image_title
+    
+   # def save(self, *args, **kwargs):
+    #    img = Image.open(self.image.path)
+        
+    ##    if img.height > 400 or img.width > 400:
+     ##       output_size = (400,400)
+        
+      #  img.thumbnail(output_size)
+      #  img.save(self.image.path)

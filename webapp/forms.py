@@ -141,3 +141,9 @@ class OrderForm(ModelForm):
     class Meta:
         model = Order
         fields = ('filename','pdf')
+
+class ImageForm(ModelForm):
+	class Meta:
+		model = Image	
+		fields = ['image_title','image']
+		

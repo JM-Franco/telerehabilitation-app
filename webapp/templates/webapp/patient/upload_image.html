@@ -1,4 +1,5 @@
 {% extends 'webapp/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Resources{% endblock title %}
 
@@ -10,14 +11,32 @@
 
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <input type="file" name="document">
-            <button type="submit">Upload file</button>
+            {{ form|crispy }}
+            <button type="submit">Upload Image</button>
         </form>
 
-        {% if url %}
-            <p>Uploaded file: <a href="{{ url}}">{{url}}</a>  </p>
 
-        {% endif %}
+        <br></br>
+        <table class="table mb-0">
+            <thead>
+              <tr>
+                
+                <th>Image</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+              {% for img in images %}
+                <tr>
+            
+                  
+                  <td>
+                    <img src="{{ img.image.url }}" style="width: 20%; height: 75%;margin-top: 12px; margin-left: 25px;margin-bottom: 10px">
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
 	
 	</div>
 

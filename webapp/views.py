@@ -633,6 +633,7 @@ def record_update_info(request):
     data = {"edit_profile_form": edit_profile_form}
     return render(request, "webapp/edit_profile.html", data)
 
+'''
 def upload_image(request):
     context = {}
     if request.method == 'POST':
@@ -641,6 +642,19 @@ def upload_image(request):
         name = fs.save(uploaded_file.name, uploaded_file)
         context['url'] = fs.url(name)
     return render(request, 'webapp/patient/upload_image.html', context)
+'''
+def upload_image(request):
+    images = Image.objects.all()
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('/p_records/files')
+    else:
+        form = ImageForm()
+    return render(request, 'webapp/patient/upload_image.html', {
+        'form': form, 'images':images
+    })
 
 def upload_video(request):
     context = {}
