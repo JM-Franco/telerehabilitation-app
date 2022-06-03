@@ -280,6 +280,7 @@ def teleconferencing(request):
     user = request.user
     pt = PhysicalTherapistProfile.objects.filter(account_id=user.id).get()
     appointments = Appointment.objects.filter(status="accepted").filter(pt_id = pt.id, type="teleconsultation").exclude(status="cancelled")
+
     _list=[]
 
     for apt in appointments:
@@ -289,6 +290,10 @@ def teleconferencing(request):
     data = {'appointments':_list}
     return render(request, 'webapp/physical_therapist/teleconferencing.html',data)    
 
+@login_required(login_url="/")
+def update_patient_records(request):
+
+    return render(request,'webapp/physical_therapist/update_patient_records.html')
 
 @login_required(login_url='/')
 def resources(request):

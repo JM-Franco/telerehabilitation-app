@@ -30,6 +30,7 @@ urlpatterns = [
     path("appointments/", views.pt_appointments, name="pt_appointments"),
     path("remind_appointment/<int:pk>/<int:apt_id>", views.send_apt_reminder, name="pt_remind_apt"),
     path("teleconferencing/", views.teleconferencing, name="teleconferencing"),
+    path("update_patient_records/", views.update_patient_records, name="update_patient_records"),
     path("resources", views.resources, name="resources"),
     path("delete_url/<int:url_id>", views.delete_url, name="delete_url"),
     path('pt/messages/', views.pt_messages, name='pt_messages'),

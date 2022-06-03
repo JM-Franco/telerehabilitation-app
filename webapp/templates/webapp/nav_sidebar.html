@@ -101,7 +101,7 @@
     </a>
   </div>
   <div
-    class="nav-item {% if request.resolver_match.view_name == 'webapp:teleconferencing' %}active{% endif %}"
+    class="nav-item {% if request.resolver_match.view_name == 'webapp:teleconferencing' or request.resolver_match.view_name == 'webapp:update_patient_records' %}active{% endif %}"
   >
     <ion-icon class="nav-icon" name="videocam-outline"></ion-icon>
     <p>Teleconferencing</p>
