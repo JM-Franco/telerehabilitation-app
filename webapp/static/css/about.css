@@ -1,0 +1,47 @@
+.line-break {
+	border: 0;
+  clear:both;
+  display:block;
+  width: 60%;               
+  background-color: black;
+  height: 0.5px;
+}
+.about-banner {
+	box-sizing: border-box;
+  background-color: #6064d2;
+  color: white;
+  padding: 3rem 4rem;
+  display: grid;
+}
+.about-desc-container {
+	box-sizing: border-box;
+  background-color: white;
+  padding: 4rem;
+  display: grid;
+}
+.about-desc {
+	text-align: justify;
+  color: black;
+  padding: 0 150px;
+  display: flex;
+}
+.about-desc-img {
+	float: right; 
+	display: block;
+	max-width: 300px; 
+	width: auto;
+	height: auto;
+	padding-left: 50px;
+	object-fit: contain;
+}
+.about-devs-container {
+	box-sizing: border-box;
+  background-color: #dee2e6;
+  padding: 4rem;
+  display: grid;
+}
+.about-devs {
+  color: black;
+  padding: 0 150px;
+  display: flex;
+}

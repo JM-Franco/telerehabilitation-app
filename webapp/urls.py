@@ -14,6 +14,7 @@ urlpatterns = [
     path("profile_page/", views.profile_page, name="profile_page"),
     path("edit_profile/<int:pk>", views.edit_profile, name="edit_profile"),
     path("dashboard/", views.dashboard, name="dashboard"),
+    path("about/", views.about_us, name="about"),
     # SA-related
     path("account_requests/", views.account_requests, name="account_requests"),
     path("accounts/", views.accounts, name="accounts"),
