@@ -1,0 +1,71 @@
+{% extends 'webapp/base.html' %}
+{% load static %}
+{% block title %}About{% endblock title %}
+
+{% block extracss %}
+	<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock extracss %}
+	
+{% block content %}
+<div>
+	<div class="about-banner">
+		<h1 style="color: white; text-align:center">About Us<h1>
+	</div>
+	<div class="about-desc-container">
+		<div class="about-desc">
+			<div style="float:left; padding-top: 20px;">				
+				<p>
+					Telerehabilitation Application for Physical Therapists (TAPhT) is a web-based application that serves as a telemedicine platform for Physical Therapists and their patients.
+				</p>
+				<br>
+				<hr class="line-break">
+				<br>
+				<p>
+					This web application is developed in partial fulfillment of the requirements for the subject CMSC 128.8 - Software Engineering II.
+				</p>
+			</div>
+			<img src="https://i.imgur.com/jXI7Rps.png" class="about-desc-img">
+		</div>
+	</div>
+	<div class="about-devs-container">
+		<div class="about-devs">
+			<div style="width: 100%; display:table;">
+					<div style="display: table-row">
+						<div style="width: 40%; display: table-cell;">
+							<h4>Project Client</h4> <br>
+							<p>Kevin Magboo</p>
+							<br>
+							<h4>Professor</h4><br>
+							<p>Ma. Sheila Magboo</p>
+						</div>
+						<div style="display: table-cell; padding-left:30px;">
+							<h4>Project Developers</h4> <br>
+							<div style="display: table-row;">
+								<div style="display: table-cell;">
+									<p>Jennifer Albarico</p> 
+									<p>Jenalyn Cantanero</p> 
+									<p>Christian Immanuel Ella</p> 
+									<p>John Mari Franco</p>
+									<p>Carl Emmanuel Gonzales</p> 
+									<p>John Phillip Jalmasco</p> 
+									<p>Glaiza Rein La Rosa</p> 
+									<p>Reece Adrian Laguda</p>
+								</div>
+								<div style="display: table-cell; padding-left:200px;">
+									<p>Biehn Limcuando</p>
+									<p>Emil Paulo Mallorca</p>
+									<p>Emir Medina</p> 
+									<p>Regine Palomo</p> 
+									<p>Skizzo Antonio Perena</p>
+									<p>Bermylle John Razon</p> 
+									<p>Alona Jane Tesorero</p>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>		
+	</div>
+</div>
+
+{% endblock content %}
