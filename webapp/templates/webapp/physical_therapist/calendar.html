@@ -2,14 +2,17 @@
 {% load static %}
 {% block title %}Calendar{% endblock title %}
 
+{% block extracss %}
+  <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+{% endblock extracss %}
 
 {% block content %}
 
 <div class="main-grid-container">
-	{% include 'webapp/nav_sidebar.html' %}
-	<div class="main-content-area">
-		<h1>Calendar</h1>
-	
+  {% include 'webapp/nav_sidebar.html' %}
+  <div class="main-content-area">
+    <h1>Calendar</h1>
+  
        
       <!-- <div class="calendar-box">{{ calendar }}</div> -->
       <div class="calendar-box">
@@ -17,7 +20,7 @@
       </div>
 
 
-	</div>
+  </div>
   {% include 'webapp/footer.html' %}
 </div>
 
@@ -39,19 +42,21 @@
           navLinks: true, // can click day/week names to navigate views
           selectable: true,
           selectMirror: true,
-          
+          allDaySlot: false,
+          height: "auto",
 
           eventClick: function(arg) {
             console.log(arg.event._def.extendedProps.link.match(/href="([^"]*)/)[1])
             window.location.href(arg.event._def.extendedProps.link.match(/href="([^"]*)/)[1]);
           },
-
-
-
-          events: {{ events|safe }},        
+          events: {{ events|safe }},
 
         });
-
+        var events = calendar.getEvents()
+        for(var e of events){
+          e.setProp("classNames", ['event-style'])
+          e.setProp("display", 'block')
+        }
         calendar.render();
       });
 
