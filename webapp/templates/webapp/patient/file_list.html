@@ -1,41 +1,47 @@
 {% extends 'webapp/base.html' %}
+{% load static %}
+{% block title %}Files{% endblock title %}
 
-{% block title %}Resources{% endblock title %}
+{% block extracss %}
+  <link rel="stylesheet" href="{% static 'css/records_tables.css' %}">
+{% endblock extracss %}
 
 {% block content %}
+
 <div class="main-grid-container">
-	{% include 'webapp/nav_sidebar.html' %}
-	<div class="main-content-area">
-		<h1>Files:</h1>
-
+  {% include 'webapp/nav_sidebar.html' %}
+  <div class="main-content-area">
+    <h1>Laboratory Results</h1>
+    <div class="table-container">
+      <div class="table-content">
         <table class="table mb-0">
-            <thead>
-              <tr>
-                <th>File name</th>
-                <th>Download</th>
-                
-              </tr>
-            </thead>
-            <tbody>
-              {% for file in files %}
-                <tr>
-            
-                  <td>{{ file.filename }}</td>
-                  <td>
-                    <a href="{{ file.pdf.url }}" class="btn btn-primary btn-sm" target="_blank">
-                      Download PDF
-                    </a>
-                  </td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-
-        
-	</div>
-
-	
-
-	{% include 'webapp/footer.html' %}
+          <thead>
+            <tr>
+              <th><h4>Title</h4></th>
+              <th><h4>Download</h4></th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for file in files %}
+            <tr>
+              <td>{{ file.filename }}</td>
+              <td>
+                <a href="{{ file.pdf.url }}" class="button-primary" target="_blank" style="color:white">
+                  Download PDF
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                  </svg>
+                </a>
+              </td>   
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table> 
+      </div>
+    </div>
+  </div>
+  {% include 'webapp/footer.html' %}
 </div>
 {% endblock content %}
+
