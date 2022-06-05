@@ -1,9 +1,11 @@
 .event-style {
   padding: 1px 2px;
   white-space: normal;
+  display: block;
 }
 #calendar {
   font-family: "ABeeZee", sans-serif;
   padding: 15px;
   margin: 0 auto;
 }
+

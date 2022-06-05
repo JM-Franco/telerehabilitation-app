@@ -48,6 +48,7 @@
           eventClick: function(arg) {
             console.log(arg.event._def.extendedProps.link.match(/href="([^"]*)/)[1])
             window.location.href(arg.event._def.extendedProps.link.match(/href="([^"]*)/)[1]);
+            //window.open(arg.event._def.extendedProps.link.match(/href="([^"]*)/)[1]);
           },
           events: {{ events|safe }},
 
@@ -55,7 +56,6 @@
         var events = calendar.getEvents()
         for(var e of events){
           e.setProp("classNames", ['event-style'])
-          e.setProp("display", 'block')
         }
         calendar.render();
       });
