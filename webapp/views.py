@@ -116,6 +116,9 @@ def dashboard(request):
         data = {'user':user}
     return render(request, 'webapp/dashboard.html', data)
 
+def about_us(request):
+    return render(request, 'webapp/about.html')
+
 # SA-related views
 
 @login_required(login_url="/")
